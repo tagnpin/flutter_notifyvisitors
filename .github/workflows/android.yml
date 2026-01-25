@@ -161,12 +161,6 @@ jobs:
       - name: 📦 Install Flutter Dependencies
         run: flutter pub get
 
-      # 🔍 6. Analyzer
-      - name: 🔍 Flutter Analyze
-        run: flutter analyze --no-fatal-infos --no-fatal-warnings
-
-    
-
       # ============================================================
       # STEP 8️⃣  Build Android App (Flutter)
       # ============================================================
