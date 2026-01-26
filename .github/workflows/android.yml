@@ -203,8 +203,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: android-${{ env.BUILD_TYPE }}-v${{ env.PLUGIN_VERSION }}
-          path: |
-            build/app/outputs/flutter-apk/
+          path: nv_flutter_sdk_app/build/app/outputs/flutter-apk/
+            
 
 
       # ============================================================
