@@ -199,16 +199,13 @@ jobs:
 
 
 
-      # ============================================================
-      # STEP 🔟  Upload Build Artifacts (Flutter)
-      # ============================================================
       - name: 📤 Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: android-${{ env.BUILD_TYPE }}-v${{ env.PLUGIN_VERSION }}
           path: |
-            build/app/outputs/flutter-apk/*.apk
-          if-no-files-found: ignore
+            build/app/outputs/flutter-apk/
+
 
       # ============================================================
       # STEP 1️⃣1️⃣  Upload Release APK to S3 (Flutter)
