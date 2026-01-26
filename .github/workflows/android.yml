@@ -17,52 +17,62 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
-    # All flutter commands run inside the Flutter app folder
+    # 📂 All flutter commands run inside the Flutter app folder
     defaults:
       run:
         working-directory: nv_flutter_sdk_app
 
     env:
-      # 🔧 Build type (debug / release)
+      # ============================================================
+      # 🔧 Build Configuration
+      # ============================================================
       BUILD_TYPE: ${{ vars.BUILD_TYPE }}
 
-      # 🔐 Base64 configs
+      # ============================================================
+      # 🔐 Base64 Encoded Configs
+      # ============================================================
       FIREBASE_JSON_BASE64: ${{ secrets.ANDROID_FIREBASE_JSON_BASE64 }}
       LOCAL_PROPERTIES: ${{ secrets.ANDROID_LOCAL_PROPERTIES_B64 }}
       KEYSTORE_FILE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
 
-      # 🏷 Brand / app config
+      # ============================================================
+      # 🏷 Brand / App Configuration
+      # ============================================================
       NV_BRAND_ID: ${{ vars.NV_BRAND_ID }}
       NV_BRAND_ENCRYPTION_KEY: ${{ vars.NV_BRAND_ENCRYPTION_KEY }}
 
-      # 🔑 Android signing secrets
+      # ============================================================
+      # 🔑 Android Signing Secrets
+      # ============================================================
       KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
       KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
       KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
 
-      # ☁️ AWS / S3
+      # ============================================================
+      # ☁️ AWS / S3 Upload
+      # ============================================================
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
       S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
 
     steps:
-      # 📁 1. Checkout Source Code
+      # ============================================================
+      # STEP 1️⃣  Checkout Source Code 📥
+      # ============================================================
       - name: 📥 Checkout Repository
         uses: actions/checkout@v4
 
       # ============================================================
-      # STEP 2️⃣  Validate Required Environment Variables (Fail Fast)
+      # STEP 2️⃣  Validate Environment Variables ✅
       # ============================================================
       - name: ✅ Validate Android CI environment variables
         run: |
           set -e
 
           : "${BUILD_TYPE:?Missing BUILD_TYPE}"
-
           : "${FIREBASE_JSON_BASE64:?Missing FIREBASE_JSON_BASE64}"
 
-          # Signing only required for release
           if [ "$BUILD_TYPE" = "release" ]; then
             : "${KEYSTORE_FILE_BASE64:?Missing KEYSTORE_FILE_BASE64}"
             : "${KEYSTORE_PASSWORD:?Missing KEYSTORE_PASSWORD}"
@@ -81,14 +91,13 @@ jobs:
           echo "✅ All required environment variables are present"
 
       # ============================================================
-      # STEP 3️⃣  Read Plugin Version (from root pubspec.yaml)
+      # STEP 3️⃣  Read Plugin Version 📦
       # ============================================================
       - name: 📦 Extract Plugin Version
         id: extract_plugin_version
         run: |
           set -e
 
-          # Plugin pubspec is one level above the app directory
           RAW_VERSION=$(grep '^version:' ../pubspec.yaml | awk '{print $2}')
 
           PLUGIN_VERSION="${RAW_VERSION%%+*}"
@@ -99,16 +108,18 @@ jobs:
 
           echo "📦 Plugin version detected: $PLUGIN_VERSION ($BUILD_NUMBER)"
 
-
-
-      # ☕ 2. Setup Java (for Gradle)
+      # ============================================================
+      # STEP 4️⃣  Setup Java ☕
+      # ============================================================
       - name: ⚙️ Setup Java 17
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
 
-      # 🐦 3. Install Flutter SDK
+      # ============================================================
+      # STEP 5️⃣  Install Flutter SDK 🐦
+      # ============================================================
       - name: 🧰 Install Flutter SDK
         uses: subosito/flutter-action@v2
         with:
@@ -117,23 +128,39 @@ jobs:
           cache: true
 
       # ============================================================
-      # STEP 6️⃣  Prepare Firebase Config & Android Signing (Flutter)
+      # STEP 6️⃣  Cache Gradle Dependencies ♻️
+      # ============================================================
+      - name: ♻️ Cache Gradle Dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('flutter_notifyvisitors/nv_flutter_sdk_app/android/**/*.gradle*', 'flutter_notifyvisitors/nv_flutter_sdk_app/android/**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      # ============================================================
+      # STEP 7️⃣  Install Flutter Dependencies 📦
+      # ============================================================
+      - name: 📦 Install Flutter Dependencies
+        run: flutter pub get
+
+      # ============================================================
+      # STEP 8️⃣  Prepare Firebase & Android Signing 🔐
       # ============================================================
       - name: 🔐 Prepare Firebase & Android signing files
         run: |
           set -e
 
-          # Firebase config
           mkdir -p android/app
           echo "$FIREBASE_JSON_BASE64" | base64 --decode > android/app/google-services.json
           chmod 600 android/app/google-services.json
 
-          # Decode keystore (MATCH Gradle path)
           mkdir -p android/app/keystore
           echo "$KEYSTORE_FILE_BASE64" | base64 --decode > android/app/keystore/nv_flutter_sdk_app_release.keystore
           chmod 600 android/app/keystore/nv_flutter_sdk_app_release.keystore
 
-          # Create android/local.properties expected by Gradle
           cat > android/local.properties <<EOF
           NV_FLUTTER_SDKAPP_STORE_FILE=keystore/nv_flutter_sdk_app_release.keystore
           NV_FLUTTER_SDKAPP_STORE_PASSWORD=$KEYSTORE_PASSWORD
@@ -145,25 +172,8 @@ jobs:
 
           echo "✅ Firebase & signing files prepared"
 
-
-
-      # 📦 4. Restore Gradle Cache
-      - name: ♻️ Cache Gradle Dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('flutter_notifyvisitors/nv_flutter_sdk_app/android/**/*.gradle*', 'flutter_notifyvisitors/nv_flutter_sdk_app/android/**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      # 📦 5. Install Flutter Dependencies
-      - name: 📦 Install Flutter Dependencies
-        run: flutter pub get
-
       # ============================================================
-      # STEP 8️⃣  Build Android App (Flutter)
+      # STEP 9️⃣  Build Android APK 🏗️
       # ============================================================
       - name: 🏗 Build Android APK
         run: |
@@ -174,8 +184,9 @@ jobs:
           else
             flutter build apk --debug --no-tree-shake-icons
           fi
+
       # ============================================================
-      # STEP 9️⃣  Rename APK with Plugin Version & Runner Count
+      # STEP 🔟  Rename APK 📛
       # ============================================================
       - name: 🏷 Rename APK with plugin version
         if: env.BUILD_TYPE == 'release'
@@ -197,18 +208,17 @@ jobs:
           echo "✅ Final APK:"
           ls -lh "$APK_DIR"
 
-
-
+      # ============================================================
+      # STEP 1️⃣1️⃣  Upload Artifacts 📤
+      # ============================================================
       - name: 📤 Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: android-${{ env.BUILD_TYPE }}-v${{ env.PLUGIN_VERSION }}
           path: nv_flutter_sdk_app/build/app/outputs/flutter-apk/
-            
-
 
       # ============================================================
-      # STEP 1️⃣1️⃣  Upload Release APK to S3 (Flutter)
+      # STEP 1️⃣2️⃣  Upload Release APK to S3 ☁️
       # ============================================================
       - name: ☁️ Upload APK to S3 (release only)
         if: env.BUILD_TYPE == 'release'
@@ -231,4 +241,3 @@ jobs:
             echo "☁️ Uploading $APK_NAME to s3://$S3_BUCKET/$S3_KEY"
             aws s3 cp "$apk" "s3://$S3_BUCKET/$S3_KEY" --only-show-errors
           done
-
