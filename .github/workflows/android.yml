@@ -128,10 +128,10 @@ jobs:
           echo "$FIREBASE_JSON_BASE64" | base64 --decode > android/app/google-services.json
           chmod 600 android/app/google-services.json
 
-          # Decode keystore
-          mkdir -p android/keystore
-          echo "$KEYSTORE_FILE_BASE64" | base64 --decode > android/keystore/nv_flutter_sdk_app_release.keystore
-          chmod 600 android/keystore/nv_flutter_sdk_app_release.keystore
+          # Decode keystore (MATCH Gradle path)
+          mkdir -p android/app/keystore
+          echo "$KEYSTORE_FILE_BASE64" | base64 --decode > android/app/keystore/nv_flutter_sdk_app_release.keystore
+          chmod 600 android/app/keystore/nv_flutter_sdk_app_release.keystore
 
           # Create android/local.properties expected by Gradle
           cat > android/local.properties <<EOF
