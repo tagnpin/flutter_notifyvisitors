@@ -22,11 +22,11 @@
   <key>provisioningProfiles</key>
   <dict>
     <!-- Main iOS App Target -->
-    <key>com.notifyvisitors.flutter.sdkapp.notifyvisitors</key>
+    <key>com.notifyvisitors.flutter.sdkapp</key>
     <string>nv_flutter_sdkapp_ios_release_profile</string>
 
     <!-- (Optional) Push Notification Extension Target -->
-    <key>com.notifyvisitors.flutter.sdkapp.notifyvisitors.NotificationService</key>
+    <key>com.notifyvisitors.flutter.sdkapp.notifyvisitorsServiceExtension</key>
     <string>nv_flutter_sdkapp_service_ext_ios_release_profile</string>
   </dict>
 
