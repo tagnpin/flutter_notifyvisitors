@@ -132,9 +132,11 @@ jobs:
 
           mkdir -p ios/certs
 
-          echo "${{ secrets.IOS_APPLE_DISTRIBUTION_P12_B64 }}" | base64 --decode > ios/certs/AppleDistribution.p12
-          echo "${{ secrets.IOS_RELEASE_PROFILE_B64 }}" | base64 --decode > ios/certs/main.mobileprovision
-          echo "${{ secrets.IOS_RELEASE_PROFILE_SERVICE_EXT_B64 }}" | base64 --decode > ios/certs/ext.mobileprovision
+          echo "$IOS_APPLE_DISTRIBUTION_P12_B64" | base64 --decode > ios/certs/AppleDistribution.p12
+          echo "$IOS_RELEASE_PROFILE_B64" | base64 --decode > ios/certs/app.mobileprovision
+          echo "$IOS_RELEASE_PROFILE_SERVICE_EXT_B64" | base64 --decode > ios/certs/ext.mobileprovision
+
+          
 
           chmod 600 ios/certs/*
 
