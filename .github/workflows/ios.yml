@@ -171,10 +171,10 @@ jobs:
           ls ~/Library/MobileDevice/Provisioning\ Profiles
 
           echo "🔍 MAIN PROFILE DETAILS:"
-          security cms -D -i ios/certs/app.mobileprovision | grep -A5 Name
+          security cms -D -i certs/app.mobileprovision | grep -A5 Name
 
           echo "🔍 CERTS IN PROFILE:"
-          security cms -D -i ios/certs/app.mobileprovision | grep -A10 DeveloperCertificates
+          security cms -D -i certs/app.mobileprovision | grep -A10 DeveloperCertificates
 
           ARCHIVE_PATH="$PWD/build/$APP_SCHEME.xcarchive"
 
