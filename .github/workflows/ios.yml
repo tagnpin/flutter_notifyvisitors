@@ -26,23 +26,14 @@ jobs:
     timeout-minutes: 60
 
     env:
-      # ============================================================
-      # 🔧 Xcode / Build Settings
-      # ============================================================
       APP_SCHEME: "Runner"
       WORKSPACE: "Runner.xcworkspace"
       CONFIGURATION: "Release"
       DEVELOPMENT_TEAM: "4JW4924F8P"
 
-      # ============================================================
-      # 🏷 Runtime Brand Config (RN Parity)
-      # ============================================================
       NV_BRAND_ID: ${{ vars.NV_BRAND_ID }}
       NV_BRAND_ENCRYPTION_KEY: ${{ vars.NV_BRAND_ENCRYPTION_KEY }} 
 
-      # ============================================================
-      # 🔑 App Store Connect API
-      # ============================================================
       IOS_APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.IOS_APP_STORE_CONNECT_API_KEY_ID }}
       IOS_APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.IOS_APP_STORE_CONNECT_ISSUER_ID }}
       IOS_APP_STORE_API_AUTHKEY_BASE64: ${{ secrets.IOS_APP_STORE_API_AUTHKEY_BASE64 }}
@@ -202,6 +193,9 @@ jobs:
           mkdir -p build
 
           cp ../ExportOptions.plist ExportOptions.plist
+
+          security find-identity -v -p codesigning build.keychain
+          ls ~/Library/MobileDevice/Provisioning\ Profiles
 
           ARCHIVE_PATH="$PWD/build/$APP_SCHEME.xcarchive"
 
