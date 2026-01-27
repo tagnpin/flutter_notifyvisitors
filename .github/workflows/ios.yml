@@ -151,6 +151,8 @@ jobs:
           set -e
           KEYCHAIN_NAME=build.keychain
 
+          ls -lh ios/certs/AppleDistribution.p12
+
           security create-keychain -p "$CERT_PASSWORD" "$KEYCHAIN_NAME"
           security set-keychain-settings -lut 3600 "$KEYCHAIN_NAME"
           security list-keychains -s "$KEYCHAIN_NAME"
