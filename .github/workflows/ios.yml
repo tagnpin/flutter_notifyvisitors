@@ -33,7 +33,6 @@ jobs:
       WORKSPACE: "Runner.xcworkspace"
       CONFIGURATION: "Release"
       DEVELOPMENT_TEAM: "4JW4924F8P"
-      KEYCHAIN_NAME: "build.keychain-db"
 
       # ============================================================
       # 🏷 Runtime Brand Config (RN Parity)
@@ -148,8 +147,6 @@ jobs:
 
           chmod 600 ios/certs/*
 
-          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          cp ios/certs/*.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
 
       # ============================================================
       # STEP 9️⃣  Setup macOS Keychain 🔑
@@ -178,7 +175,14 @@ jobs:
             -s -k "$CERT_PASSWORD" \
             "$KEYCHAIN_NAME"
 
-
+      # -------------------------------------------------
+      # 9️⃣ Install Provisioning Profiles
+      # -------------------------------------------------
+      - name: 📄 Install Provisioning Profiles
+        run: |
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          cp ios/certs/*.mobileprovision \
+            ~/Library/MobileDevice/Provisioning\ Profiles/
      
 
       # ============================================================
