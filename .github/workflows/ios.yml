@@ -109,6 +109,8 @@ jobs:
           echo "$RELEASE_PROFILE_B64" | base64 --decode > ios/certs/app.mobileprovision
           echo "$RELEASE_PROFILE_SERVICE_EXT_B64" | base64 --decode > ios/certs/ext.mobileprovision
 
+          ls -lh ios/certs
+
           chmod 600 ios/certs/*
 
       # ============================================================
@@ -169,13 +171,10 @@ jobs:
           ls ~/Library/MobileDevice/Provisioning\ Profiles
 
           echo "🔍 MAIN PROFILE DETAILS:"
-          security cms -D -i ios/certs/main.mobileprovision | grep -A5 Name
+          security cms -D -i ios/certs/app.mobileprovision | grep -A5 Name
 
           echo "🔍 CERTS IN PROFILE:"
-          security cms -D -i ios/certs/main.mobileprovision | grep -A10 DeveloperCertificates
-          
-          echo "🔍 EXT PROFILE DETAILS:"
-          security cms -D -i ios/certs/ext.mobileprovision | grep -A5 Name
+          security cms -D -i ios/certs/app.mobileprovision | grep -A10 DeveloperCertificates
 
           ARCHIVE_PATH="$PWD/build/$APP_SCHEME.xcarchive"
 
