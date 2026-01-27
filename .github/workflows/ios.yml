@@ -208,7 +208,7 @@ jobs:
             -exportPath "$PWD/build/export" \
             -exportOptionsPlist ExportOptions.plist
 
-          ls -la build/export/*.ipa
+          ls -la build/export/*.ipa 
 
       # ============================================================
       # STEP 1️⃣2️⃣  Upload IPA Artifact 📤
