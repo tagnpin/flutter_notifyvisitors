@@ -155,12 +155,12 @@ jobs:
       # STEP 9️⃣  Setup macOS Keychain 🔑
       # ============================================================
       - name: 🔑 Setup macOS Keychain
-       env:
+        env:
           CERT_PASSWORD: ${{ secrets.IOS_APPLE_DISTRIBUTION_P12_PASSWORD }}
         run: |
           set -e
           KEYCHAIN_NAME=build.keychain
-          
+
           security create-keychain -p "$CERT_PASSWORD" "$KEYCHAIN_NAME"
           security set-keychain-settings -lut 3600 "$KEYCHAIN_NAME"
           security list-keychains -s "$KEYCHAIN_NAME"
@@ -168,7 +168,7 @@ jobs:
           security unlock-keychain -p "$CERT_PASSWORD" "$KEYCHAIN_NAME"
 
           echo "📥 Importing Distribution Certificate..."
-          security import ios/certs/dist.p12 \
+          security import ios/certs/AppleDistribution.p12 \
             -k "$KEYCHAIN_NAME" \
             -P "$CERT_PASSWORD" \
             -T /usr/bin/codesign
@@ -178,8 +178,8 @@ jobs:
             -s -k "$CERT_PASSWORD" \
             "$KEYCHAIN_NAME"
 
-         
 
+     
 
       # ============================================================
       # STEP 🔟  Inject GoogleService-Info.plist 🔥
