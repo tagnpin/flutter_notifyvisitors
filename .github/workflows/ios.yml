@@ -34,9 +34,15 @@ jobs:
       NV_BRAND_ID: ${{ vars.NV_BRAND_ID }}
       NV_BRAND_ENCRYPTION_KEY: ${{ vars.NV_BRAND_ENCRYPTION_KEY }} 
 
-      IOS_APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.IOS_APP_STORE_CONNECT_API_KEY_ID }}
-      IOS_APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.IOS_APP_STORE_CONNECT_ISSUER_ID }}
+      APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.IOS_APP_STORE_CONNECT_API_KEY_ID }}
+      APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.IOS_APP_STORE_CONNECT_ISSUER_ID }}
       IOS_APP_STORE_API_AUTHKEY_BASE64: ${{ secrets.IOS_APP_STORE_API_AUTHKEY_BASE64 }}
+
+      APPLE_DISTRIBUTION_P12_B64: ${{ secrets.IOS_APPLE_DISTRIBUTION_P12_B64 }}
+      APPLE_DISTRIBUTION_P12_PASSWORD: ${{ secrets.IOS_APPLE_DISTRIBUTION_P12_PASSWORD }}
+      RELEASE_PROFILE_B64: ${{ secrets.IOS_RELEASE_PROFILE_B64 }}
+      RELEASE_PROFILE_SERVICE_EXT_B64: ${{ secrets.IOS_RELEASE_PROFILE_SERVICE_EXT_B64 }}
+      GOOGLESERVICE_INFO_B64: ${{ secrets.IOS_GOOGLESERVICE_INFO_B64 }}
 
     steps:
       # ============================================================
@@ -45,39 +51,7 @@ jobs:
       - name: 📥 Checkout Repository
         uses: actions/checkout@v4
 
-      # ============================================================
-      # STEP 2️⃣  Validate Required Secrets ✅
-      # ============================================================
-      - name: ✅ Validate iOS CI environment variables
-        run: |
-          set -e 
-
-          : "${IOS_APPLE_DISTRIBUTION_P12_B64:?Missing IOS_APPLE_DISTRIBUTION_P12_B64}"
-          : "${IOS_APPLE_DISTRIBUTION_P12_PASSWORD:?Missing IOS_APPLE_DISTRIBUTION_P12_PASSWORD}"
-
-          : "${IOS_RELEASE_PROFILE_B64:?Missing IOS_RELEASE_PROFILE_B64}"
-          : "${IOS_RELEASE_PROFILE_SERVICE_EXT_B64:?Missing IOS_RELEASE_PROFILE_SERVICE_EXT_B64}"
-
-          : "${IOS_APP_STORE_API_AUTHKEY_BASE64:?Missing IOS_APP_STORE_API_AUTHKEY_BASE64}"
-          : "${IOS_APP_STORE_CONNECT_API_KEY_ID:?Missing IOS_APP_STORE_CONNECT_API_KEY_ID}"
-          : "${IOS_APP_STORE_CONNECT_ISSUER_ID:?Missing IOS_APP_STORE_CONNECT_ISSUER_ID}"
-
-          : "${IOS_GOOGLESERVICE_INFO_B64:?Missing IOS_GOOGLESERVICE_INFO_B64}"
-
-          : "${NV_BRAND_ID:?Missing NV_BRAND_ID}"
-          : "${NV_BRAND_ENCRYPTION_KEY:?Missing NV_BRAND_ENCRYPTION_KEY}"
-
-          echo "✅ All required secrets are present"
-        env:
-          IOS_APPLE_DISTRIBUTION_P12_B64: ${{ secrets.IOS_APPLE_DISTRIBUTION_P12_B64 }}
-          IOS_APPLE_DISTRIBUTION_P12_PASSWORD: ${{ secrets.IOS_APPLE_DISTRIBUTION_P12_PASSWORD }}
-          IOS_RELEASE_PROFILE_B64: ${{ secrets.IOS_RELEASE_PROFILE_B64 }}
-          IOS_RELEASE_PROFILE_SERVICE_EXT_B64: ${{ secrets.IOS_RELEASE_PROFILE_SERVICE_EXT_B64 }}
-          IOS_APP_STORE_API_AUTHKEY_BASE64: ${{ secrets.IOS_APP_STORE_API_AUTHKEY_BASE64 }}
-          IOS_APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.IOS_APP_STORE_CONNECT_API_KEY_ID }}
-          IOS_APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.IOS_APP_STORE_CONNECT_ISSUER_ID }}
-          IOS_GOOGLESERVICE_INFO_B64: ${{ secrets.IOS_GOOGLESERVICE_INFO_B64 }}
-
+       
       # ============================================================
       # STEP 3️⃣  Generate Runtime Secrets XCConfig 🔧
       # ============================================================
@@ -129,45 +103,39 @@ jobs:
       - name: 🔐 Install certificates & provisioning profiles
         run: |
           set -e
-
           mkdir -p ios/certs
 
-          echo "$IOS_APPLE_DISTRIBUTION_P12_B64" | base64 --decode > ios/certs/AppleDistribution.p12
-          echo "$IOS_RELEASE_PROFILE_B64" | base64 --decode > ios/certs/app.mobileprovision
-          echo "$IOS_RELEASE_PROFILE_SERVICE_EXT_B64" | base64 --decode > ios/certs/ext.mobileprovision
-
-          
+          echo "$APPLE_DISTRIBUTION_P12_B64" | base64 --decode > ios/certs/AppleDistribution.p12
+          echo "$RELEASE_PROFILE_B64" | base64 --decode > ios/certs/app.mobileprovision
+          echo "$RELEASE_PROFILE_SERVICE_EXT_B64" | base64 --decode > ios/certs/ext.mobileprovision
 
           chmod 600 ios/certs/*
-
 
       # ============================================================
       # STEP 9️⃣  Setup macOS Keychain 🔑
       # ============================================================
       - name: 🔑 Setup macOS Keychain
-        env:
-          CERT_PASSWORD: ${{ secrets.IOS_APPLE_DISTRIBUTION_P12_PASSWORD }}
         run: |
           set -e
           KEYCHAIN_NAME=build.keychain
 
           ls -lh ios/certs/AppleDistribution.p12
 
-          security create-keychain -p "$CERT_PASSWORD" "$KEYCHAIN_NAME"
+          security create-keychain -p "$APPLE_DISTRIBUTION_P12_PASSWORD" "$KEYCHAIN_NAME"
           security set-keychain-settings -lut 3600 "$KEYCHAIN_NAME"
           security list-keychains -s "$KEYCHAIN_NAME"
           security default-keychain -s "$KEYCHAIN_NAME"
-          security unlock-keychain -p "$CERT_PASSWORD" "$KEYCHAIN_NAME"
+          security unlock-keychain -p "$APPLE_DISTRIBUTION_P12_PASSWORD" "$KEYCHAIN_NAME"
 
           echo "📥 Importing Distribution Certificate..."
           security import ios/certs/AppleDistribution.p12 \
             -k "$KEYCHAIN_NAME" \
-            -P "$CERT_PASSWORD" \
+            -P "$APPLE_DISTRIBUTION_P12_PASSWORD" \
             -T /usr/bin/codesign
 
           security set-key-partition-list \
             -S apple-tool:,apple: \
-            -s -k "$CERT_PASSWORD" \
+            -s -k "$APPLE_DISTRIBUTION_P12_PASSWORD" \
             "$KEYCHAIN_NAME"
 
       # -------------------------------------------------
