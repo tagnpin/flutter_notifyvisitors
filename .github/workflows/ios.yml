@@ -168,6 +168,15 @@ jobs:
           security find-identity -v -p codesigning build.keychain
           ls ~/Library/MobileDevice/Provisioning\ Profiles
 
+          echo "🔍 MAIN PROFILE DETAILS:"
+          security cms -D -i ios/certs/main.mobileprovision | grep -A5 Name
+
+          echo "🔍 CERTS IN PROFILE:"
+          security cms -D -i ios/certs/main.mobileprovision | grep -A10 DeveloperCertificates
+          
+          echo "🔍 EXT PROFILE DETAILS:"
+          security cms -D -i ios/certs/ext.mobileprovision | grep -A5 Name
+
           ARCHIVE_PATH="$PWD/build/$APP_SCHEME.xcarchive"
 
           xcodebuild clean \
