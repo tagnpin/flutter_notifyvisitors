@@ -157,6 +157,15 @@ jobs:
           echo "${{ secrets.IOS_GOOGLESERVICE_INFO_B64 }}" | base64 --decode \
             > ios/Runner/GoogleService-Info.plist
 
+      # -------------------------------------------------
+      # 5. Auto-Increment Build Number
+      # -------------------------------------------------
+      - name: 🔢 Auto-Increment iOS Build Number
+        run: |
+          BUILD_NUMBER="${{ github.run_number }}"
+          echo "Using CFBundleVersion: $BUILD_NUMBER"
+          plutil -replace CFBundleVersion -string "$BUILD_NUMBER" ios/Runner/Info.plist
+
       # ============================================================
       # STEP 1️⃣1️⃣  Archive & Export IPA 📦
       # ============================================================
@@ -211,7 +220,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: flutter-ios-build
-          path: flutter_sdk_app/ios/build/export/*.ipa
+          path: nv_flutter_sdk_app/ios/build/export/*.ipa
 
       # -------------------------------------------------
       # 1️⃣3️⃣ Upload IPA to TestFlight (Fastlane)
