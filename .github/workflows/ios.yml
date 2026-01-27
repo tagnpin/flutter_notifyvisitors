@@ -138,7 +138,7 @@ jobs:
           security set-key-partition-list \
             -S apple-tool:,apple: \
             -s -k "$APPLE_DISTRIBUTION_P12_PASSWORD" \
-            "$KEYCHAIN_NAME"
+            "$KEYCHAIN_NAME" 
 
       # -------------------------------------------------
       # 9️⃣ Install Provisioning Profiles
