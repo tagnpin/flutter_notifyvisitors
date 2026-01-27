@@ -59,7 +59,7 @@ jobs:
       # ============================================================
       - name: ✅ Validate iOS CI environment variables
         run: |
-          set -e
+          set -e 
 
           : "${IOS_APPLE_DISTRIBUTION_P12_B64:?Missing IOS_APPLE_DISTRIBUTION_P12_B64}"
           : "${IOS_APPLE_DISTRIBUTION_P12_PASSWORD:?Missing IOS_APPLE_DISTRIBUTION_P12_PASSWORD}"
