@@ -39,7 +39,7 @@ jobs:
       # 🏷 Runtime Brand Config (RN Parity)
       # ============================================================
       NV_BRAND_ID: ${{ vars.NV_BRAND_ID }}
-      NV_BRAND_ENCRYPTION_KEY: ${{ vars.NV_BRAND_ENCRYPTION_KEY }}
+      NV_BRAND_ENCRYPTION_KEY: ${{ vars.NV_BRAND_ENCRYPTION_KEY }} 
 
       # ============================================================
       # 🔑 App Store Connect API
