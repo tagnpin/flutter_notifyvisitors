@@ -1,6 +1,6 @@
 name: 🍎 Flutter CI – iOS Release (Production Ready)
 
-run-name: iOS ${{ github.sha }}
+run-name: 🧱 Build iOS (Release)
 
 on:
   push:
@@ -49,7 +49,7 @@ jobs:
 
     steps:
       # ============================================================
-      # STEP 1️⃣  Checkout Source Code 📥
+      # STEP 1️⃣  Checkout Source Code 📥 
       # ============================================================
       - name: 📥 Checkout Repository
         uses: actions/checkout@v4
