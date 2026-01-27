@@ -240,4 +240,8 @@ jobs:
 
             echo "☁️ Uploading $APK_NAME to s3://$S3_BUCKET/$S3_KEY"
             aws s3 cp "$apk" "s3://$S3_BUCKET/$S3_KEY" --only-show-errors
+<<<<<<< HEAD
           done
+=======
+          done
+>>>>>>> c080a0060197176b776384d4948316f8741b0927
