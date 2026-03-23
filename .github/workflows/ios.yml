@@ -4,13 +4,29 @@ run-name: 🧱 Build iOS (Release)
 
 on:
   push:
-    branches: [ stage ]
+    branches: [stage]
     paths:
-      - "flutter_notifyvisitors/nv_flutter_sdk_app/ios/**"
-      - "flutter_notifyvisitors/nv_flutter_sdk_app/lib/**"
-      - "flutter_notifyvisitors/nv_flutter_sdk_app/pubspec.yaml"
-      - "flutter_notifyvisitors/nv_flutter_sdk_app/pubspec.lock"
-      - ".github/workflows/ios.yml"
+      # Package specific changes affecting iOS bundle
+      - "lib/**"
+      - "ios/**"
+      - "pubspec.yaml"
+      - "pubspec.lock"
+
+      # Example app specific changes affecting iOS bundle
+      - "nv_flutter_sdk_app/lib/**"
+      - "nv_flutter_sdk_app/ios/**"
+      - "nv_flutter_sdk_app/pubspec.yaml"
+      - "nv_flutter_sdk_app/pubspec.lock"
+
+      # Workflow changes
+      - ".github/workflows/android.yml"
+
+      ### OLD Paths (Given by Neeraj)
+      # - "flutter_notifyvisitors/nv_flutter_sdk_app/ios/**"
+      # - "flutter_notifyvisitors/nv_flutter_sdk_app/lib/**"
+      # - "flutter_notifyvisitors/nv_flutter_sdk_app/pubspec.yaml"
+      # - "flutter_notifyvisitors/nv_flutter_sdk_app/pubspec.lock"
+      # - ".github/workflows/ios.yml"
 
 # --------------------------------------------------------------------
 # 📂 Global Working Directory (Flutter App Root)

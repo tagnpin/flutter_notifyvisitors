@@ -3,13 +3,29 @@ run-name: Android ${{ vars.BUILD_TYPE }} build (commit ${{ github.sha }})
 
 on:
   push:
-    branches: [ stage ]
+    branches: [stage]
     paths:
-      - 'flutter_notifyvisitors/nv_flutter_sdk_app/android/**'
-      - 'flutter_notifyvisitors/nv_flutter_sdk_app/lib/**'
-      - 'flutter_notifyvisitors/nv_flutter_sdk_app/pubspec.yaml'
-      - 'flutter_notifyvisitors/nv_flutter_sdk_app/pubspec.lock'
-      - '.github/workflows/android.yml'
+      # Package specific changes affecting Android bundle
+      - "lib/**"
+      - "android/**"
+      - "pubspec.yaml"
+      - "pubspec.lock"
+
+      # Example app specific changes affecting Android bundle
+      - "nv_flutter_sdk_app/lib/**"
+      - "nv_flutter_sdk_app/android/**"
+      - "nv_flutter_sdk_app/pubspec.yaml"
+      - "nv_flutter_sdk_app/pubspec.lock"
+
+      # Workflow changes
+      - ".github/workflows/android.yml"
+
+      ### OLD Paths (Given by Neeraj)
+      # - 'flutter_notifyvisitors/nv_flutter_sdk_app/android/**'
+      # - 'flutter_notifyvisitors/nv_flutter_sdk_app/lib/**'
+      # - 'flutter_notifyvisitors/nv_flutter_sdk_app/pubspec.yaml'
+      # - 'flutter_notifyvisitors/nv_flutter_sdk_app/pubspec.lock'
+      # - '.github/workflows/android.yml'
 
 jobs:
   build-android:
@@ -123,7 +139,7 @@ jobs:
       - name: 🧰 Install Flutter SDK
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.27.0'
+          flutter-version: "3.27.0"
           channel: stable
           cache: true
 
@@ -242,4 +258,3 @@ jobs:
             aws s3 cp "$apk" "s3://$S3_BUCKET/$S3_KEY" --only-show-errors
 
           done
-
