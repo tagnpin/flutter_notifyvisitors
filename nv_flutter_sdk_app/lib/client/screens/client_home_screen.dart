@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_notifyvisitors/flutter_notifyvisitors.dart';
+import 'dart:io';
 
 import 'package:nv_flutter_sdk_app/client/screens/feature_action_screen.dart';
 import 'package:nv_flutter_sdk_app/config/client_feature_registry.dart';
@@ -11,8 +13,39 @@ import 'package:nv_flutter_sdk_app/shared/widgets/models/feature_action_models.d
 import 'package:nv_flutter_sdk_app/shared/widgets/sdk_info_section.dart';
 import 'package:nv_flutter_sdk_app/shared/widgets/section_header.dart';
 
-class ClientHomeScreen extends StatelessWidget {
+class ClientHomeScreen extends StatefulWidget {
   const ClientHomeScreen({super.key});
+
+  @override
+  State<ClientHomeScreen> createState() => _ClientHomeScreenState();
+}
+
+class _ClientHomeScreenState extends State<ClientHomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _createNotificationChannelOnLoad();
+  }
+
+  Future<void> _createNotificationChannelOnLoad() async {
+    if (!Platform.isAndroid) return;
+
+    try {
+      await Notifyvisitors.shared.createNotificationChannel(
+        'test_custom_channel_id_89',
+        'Test Notifications',
+        'Testing channel for NotifyVisitors push notifications',
+        '5',
+        true,
+        true,
+        '#FFFFFF',
+        '',
+        '0,500,200,500,200,500',
+      );
+    } catch (error) {
+      debugPrint('createNotificationChannel failed: $error');
+    }
+  }
 
   void _openFeature(
     BuildContext context,
@@ -23,10 +56,7 @@ class ClientHomeScreen extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (_) => FeatureActionScreen(
-          args: FeatureActionArgs(
-            featureTitle: title,
-            section: section,
-          ),
+          args: FeatureActionArgs(featureTitle: title, section: section),
         ),
       ),
     );
