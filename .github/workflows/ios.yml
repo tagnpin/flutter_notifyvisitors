@@ -181,6 +181,15 @@ jobs:
           plutil -replace CFBundleVersion -string "$BUILD_NUMBER" ios/Runner/Info.plist
 
       # ============================================================
+      # STEP 1️⃣2️⃣  Build Flutter iOS (FIX) 🚀
+      # ============================================================
+      - name: 🚀 Build Flutter iOS
+        run: |
+          flutter clean
+          flutter pub get
+          flutter build ios --release
+
+      # ============================================================
       # STEP 1️⃣2️⃣  Archive & Export IPA 📦
       # ============================================================
       - name: 📦 Archive & Export IPA
