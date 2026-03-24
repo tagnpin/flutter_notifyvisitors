@@ -60,7 +60,7 @@ public class NotifyvisitorsPlugin extends BroadcastReceiver implements FlutterPl
     private MethodChannel channel;
 
     private static final String TAG = "NotifyVisitors-Flutter";
-    private static final String PLUGIN_VERSION = "1.5.0";
+    private static final String PLUGIN_VERSION = "1.6.0";
 
     private Context flutterContext;
     private Activity mainActivity;
@@ -1273,6 +1273,7 @@ public class NotifyvisitorsPlugin extends BroadcastReceiver implements FlutterPl
             boolean shouldVibrate = true;
             String lightColor = null;
             String soundFileName = null;
+            String vibrationPattern = null;
 
             try {
                 chId = call.argument("channelId");
@@ -1322,6 +1323,12 @@ public class NotifyvisitorsPlugin extends BroadcastReceiver implements FlutterPl
                 Log.i(TAG, "SOUND-FILE-NAME ERROR : " + e);
             }
 
+            try {
+                vibrationPattern = call.argument("vibrationPattern");
+            } catch (Exception e) {
+                Log.i(TAG, "VIBRATION-PATTERN ERROR : " + e);
+            }
+
             int iChImportance = 3;
 
 
@@ -1336,6 +1343,19 @@ public class NotifyvisitorsPlugin extends BroadcastReceiver implements FlutterPl
                 iChImportance = Integer.parseInt(chImportance);
             }
 
+            // Parse vibration pattern from comma-separated string to long array
+            long[] vibrationArray = new long[]{1000, 1000, 1000, 1000, 1000}; // default
+            if (vibrationPattern != null && !vibrationPattern.isEmpty()) {
+                try {
+                    String[] parts = vibrationPattern.split(",");
+                    vibrationArray = new long[parts.length];
+                    for (int i = 0; i < parts.length; i++) {
+                        vibrationArray[i] = Long.parseLong(parts[i].trim());
+                    }
+                } catch (Exception e) {
+                    Log.i(TAG, "VIBRATION-PATTERN PARSE ERROR : " + e);
+                }
+            }
 
             NVNotificationChannels.Builder builder1 = new NVNotificationChannels.Builder();
             builder1.setChannelID(chId);
@@ -1346,7 +1366,7 @@ public class NotifyvisitorsPlugin extends BroadcastReceiver implements FlutterPl
             builder1.setLightColor(Color.parseColor(lightColor));
             builder1.setSoundFileName(soundFileName);
             builder1.setShouldVibrate(shouldVibrate);
-            builder1.setVibrationPattern(new long[]{1000, 1000, 1000, 1000, 1000});
+            builder1.setVibrationPattern(vibrationArray);
             builder1.build();
 
             Set<NVNotificationChannels.Builder> nChannelSets = new HashSet<>();

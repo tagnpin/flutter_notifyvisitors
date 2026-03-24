@@ -1,5 +1,18 @@
 ## CHANGE LOG
 
+### Version 1.6.0 *(March 25, 2026)*
+-------------------------------------------
+- Android Updates:
+  - Introduced Batch Processing for Events, replacing real-time event callbacks
+  - Updated callback response behavior to align with batch processing.
+  - Fixed Activity Context Cast Exception crash.
+  - Fixed missing "nudges" resource field in integers.xml.
+  - Minor bug fixes and code optimization improvements.
+    - Minor bug fixes
+    - Code optimisation and performance enhancement.
+- iOS Updates:
+  - Advertising ID (IDFA) will now be available in API response only if the user has granted permission from the app side (as per privacy requirements).
+
 ### Version 1.5.0 *(January 31, 2026)*
 -------------------------------------------
 - Android Updates:

@@ -184,7 +184,8 @@ class Notifyvisitors {
       bool enableLights,
       bool shouldVibrate,
       String lightColor,
-      String soundFileName) async {
+      String soundFileName,
+      String vibrationPattern) async {
     var channelInfo = {
       'channelId': channelId,
       'channelName': channelName,
@@ -193,7 +194,8 @@ class Notifyvisitors {
       'enableLights': enableLights,
       'shouldVibrate': shouldVibrate,
       'lightColor': lightColor,
-      'soundFileName': soundFileName
+      'soundFileName': soundFileName,
+      'vibrationPattern': vibrationPattern
     };
     await _channel.invokeMethod('createNotificationChannel', channelInfo);
   }
