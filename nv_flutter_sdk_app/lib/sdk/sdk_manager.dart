@@ -1,13 +1,17 @@
+import 'dart:async';
 import 'dart:io';
+import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_notifyvisitors/PushPromptInfo.dart';
 import 'package:flutter_notifyvisitors/flutter_notifyvisitors.dart';
+import 'package:nv_flutter_sdk_app/shared/theme/app_colors.dart';
 
 import 'package:intl/intl.dart';
 // import 'package:device_info_plus/device_info_plus.dart';
 // import 'package:package_info_plus/package_info_plus.dart';
 
 class SDKManager {
-  static const String sdkVersion = '1.0.0';
+  // static const String sdkVersion = '1.0.0';
 
   // static final eventAttributes = <String, dynamic>{
   //   'name': bannerSurveyUserToken['name'],
@@ -65,6 +69,12 @@ class SDKManager {
   static String get currentDateTime {
     final formatter = DateFormat('dd_MM_yyyy_HH_mm_ss');
     return '_${formatter.format(DateTime.now())}';
+  }
+
+  static String _hexFromColor(Color color) {
+    final hex =
+        color.toARGB32().toRadixString(16).padLeft(8, '0').toUpperCase();
+    return '#${hex.substring(2)}';
   }
 
   /* ---------------------------------------------------
@@ -157,6 +167,45 @@ class SDKManager {
     _schedulePush(_getNotificationId('videoPushNID'), '2');
   }
 
+  static Future<dynamic> getPushToken() async {
+    final callback = await Notifyvisitors.shared.getRegistrationToken();
+    debugPrint("NVECTA Push SubscriptionID: $callback");
+    return callback;
+  }
+
+  static Future<dynamic> androidPushPermissionPrompt() async {
+    final design = PushPromptInfo()
+      ..title = 'Get Notified'
+      ..titleTextColor = _hexFromColor(AppColors.lightTextPrimary)
+      ..description = 'Enable Push Notifications on Your Device !!'
+      ..descriptionTextColor = _hexFromColor(AppColors.lightTextSecondary)
+      ..backgroundColor = _hexFromColor(AppColors.lightSurface)
+      ..buttonOneBorderColor = _hexFromColor(AppColors.primary)
+      ..buttonOneBackgroundColor = _hexFromColor(AppColors.primary)
+      ..buttonOneBorderRadius = '16'
+      ..buttonOneText = 'Allow'
+      ..buttonOneTextColor = _hexFromColor(AppColors.lightSurface)
+      ..buttonTwoText = 'Cancel'
+      ..buttonTwoTextColor = _hexFromColor(AppColors.lightSurface)
+      ..buttonTwoBackgroundColor = _hexFromColor(AppColors.error)
+      ..buttonTwoBorderColor = _hexFromColor(AppColors.error)
+      ..buttonTwoBorderRadius = '16'
+      ..numberOfSessions = '3'
+      ..setResumeInDays = '1'
+      ..setNumberOfTimesPerSession = '6';
+
+    final completer = Completer<dynamic>();
+
+    Notifyvisitors.shared.pushPermissionPrompt(design, (response) {
+      debugPrint('Push Permission Prompt Callback: $response');
+      if (!completer.isCompleted) {
+        completer.complete(response);
+      }
+    });
+
+    return completer.future;
+  }
+
   /* ---------------------------------------------------
    *  Notification Center
    * --------------------------------------------------- */
@@ -221,17 +270,29 @@ class SDKManager {
    *  Analytics
    * --------------------------------------------------- */
 
-  static Future<void> trackEvent({
+  static Future<dynamic> trackEvent({
     required String eventName,
     Map<String, dynamic>? attributes,
     String ltv = '',
     String scope = '',
   }) async {
-    if (eventName.trim().isEmpty) return;
+    if (eventName.trim().isEmpty) return null;
+    final completer = Completer<String?>();
 
-    Notifyvisitors.shared.event(eventName, attributes, ltv, scope, (callback) {
+    unawaited(Notifyvisitors.shared.event(eventName, attributes, ltv, scope,
+        (callback) {
       debugPrint("Track Event Callback: $callback");
-    });
+      if (!completer.isCompleted) {
+        completer.complete(callback);
+      }
+    }).catchError((Object error, StackTrace stackTrace) {
+      if (!completer.isCompleted) {
+        completer.completeError(error, stackTrace);
+      }
+    }));
+
+    final callback = await completer.future;
+    return callback;
   }
 
   static Future<void> trackScreen(String screenName) async {
@@ -250,10 +311,9 @@ class SDKManager {
   }
 
   static Future<dynamic> getNVUID() async {
-    Notifyvisitors.shared.getNvUID().then((callback) {
-      debugPrint("Get NVUID Callback: $callback");
-      return callback;
-    });
+    final callback = await Notifyvisitors.shared.getNvUID();
+    debugPrint("Get NVUID Callback: $callback");
+    return callback;
   }
 
   /* ---------------------------------------------------

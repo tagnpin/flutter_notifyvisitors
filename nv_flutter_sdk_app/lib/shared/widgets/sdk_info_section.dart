@@ -7,6 +7,7 @@ class SDKInfoCard extends StatelessWidget {
   final String platform;
   final String deviceId;
   final String pushToken;
+  final String? adID;
 
   const SDKInfoCard({
     super.key,
@@ -16,6 +17,7 @@ class SDKInfoCard extends StatelessWidget {
     required this.platform,
     required this.deviceId,
     required this.pushToken,
+    this.adID,
   });
 
   @override
@@ -41,6 +43,7 @@ class SDKInfoCard extends StatelessWidget {
             _row(theme, 'Platform', platform),
             _selectableRow(theme, 'Device ID', deviceId),
             _selectableRow(theme, 'Push Token', pushToken),
+            _row(theme, 'AdID', adID ?? ""),
           ],
         ),
       ),
@@ -127,9 +130,6 @@ class SDKInfoCard extends StatelessWidget {
     );
   }
 }
-
-
-
 
 // import 'package:flutter/material.dart';
 
