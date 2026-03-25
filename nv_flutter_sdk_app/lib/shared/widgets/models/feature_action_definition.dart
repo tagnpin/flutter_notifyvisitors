@@ -11,7 +11,7 @@ enum ActionUIType {
   form, // accordion + inputs
 }
 
-typedef FeatureActionExecutor = Future<Map<String, dynamic>?> Function(
+typedef FeatureActionExecutor = Future<dynamic> Function(
   Map<String, dynamic> params,
 );
 

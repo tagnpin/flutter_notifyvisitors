@@ -11,7 +11,7 @@
     - Minor bug fixes
     - Code optimisation and performance enhancement.
 - iOS Updates:
-  - Advertising ID (IDFA) will now be available in API response only if the user has granted permission from the app side (as per privacy requirements).
+  - If tracking permission is enabled in the app and the user grants consent, IDFA will be shared and available in your notifyvisitors panel.
 
 ### Version 1.5.0 *(January 31, 2026)*
 -------------------------------------------

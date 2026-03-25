@@ -20,13 +20,6 @@ on:
       # Workflow changes
       - ".github/workflows/android.yml"
 
-      ### OLD Paths (Given by Neeraj)
-      # - 'flutter_notifyvisitors/nv_flutter_sdk_app/android/**'
-      # - 'flutter_notifyvisitors/nv_flutter_sdk_app/lib/**'
-      # - 'flutter_notifyvisitors/nv_flutter_sdk_app/pubspec.yaml'
-      # - 'flutter_notifyvisitors/nv_flutter_sdk_app/pubspec.lock'
-      # - '.github/workflows/android.yml'
-
 jobs:
   build-android:
     name: 🛠️ Build Flutter Android Debug APK

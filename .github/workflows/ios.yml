@@ -21,13 +21,6 @@ on:
       # Workflow changes
       - ".github/workflows/ios.yml"
 
-      ### OLD Paths (Given by Neeraj)
-      # - "flutter_notifyvisitors/nv_flutter_sdk_app/ios/**"
-      # - "flutter_notifyvisitors/nv_flutter_sdk_app/lib/**"
-      # - "flutter_notifyvisitors/nv_flutter_sdk_app/pubspec.yaml"
-      # - "flutter_notifyvisitors/nv_flutter_sdk_app/pubspec.lock"
-      # - ".github/workflows/ios.yml"
-
 # --------------------------------------------------------------------
 # 📂 Global Working Directory (Flutter App Root)
 # --------------------------------------------------------------------

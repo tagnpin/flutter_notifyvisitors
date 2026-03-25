@@ -19,16 +19,18 @@ final trackEventActions = [
     title: 'Track Default Event',
     description: 'Tracks a default analytics event',
     actionLabel: 'Track',
+    resultTitle: "Default Event Tracking Result:",
+    showResult: true,
     execute: (params) async {
       final sampleEvent = SampleEvents.purchaseEvent();
-      await SDKManager.trackEvent(
+      dynamic result = await SDKManager.trackEvent(
           eventName: sampleEvent['eventName'],
           attributes: sampleEvent['attributes'],
           ltv: sampleEvent['ltv'] ?? '10',
           scope: sampleEvent['scope'] ?? '1');
 
       debugPrint('Tracking default event');
-      return null;
+      return result;
     },
   ),
 
@@ -55,7 +57,7 @@ final trackEventActions = [
     description: 'Tracks a custom event with parameters',
     actionLabel: 'Track Event',
     showResult: true,
-    resultTitle: 'Event Payload',
+    resultTitle: 'Event Response',
     fields: [
       const FeatureActionField(
         key: 'event_name',
@@ -63,21 +65,42 @@ final trackEventActions = [
         required: true,
       ),
       const FeatureActionField(
-        key: 'properties',
-        label: 'Event Properties (JSON)',
+        key: 'event_attributes',
+        label: 'Event Attributes (JSON)',
         type: FieldType.json,
+        hint: "{\"key\": \"value\"}",
+      ),
+      const FeatureActionField(
+        key: 'event_ltv',
+        label: 'LTV',
+      ),
+      const FeatureActionField(
+        key: 'event_scope',
+        label: 'Scope',
+        required: true,
+        type: FieldType.number,
       ),
     ],
     execute: (params) async {
-      debugPrint('Tracking custom event: $params');
-      SDKManager.trackEvent(
-        eventName: params['event_name'],
-        attributes: params['properties'] ?? <String, dynamic>{},
-        ltv: '10',
-        scope: '1',
+      String eventName = params['event_name'];
+      dynamic attributes = params['event_attributes'] ?? <String, dynamic>{};
+      String ltv = params['event_ltv'];
+
+      int scopeInt = params['event_scope'];
+      String scopeStr = scopeInt.toString();
+      debugPrint(
+          'Tracking custom event: {eventName = $eventName, attributes = $attributes, ltv = $ltv, scope = $scopeStr}');
+      final result = await SDKManager.trackEvent(
+        eventName: eventName,
+        attributes: attributes,
+        ltv: ltv,
+        scope: scopeStr,
       );
 
-      return params; // 👈 QA preview
+      return {
+        'request': params,
+        'callback': result,
+      };
     },
   ),
 ];
@@ -91,12 +114,14 @@ final List<FeatureActionDefinition> userPropertyActions = [
     title: 'Set User Details',
     description: 'Creates a known user profile',
     actionLabel: 'Set User Details',
+    showResult: true,
+    resultTitle: 'user tracking response:',
     execute: (params) async {
       final sampleUser =
           SampleUser.withDynamicEmail(SDKManager.currentDateTime);
-      await SDKManager.setUserDetails(sampleUser);
+      final result = await SDKManager.setUserDetails(sampleUser);
       debugPrint('Setting user details');
-      return null;
+      return result;
     },
   ),
   FeatureActionDefinition(
@@ -104,12 +129,13 @@ final List<FeatureActionDefinition> userPropertyActions = [
     title: 'Get NV-UID',
     description: 'Fetch current NV-UID',
     actionLabel: 'Get NV-UID',
+    showResult: true,
+    resultTitle: 'NV-UID:',
     execute: (params) async {
       debugPrint('Fetching NV-UID');
-      SDKManager.getNVUID().then((nvuid) {
-        debugPrint('final Current NV-UID: $nvuid');
-      });
-      return null;
+      final result = await SDKManager.getNVUID();
+      debugPrint('final Current NV-UID: $result');
+      return result;
     },
   ),
   FeatureActionDefinition(
@@ -118,6 +144,8 @@ final List<FeatureActionDefinition> userPropertyActions = [
     title: 'Set Custom User Property',
     description: 'Set a custom user property',
     actionLabel: 'Set Custom User Property',
+    showResult: true,
+    resultTitle: 'User Tracking Response:',
     fields: [
       const FeatureActionField(
         key: 'user_params',

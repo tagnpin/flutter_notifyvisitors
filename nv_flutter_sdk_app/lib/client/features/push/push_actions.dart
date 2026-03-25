@@ -5,6 +5,19 @@ final List<FeatureActionDefinition> sendPushActions = [
   /// -------------------------
   /// SIMPLE BUTTON ACTION
   /// -------------------------
+
+  FeatureActionDefinition(
+    id: 'pushSubscriptionID',
+    title: 'Get Push SubscriptionID',
+    description: 'returns FCM/APNS Token as NVECTA subscriptionID',
+    actionLabel: 'Get Push SubscriptionID',
+    showResult: true,
+    resultTitle: "Push SubscriptionID:",
+    execute: (params) async {
+      final pushToken = await SDKManager.getPushToken();
+      return pushToken;
+    },
+  ),
   FeatureActionDefinition(
     id: 'sendStandardPush',
     title: 'Send Standard Push',

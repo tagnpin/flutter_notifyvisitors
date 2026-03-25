@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Nv Flutter Sdk App</string>
+	<string>NVECTA (Flutter)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -73,5 +73,7 @@
 	<string>$(NV_BRAND_ENCRYPTION_KEY)</string>
 	<key>nvViewAutoRedirection</key>
 	<true/>
+	<key>NSUserTrackingUsageDescription</key>
+<string>This identifier will be used to deliver personalized experiences.</string>
 </dict>
 </plist>

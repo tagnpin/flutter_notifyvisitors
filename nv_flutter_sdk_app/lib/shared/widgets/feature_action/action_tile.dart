@@ -26,7 +26,7 @@ class _ActionTileState extends State<ActionTile> {
   final Map<String, TextEditingController> _controllers = {};
   final Map<String, String?> _errors = {};
 
-  Map<String, dynamic>? _rawResult;
+  dynamic _rawResult;
   Map<String, dynamic>? _parsedResult;
 
   @override
@@ -110,8 +110,9 @@ class _ActionTileState extends State<ActionTile> {
         _rawResult = {'error': e.toString()};
       });
     } finally {
-      if (!mounted) return;
-      setState(() => _loading = false);
+      if (mounted) {
+        setState(() => _loading = false);
+      }
     }
   }
 
@@ -262,6 +263,10 @@ class _ActionTileState extends State<ActionTile> {
   // Result Section
   // ------------------------------------------------------------
   Widget _buildResultSection(ThemeData theme) {
+    final content = _parsedResult != null
+        ? const JsonEncoder.withIndent('  ').convert(_parsedResult)
+        : _formatResultContent(_rawResult);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -271,62 +276,53 @@ class _ActionTileState extends State<ActionTile> {
             style: theme.textTheme.titleSmall,
           ),
         const SizedBox(height: 8),
-        _buildResultBlock(
-          theme: theme,
-          title: 'Raw',
-          content: const JsonEncoder.withIndent('  ').convert(_rawResult),
-        ),
-        if (_parsedResult != null) ...[
-          const SizedBox(height: 8),
-          _buildResultBlock(
-            theme: theme,
-            title: 'Parsed',
-            content: const JsonEncoder.withIndent('  ').convert(_parsedResult),
-          ),
-        ],
+        _buildResultBlock(theme: theme, content: content),
       ],
     );
   }
 
+  String _formatResultContent(dynamic value) {
+    if (value == null) return 'null';
+    if (value is String) {
+      final prettyJson = JsonUtils.tryPrettyJson(value);
+      if (prettyJson != null) {
+        return const JsonEncoder.withIndent('  ').convert(prettyJson);
+      }
+      return value;
+    }
+    return const JsonEncoder.withIndent('  ').convert(value);
+  }
+
   Widget _buildResultBlock({
     required ThemeData theme,
-    required String title,
     required String content,
   }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Stack(
       children: [
-        Text(title, style: theme.textTheme.labelLarge),
-        const SizedBox(height: 4),
-        Stack(
-          children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: theme.colorScheme.surfaceContainerHighest,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: SelectableText(
-                content,
-                style: theme.textTheme.bodySmall
-                    ?.copyWith(fontFamily: 'monospace'),
-              ),
-            ),
-            Positioned(
-              top: 4,
-              right: 4,
-              child: IconButton(
-                icon: const Icon(Icons.copy, size: 18),
-                onPressed: () {
-                  Clipboard.setData(ClipboardData(text: content));
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Copied to clipboard')),
-                  );
-                },
-              ),
-            ),
-          ],
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: theme.colorScheme.surfaceContainerHighest,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: SelectableText(
+            content,
+            style: theme.textTheme.bodySmall?.copyWith(fontFamily: 'monospace'),
+          ),
+        ),
+        Positioned(
+          top: 4,
+          right: 4,
+          child: IconButton(
+            icon: const Icon(Icons.copy, size: 18),
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: content));
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Copied to clipboard')),
+              );
+            },
+          ),
         ),
       ],
     );

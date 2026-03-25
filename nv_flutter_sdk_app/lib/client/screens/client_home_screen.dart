@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:nv_flutter_sdk_app/client/screens/feature_action_screen.dart';
 import 'package:nv_flutter_sdk_app/config/client_feature_registry.dart';
 import 'package:nv_flutter_sdk_app/sdk/sdk_manager.dart';
+import 'package:nv_flutter_sdk_app/shared/providers/advertising_id_provider.dart';
 import 'package:nv_flutter_sdk_app/shared/providers/notification_badge_provider.dart';
 import 'package:nv_flutter_sdk_app/shared/widgets/advanced_action_tile.dart';
 import 'package:nv_flutter_sdk_app/shared/widgets/feature_list_item.dart';
@@ -13,18 +14,24 @@ import 'package:nv_flutter_sdk_app/shared/widgets/models/feature_action_models.d
 import 'package:nv_flutter_sdk_app/shared/widgets/sdk_info_section.dart';
 import 'package:nv_flutter_sdk_app/shared/widgets/section_header.dart';
 
-class ClientHomeScreen extends StatefulWidget {
+class ClientHomeScreen extends ConsumerStatefulWidget {
   const ClientHomeScreen({super.key});
 
   @override
-  State<ClientHomeScreen> createState() => _ClientHomeScreenState();
+  ConsumerState<ClientHomeScreen> createState() => _ClientHomeScreenState();
 }
 
-class _ClientHomeScreenState extends State<ClientHomeScreen> {
+class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
   @override
   void initState() {
     super.initState();
+    SDKManager.androidPushPermissionPrompt();
     _createNotificationChannelOnLoad();
+
+    /// wait until UI is ready (Apple requirement)
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(advertisingInfoProvider.notifier).loadAdvertisingInfo();
+    });
   }
 
   Future<void> _createNotificationChannelOnLoad() async {
@@ -66,6 +73,21 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
+    final adInfo = ref.watch(advertisingInfoProvider);
+    // final adIdText = adInfo.when(
+    //   loading: () => "Fetching Advertising ID...",
+    //   error: (_, __) => "Unavailable",
+    //   data: (info) {
+    //     if (info.advertisingId == null || info.advertisingId!.isEmpty) {
+    //       return "Not Available";
+    //     }
+
+    //     final platform = Platform.isIOS ? "IDFA" : "GAID";
+
+    //     return "$platform: ${info.advertisingId}";
+    //   },
+    // );
+    debugPrint('adIdText = $adInfo');
 
     return Scaffold(
       appBar: AppBar(
@@ -118,34 +140,6 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
             },
           ),
         ],
-
-        // actions: [
-        //   Stack(
-        //     children: [
-        //       IconButton(
-        //         icon: const Icon(Icons.notifications_none),
-        //         onPressed: () {},
-        //       ),
-        //       Positioned(
-        //         right: 8,
-        //         top: 8,
-        //         child: Container(
-        //           padding: const EdgeInsets.all(4),
-        //           decoration: BoxDecoration(
-        //             color: colors.error,
-        //             shape: BoxShape.circle,
-        //           ),
-        //           child: Text(
-        //             '3',
-        //             style: theme.textTheme.labelSmall?.copyWith(
-        //               color: colors.onError,
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -173,13 +167,18 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
             const SizedBox(height: 20),
 
             /// SDK Info
-            const SDKInfoCard(
+            SDKInfoCard(
               status: 'Initialized',
               sdkVersion: '3.2.1',
               appVersion: '1.0.0 (100)',
               platform: 'Android',
               deviceId: '7f3c9a2b8d1e...',
               pushToken: 'fcm_abc123xyz...',
+              adID: adInfo.when(
+                loading: () => "Fetching Advertising ID...",
+                error: (error, stackTrace) => "Unavailable",
+                data: (info) => info.advertisingId ?? "Not Available",
+              ),
             ),
 
             const SizedBox(height: 28),
