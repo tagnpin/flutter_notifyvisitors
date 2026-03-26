@@ -25,8 +25,8 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
   @override
   void initState() {
     super.initState();
-    SDKManager.androidPushPermissionPrompt();
-    _createNotificationChannelOnLoad();
+    //SDKManager.androidPushPermissionPrompt();
+    //_createNotificationChannelOnLoad();
 
     /// wait until UI is ready (Apple requirement)
     WidgetsBinding.instance.addPostFrameCallback((_) {
