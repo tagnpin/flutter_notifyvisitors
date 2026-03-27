@@ -25,33 +25,13 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
   @override
   void initState() {
     super.initState();
-    //SDKManager.androidPushPermissionPrompt();
-    //_createNotificationChannelOnLoad();
+    SDKManager.androidCustomNotificationChannel();
 
     /// wait until UI is ready (Apple requirement)
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      SDKManager.androidPushPermissionPrompt();
       ref.read(advertisingInfoProvider.notifier).loadAdvertisingInfo();
     });
-  }
-
-  Future<void> _createNotificationChannelOnLoad() async {
-    if (!Platform.isAndroid) return;
-
-    try {
-      await Notifyvisitors.shared.createNotificationChannel(
-        'test_custom_channel_id_89',
-        'Test Notifications',
-        'Testing channel for NotifyVisitors push notifications',
-        '5',
-        true,
-        true,
-        '#FFFFFF',
-        '',
-        '0,500,200,500,200,500',
-      );
-    } catch (error) {
-      debugPrint('createNotificationChannel failed: $error');
-    }
   }
 
   void _openFeature(

@@ -1,6 +1,6 @@
 ## CHANGE LOG
 
-### Version 1.6.0 *(March 25, 2026)*
+### Version 1.6.0 *(March 27, 2026)*
 -------------------------------------------
 - Android Updates:
   - Introduced Batch Processing for Events, replacing real-time event callbacks
@@ -11,7 +11,7 @@
     - Minor bug fixes
     - Code optimisation and performance enhancement.
 - iOS Updates:
-  - If tracking permission is enabled in the app and the user grants consent, IDFA will be shared and available in your notifyvisitors panel.
+  - If tracking permission is enabled in the app and the user grants consent, IDFA will be shared and available in your NVECTA (Notifyvisitors) panel.
 
 ### Version 1.5.0 *(January 31, 2026)*
 -------------------------------------------

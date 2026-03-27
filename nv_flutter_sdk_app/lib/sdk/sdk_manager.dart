@@ -214,6 +214,26 @@ class SDKManager {
     return completer.future;
   }
 
+  static Future<dynamic> androidCustomNotificationChannel() async {
+    if (!Platform.isAndroid) return;
+
+    try {
+      await Notifyvisitors.shared.createNotificationChannel(
+        'nv_flutter_sdkApp_channel_id_89',
+        'nv_flutter_sdk_app custom notifications',
+        'Testing channel for NotifyVisitors push notifications in the flutter testing app',
+        '5',
+        true,
+        true,
+        '#FFFFFF',
+        '',
+        '0,500,200,500,200,500',
+      );
+    } catch (error) {
+      debugPrint('createNotificationChannel failed: $error');
+    }
+  }
+
   /* ---------------------------------------------------
    *  Notification Center
    * --------------------------------------------------- */

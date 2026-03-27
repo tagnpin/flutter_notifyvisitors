@@ -41,11 +41,11 @@ android {
         applicationId = "com.notifyvisitors.flutter.sdkapp"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = 23
+        minSdkVersion = flutter.minSdkVersion
         targetSdk = 35
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-        buildConfigField "int", " nvBrandID", nvBrandId
+        buildConfigField "int", "nvBrandID", nvBrandId
         buildConfigField "String", "nvSecretKey", "\"${nvSecretKey}\""
     }
 
@@ -67,6 +67,7 @@ android {
             } else {
                 println("⚠️ Release signingConfig not found. APK will NOT be signed.")
             }
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             // minifyEnabled enableProguardInReleaseBuilds
             minifyEnabled true
             shrinkResources true
