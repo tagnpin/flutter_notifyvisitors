@@ -25,10 +25,6 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
   @override
   void initState() {
     super.initState();
-    // Future.delayed(const Duration(seconds: 1), () {
-    //   if (!mounted) return;
-
-    // });
     SDKManager.androidCustomNotificationChannel();
 
     /// wait until UI is ready (Apple requirement)
