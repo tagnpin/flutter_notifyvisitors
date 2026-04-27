@@ -3,7 +3,7 @@
 ### Version 1.6.1 *(April 27, 2026)*
 -------------------------------------------
 - Android Updates:
-  - Fixed minor bug in install attributes & utm campaigns mapping
+  - Fixed minor bug in install attributes & UTM campaigns mapping
 
 ### Version 1.6.0 *(March 27, 2026)*
 -------------------------------------------
