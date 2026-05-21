@@ -2,7 +2,7 @@
 
 # NVECTA Flutter SDK
 
-[![Static Badge](https://img.shields.io/badge/pub-1.6.1-blue?logo=flutter)](https://pub.dev/packages/flutter_notifyvisitors)
+[![Static Badge](https://img.shields.io/badge/pub-1.6.1-blue?logo=flutter)](https://pub.dev/packages/flutter_notifyvisitors)     ![Formerly](https://img.shields.io/badge/Formerly-NotifyVisitors-blue)
 
 ## 🚀 Quick Introduction
 
@@ -26,8 +26,12 @@ After adding the dependency, run the following command to install the package:
 
 ```bash
 flutter pub get
+```
 
 To access NVECTA plugin methods, import the following package into your Dart file:
 
 ```dart
 import 'package:flutter_notifyvisitors/flutter_notifyvisitors.dart';
+```
+
+
