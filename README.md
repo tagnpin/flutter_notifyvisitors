@@ -4,6 +4,8 @@
 
 [![Static Badge](https://img.shields.io/badge/pub-1.6.1-blue?logo=flutter)](https://pub.dev/packages/flutter_notifyvisitors)     ![Formerly](https://img.shields.io/badge/Formerly-NotifyVisitors-blue)
 
+<br>
+
 ## 🚀 Quick Introduction
 
 The NVECTA Flutter SDK helps you integrate powerful customer engagement and analytics features into your Flutter mobile applications. With NVECTA, you can track user activity, send personalized notifications, and improve user engagement through real-time insights and communication tools.
@@ -12,6 +14,7 @@ To learn more, visit our [website] (https://www.nvecta.com/) and explore the [do
 
 Ready to get started? [Sign up here] (https://console.notifyvisitors.com/console/account/login) to create your account.
 
+<br>
 
 ## 📦 Integrate NVECTA into Your Flutter App
 
@@ -72,13 +75,14 @@ Display targeted in-app messages and campaigns to engage users while they are ac
 Configure and send push notifications to re-engage users with real-time updates and personalized communication.
 
 ➡️ [View Push Notification Documentation](https://www.nvecta.com/docs/push-notifications)
+<br>
 
 > [!IMPORTANT]
 > ![iOS](https://img.shields.io/badge/iOS-Specific-blue)
-> Rich push notifications on iOS require proper Notification Service Extension configuration. Please refer to the iOS technical documentation to complete the setup correctly.
+> Rich push notifications on iOS require proper Notification Service Extension configuration. Please refer to the [iOS technical](https://www.nvecta.com/docs/flutter-notification-service-extension) documentation to complete the setup correctly.
 >
 > ![Android](https://img.shields.io/badge/Android-Specific-green)
-> To receive push notifications on Android 12+ devices, you must configure the runtime push notification permission prompt in your application.
+> To receive push notifications on Android 12+ devices, you must configure the runtime push notification permission prompt in your application. Please refer to the [Android technical](https://www.nvecta.com/docs/flutter-notification-runtime-permission-android) documentation to complete the setup correctly.
 
 ---
 
