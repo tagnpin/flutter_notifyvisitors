@@ -96,6 +96,8 @@ Manage and display user notifications within a centralized in-app notification c
 ### 🎯 Sample Integration
 The [demo application](https://github.com/tagnpin/flutter_notifyvisitors/tree/add_sample_app/nv_flutter_sdk_app) provides a practical implementation example to help you quickly integrate and test the NVECTA Flutter SDK.
 
+<br>
+
 ### 🆕 Changelog
 Refer to the NVECTA Flutter SDK [Change Log](https://pub.dev/packages/flutter_notifyvisitors/changelog).
 
