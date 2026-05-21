@@ -12,9 +12,22 @@ To learn more, visit our [website] (https://www.nvecta.com/) and explore the [do
 
 Ready to get started? [Sign up here] (https://console.notifyvisitors.com/console/account/login) to create your account.
 
+
 ## Integrate NVECTA into Your Flutter App
+
 To integrate the NVECTA Flutter SDK into your Flutter application, add the SDK dependency to your project's `pubspec.yaml` file:
+
 ```
 dependencies:
     flutter_notifyvisitors: ^1.6.1
 ```
+
+After adding the dependency, run the following command to install the package:
+
+```bash
+flutter pub get
+
+To access NVECTA plugin methods, import the following package into your Dart file:
+
+```dart
+import 'package:flutter_notifyvisitors/flutter_notifyvisitors.dart';
