@@ -10,9 +10,9 @@
 
 The NVECTA Flutter SDK helps you integrate powerful customer engagement and analytics features into your Flutter mobile applications. With NVECTA, you can track user activity, send personalized notifications, and improve user engagement through real-time insights and communication tools.
 
-To learn more, visit our [website] (https://www.nvecta.com/) and explore the [documentation] (https://www.nvecta.com/docs/flutter-plugin-installation) for installation and setup guidance.
+To learn more, visit our [website](https://www.nvecta.com/) and explore the [documentation](https://www.nvecta.com/docs/flutter-plugin-installation) for installation and setup guidance.
 
-Ready to get started? [Sign up here] (https://console.notifyvisitors.com/console/account/login) to create your account.
+Ready to get started? [Sign up here](https://console.notifyvisitors.com/console/account/login) to create your account.
 
 <br>
 
@@ -47,6 +47,7 @@ For Android-specific integration steps, please refer to our technical [Android](
 ### 🍎 iOS Setup
 For iOS-specific integration steps, please refer to our technical [iOS](https://www.nvecta.com/docs/flutter-ios-integration) documentation.
 
+<br>
 
 ## 📊 SDK Features & Guides
 
@@ -90,5 +91,15 @@ Manage and display user notifications within a centralized in-app notification c
 
 ➡️ [View Notification Center Documentation](https://www.nvecta.com/docs/flutter-notification-center-app-inbox)
 
+<br>
 
+### 🎯 Sample Integration
+The [demo application](https://github.com/tagnpin/flutter_notifyvisitors/tree/add_sample_app/nv_flutter_sdk_app) provides a practical implementation example to help you quickly integrate and test the NVECTA Flutter SDK.
 
+### 🆕 Changelog
+Refer to the NVECTA Flutter SDK [Change Log](https://pub.dev/packages/flutter_notifyvisitors/changelog).
+
+<br>
+
+### ❓Questions
+Need help? Contact the NVECTA support team directly from the NVECTA Dashboard for assistance with integration, configuration, or troubleshooting.
