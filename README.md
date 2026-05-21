@@ -37,6 +37,8 @@ flutter pub get
 import 'package:flutter_notifyvisitors/flutter_notifyvisitors.dart';
 ```
 
+<br>
+
 ## ⚙️ Configurations
 
 ### 📱 Android Setup
@@ -55,26 +57,24 @@ Track user interactions and custom events to better understand user behavior and
 
 ➡️ [View Event Tracking Documentation](https://www.nvecta.com/docs/flutter-tracking-events)
 
----
 
 ### 👤 Tracking Users
 Identify users, manage user profiles, and associate user activity for personalized engagement and analytics.
 
 ➡️ [View User Tracking Documentation](https://www.nvecta.com/docs/flutter-tracking-users)
 
----
 
 ### 💬 In-App Notifications
 Display targeted in-app messages and campaigns to engage users while they are actively using the application.
 
 ➡️ [View In-App Notification Documentation](https://www.nvecta.com/docs/flutter-in-app-notification)
 
----
 
 ### 🔔 Push Notifications
 Configure and send push notifications to re-engage users with real-time updates and personalized communication.
 
 ➡️ [View Push Notification Documentation](https://www.nvecta.com/docs/push-notifications)
+
 <br>
 
 > [!IMPORTANT]
@@ -84,12 +84,11 @@ Configure and send push notifications to re-engage users with real-time updates 
 > ![Android](https://img.shields.io/badge/Android-Specific-green)
 > To receive push notifications on Android 12+ devices, you must configure the runtime push notification permission prompt in your application. Please refer to the [Android technical](https://www.nvecta.com/docs/flutter-notification-runtime-permission-android) documentation to complete the setup correctly.
 
----
 
 ### 📥 Notification Center
 Manage and display user notifications within a centralized in-app notification center experience.
 
-➡️ [View Notification Center Documentation]()
+➡️ [View Notification Center Documentation](https://www.nvecta.com/docs/flutter-notification-center-app-inbox)
 
 
 
