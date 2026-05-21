@@ -76,8 +76,6 @@ Configure and send push notifications to re-engage users with real-time updates 
 
 ➡️ [View Push Notification Documentation](https://www.nvecta.com/docs/push-notifications)
 
-<br>
-
 > [!IMPORTANT]
 > ![iOS](https://img.shields.io/badge/iOS-Specific-blue)
 > Rich push notifications on iOS require proper Notification Service Extension configuration. Please refer to the [iOS technical](https://www.nvecta.com/docs/flutter-notification-service-extension) documentation to complete the setup correctly.
@@ -93,15 +91,15 @@ Manage and display user notifications within a centralized in-app notification c
 
 <br>
 
-### 🎯 Sample Integration
+## 🎯 Sample Integration
 The [demo application](https://github.com/tagnpin/flutter_notifyvisitors/tree/add_sample_app/nv_flutter_sdk_app) provides a practical implementation example to help you quickly integrate and test the NVECTA Flutter SDK.
 
 <br>
 
-### 🆕 Changelog
+## 🆕 Changelog
 Refer to the NVECTA Flutter SDK [Change Log](https://pub.dev/packages/flutter_notifyvisitors/changelog).
 
 <br>
 
-### ❓Questions
+## ❓Questions
 Need help? Contact the NVECTA support team directly from the NVECTA Dashboard for assistance with integration, configuration, or troubleshooting.
