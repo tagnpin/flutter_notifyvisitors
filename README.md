@@ -1,13 +1,12 @@
 # flutter_notifyvisitors
 
-A NotifyVisitors Flutter plugin.
+# NVECTA Flutter SDK
+https://pub.dev/packages/flutter_notifyvisitors
 
-## Getting Started
+## Introduction
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+The NVECTA Flutter SDK for Mobile Customer Engagement and Analytics solutions.
 
+For more information, check out our <a>website</a> and documentation.
 
-
+To get started, sign up here.
