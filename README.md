@@ -1,7 +1,8 @@
 ![NVECTA logo; Formerly NotifyVisitors](https://i.ibb.co/MybKMHDm/NVECTA-000.jpg)
 
 # NVECTA Flutter SDK
-https://pub.dev/packages/flutter_notifyvisitors
+
+[![pub package] (https://img.shields.io/badge/build-passing-brightgreen?style=for-the-badge)] (https://pub.dev/packages/flutter_notifyvisitors)
 
 ## Introduction
 
