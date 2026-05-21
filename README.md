@@ -1,12 +1,12 @@
-![NVECTA logo; Formerly NotifyVisitors](https://i.ibb.co/4ZKGNdTQ/NVECTA-000.png)
+![NVECTA logo; Formerly NotifyVisitors](https://i.ibb.co/MybKMHDm/NVECTA-000.jpg)
 
 # NVECTA Flutter SDK
 https://pub.dev/packages/flutter_notifyvisitors
 
 ## Introduction
 
-The NVECTA Flutter SDK for Mobile Customer Engagement and Analytics solutions.
+The NVECTA Flutter SDK helps you integrate powerful customer engagement and analytics features into your Flutter mobile applications. With NVECTA, you can track user activity, send personalized notifications, and improve user engagement through real-time insights and communication tools.
 
-For more information, check out our [website] (https://www.nvecta.com/) and [documentation] (https://www.nvecta.com/docs/flutter-plugin-installation).
+To learn more, visit our [website] (https://www.nvecta.com/) and explore the [documentation] (https://www.nvecta.com/docs/flutter-plugin-installation) for installation and setup guidance.
 
-To get started, [sign up] (https://console.notifyvisitors.com/console/account/login) here.
+Ready to get started? [Sign up here] (https://console.notifyvisitors.com/console/account/login) to create your account.
