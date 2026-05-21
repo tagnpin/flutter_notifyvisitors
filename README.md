@@ -1,4 +1,4 @@
-# flutter_notifyvisitors
+![NVECTA logo; Formerly NotifyVisitors](file:///D:/CompanyProjects/nvecta_logo_full.svg)
 
 # NVECTA Flutter SDK
 https://pub.dev/packages/flutter_notifyvisitors
