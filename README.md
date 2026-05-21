@@ -4,7 +4,7 @@
 
 [![Static Badge](https://img.shields.io/badge/pub-1.6.1-blue?logo=flutter)](https://pub.dev/packages/flutter_notifyvisitors)
 
-## Introduction
+## NVECTA Flutter SDK Overview
 
 The NVECTA Flutter SDK helps you integrate powerful customer engagement and analytics features into your Flutter mobile applications. With NVECTA, you can track user activity, send personalized notifications, and improve user engagement through real-time insights and communication tools.
 
