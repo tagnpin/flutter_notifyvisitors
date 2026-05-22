@@ -7,8 +7,8 @@
     - Fixed the NULL context crash triggered while validating push notification permission status on app launch.
     - Added title and message support in the GIF Push expanded UI, along with Dark Mode compatibility handling.
 - iOS Updates:
-    - Events tracking optimised
-- Minor bug fixes
+    - Events tracking optimised.
+- Minor bug fixes.
 - Code optimisation and performance enhancement.
 
 ### Version 1.6.1 *(April 28, 2026)*
@@ -238,4 +238,5 @@
 - Initial Release.
 - Supports NotifyVisitors Android SDK
 - Supports NotifyVisitors IOS SDK
+
 
