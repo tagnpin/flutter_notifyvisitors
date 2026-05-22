@@ -61,8 +61,6 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>MinimumOSVersion</key>
-	<string>13.0</string>
 	<key>nvAppGroupKey</key>
 	<string>group.com.notifyvisitors.flutter.sdkapp.notifyvisitors</string>
 	<key>nvBrandID</key>
