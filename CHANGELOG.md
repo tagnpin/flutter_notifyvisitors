@@ -3,13 +3,13 @@
 ### Version 1.6.2 *(May 22, 2026)*
 -------------------------------------------
 - Android Updates:
-    - Resolved the ANR issue occurring during deep link query parameter extraction.
-    - Fixed the NULL context crash triggered while validating push notification permission status on app launch.
+    - Resolved the ANR issue occurring during deep link query parameter extraction
+    - Fixed the NULL context crash triggered while validating push notification permission status on app launch
     - Added title and message support in the GIF Push expanded UI, along with Dark Mode compatibility handling.
 - iOS Updates:
-    - Events tracking optimised.
-- Minor bug fixes.
-- Code optimisation and performance enhancement.
+    - Events tracking optimised
+- Minor bug fixes
+- Code optimisation and performance enhancement
 
 ### Version 1.6.1 *(April 28, 2026)*
 -------------------------------------------
