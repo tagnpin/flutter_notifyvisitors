@@ -15,7 +15,7 @@ class MainApplication : Application() {
         super.onCreate()
         
         Log.i("rn-nv-android", "nvBrandID = " + nvBrandID + " nvSecreKey = " + nvSecreKey)
-        NotifyvisitorsPlugin.register(this, 7577, "DB52A5B00BB0D3BF426639A1B9FCF2F7");
+        NotifyvisitorsPlugin.register(this, nvBrandID, nvSecreKey);
     
     }
 }
