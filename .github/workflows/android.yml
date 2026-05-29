@@ -89,13 +89,11 @@ jobs:
             : "${KEY_PASSWORD:?Missing KEY_PASSWORD}"
           fi
 
-          # : "${NV_BRAND_ID:?Missing NV_BRAND_ID}"
           # NV_BRAND_ID can be 0
           if [ -z "${NV_BRAND_ID+x}" ]; then
           echo "Missing NV_BRAND_ID"
           exit 1
           fi
-          # : "${NV_BRAND_ENCRYPTION_KEY:?Missing NV_BRAND_ENCRYPTION_KEY}"
           # Empty string allowed
           if [ -z "${NV_BRAND_ENCRYPTION_KEY+x}" ]; then
           echo "Missing NV_BRAND_ENCRYPTION_KEY"
@@ -186,8 +184,8 @@ jobs:
           NV_FLUTTER_SDKAPP_KEY_ALIAS=$KEY_ALIAS
           NV_FLUTTER_SDKAPP_KEY_PASSWORD=$KEY_PASSWORD
 
-          NV_BRAND_ID: ${{ vars.NV_BRAND_ID }}
-          NV_BRAND_ENCRYPTION_KEY: ${{ vars.NV_BRAND_ENCRYPTION_KEY }}
+          NV_BRAND_ID=$NV_BRAND_ID
+          NV_BRAND_ENCRYPTION_KEY=$NV_BRAND_ENCRYPTION_KEY
           EOF
 
           chmod 600 android/local.properties
