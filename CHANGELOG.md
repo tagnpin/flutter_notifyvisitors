@@ -1,5 +1,18 @@
 ## CHANGE LOG
 
+### Version 1.6.3 *(May 29, 2026)*
+-------------------------------------------
+- Android Updates:
+  - Optimized location manager operations by moving processing from the main thread to a background thread.
+  - Added exception handling (`try-catch`) for both location and push notification system prompts to improve stability.
+  - Fixed NULL context crash occurring during app launch from the location permission flow.
+  - Added additional safety checks while fetching query parameters in the `parseDeepLink` function.
+  - Moved database-related initialization processes to a background thread for better performance.
+  - Updated GIF push CTA styling:
+    - Background changed to transparent
+    - Text color updated to match the accent color
+
+
 ### Version 1.6.2 *(May 22, 2026)*
 -------------------------------------------
 - Android Updates:
