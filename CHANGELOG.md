@@ -9,8 +9,8 @@
   - Added additional safety checks while fetching query parameters in the `parseDeepLink` function.
   - Moved database-related initialization processes to a background thread for better performance.
   - Updated GIF push CTA styling:
-    - Background changed to transparent
-    - Text color updated to match the accent color
+    - Background changed to transparent.
+    - Text color updated to match the accent color.
 
 
 ### Version 1.6.2 *(May 22, 2026)*
