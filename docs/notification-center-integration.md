@@ -4,6 +4,9 @@ The Notification Center (App Inbox) allows you to display previously received pu
 
 This feature is useful when users miss notifications or want to revisit older messages. Notification expiry and categorization can be managed from the NVECTA dashboard.
 
+Official Documentation: <br>
+https://www.nvecta.com/docs/flutter-notification-center-app-inbox
+
 ---
 
 <br>

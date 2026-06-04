@@ -2,6 +2,9 @@
 
 This document explains how to track custom events in your Flutter application using the NVECTA Flutter SDK.
 
+Official Documentation: <br>
+https://www.nvecta.com/docs/flutter-tracking-events
+
 ---
 <br>
 
@@ -311,5 +314,3 @@ With NVECTA Flutter SDK event tracking, you can:
 - Create personalized campaigns
 - Trigger automations
 - Improve user engagement
-
-For complete SDK documentation: [Event Tracking](https://www.nvecta.com/docs/flutter-tracking-events)

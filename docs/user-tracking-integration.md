@@ -2,6 +2,9 @@
 
 This document explains how to identify and track users in your Flutter application using the NVECTA Flutter SDK.
 
+Official Documentation: <br>
+https://www.nvecta.com/docs/flutter-tracking-users
+
 ---
 
 <br>
@@ -320,6 +323,4 @@ With proper user identification, you can:
 - Personalize campaigns
 - Improve retention
 - Analyze customer behavior
-
-For complete documentation, refer to the official NVECTA [User Tracking](https://www.nvecta.com/docs/flutter-tracking-users) guide.
 
