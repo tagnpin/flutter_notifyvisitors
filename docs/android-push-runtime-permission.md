@@ -2,8 +2,12 @@
 
 Starting with Android 13 (API Level 33), applications must request notification permission at runtime before sending push notifications.
 
+
 Official Documentation: <br>
 https://www.nvecta.com/docs/flutter-notification-runtime-permission-android
+
+
+---
 
 NVECTA provides three different ways to handle notification permission requests:
 

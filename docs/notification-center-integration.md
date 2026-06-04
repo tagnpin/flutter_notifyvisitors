@@ -9,7 +9,6 @@ https://www.nvecta.com/docs/flutter-notification-center-app-inbox
 
 ---
 
-<br>
 
 # Open Notification Center
 

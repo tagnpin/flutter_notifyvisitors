@@ -23,6 +23,7 @@ Users can independently configure each channel by:
 > **Note**
 >
 > Android 8.0+ requires every notification to be associated with a valid notification channel. Notifications sent without a channel may not be displayed.
+<br>
 
 Official Documentation: <br>
 https://www.nvecta.com/docs/flutter-notification-channels-android

@@ -7,7 +7,6 @@ https://www.nvecta.com/docs/flutter-tracking-users
 
 ---
 
-<br>
 
 # What is User Tracking?
 

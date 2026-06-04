@@ -6,7 +6,6 @@ Official Documentation: <br>
 https://www.nvecta.com/docs/flutter-tracking-events
 
 ---
-<br>
 
 # What is Event Tracking?
 
