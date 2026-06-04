@@ -1,5 +1,10 @@
 # Android Integration
 This document explains the Android-specific integration steps required for the Flutter plugin.
+
+Official Documentation:
+https://www.nvecta.com/docs/flutter-android-integration
+---
+
 <br>
 
 # 1. Gradle Configuration
