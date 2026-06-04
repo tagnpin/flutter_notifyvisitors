@@ -86,7 +86,7 @@ The following attributes are commonly used while identifying users.
 | email | User email address |
 | mobile | Mobile number |
 | name | Full name |
-| user_id | Unique customer identifier |
+| userID | Unique customer identifier |
 | gender | User gender |
 | city | User city |
 | country | User country |
@@ -294,7 +294,7 @@ Notifyvisitors.shared.setUserIdentifier({"email": "john@example.com","name": "Jo
 ## User Login
 
 ```dart
-Notifyvisitors.shared.setUserIdentifier({"user_id": "12345","email": "john@example.com"}).then((response) {});
+Notifyvisitors.shared.setUserIdentifier({"userID": "12345","email": "john@example.com"}).then((response) {});
 ```
 
 ---
@@ -302,7 +302,7 @@ Notifyvisitors.shared.setUserIdentifier({"user_id": "12345","email": "john@examp
 ## Premium Subscription
 
 ```dart
-Notifyvisitors.shared.setUserIdentifier({"user_id": "12345","subscription": "Premium"}).then((response) {});
+Notifyvisitors.shared.setUserIdentifier({"userID": "12345","subscription": "Premium"}).then((response) {});
 ```
 
 ---
