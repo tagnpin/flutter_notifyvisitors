@@ -37,7 +37,7 @@ To configure your info.plist, go to ios folder inside your Flutter Project root 
      	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
              	<key>CFBundleURLSchemes</key>
              	<array>
- 	<string>”yourURLscheme comes here”</string>
+ 	<string>"yourURLscheme comes here"</string>
          </array>
      	</dict>
           </array>
@@ -50,3 +50,11 @@ To configure your info.plist, go to ios folder inside your Flutter Project root 
              <key>nvViewAutoRedirection</key>
                        <true/>       <!--OR--> <!-- <false/>-->
 ```
+
+`OR`
+
+You can simply open the `info.plist` file as `Property List` and add the keys which work the same as above.
+
+## 1.
+
+Add a new row again and set up a URL Types item by means of adding a new item. Expand the URL Types key, then expand Item 0, and add a new item, URL Identifier . Fill in 'appScheme' for Item 0 of URL schemes and your company identifier for the URL Identifier. Once done, your file should resemble the image provided below.
