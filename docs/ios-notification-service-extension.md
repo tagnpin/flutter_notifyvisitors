@@ -194,4 +194,47 @@ Once the above steps are completed, your app will be able to receive rich push. 
 
 # 6. Configure App Groups for All Targets:
 
-Let's set up AppGroups in your app to count push deliveries in your NotifyVisitors panel. First, we'll select an AppGroupID and set it up in each of the info.plist of your two targets (i.e. Your App's Main Target and Your Notification Service Extension Target), and then we'll use the same AppGroupID to create and activate the same AppGroup in both target’s Signing & Capabilities Tabs. To configure this way, follow the steps listed below.
+Let's set up `AppGroups` in your app to count push deliveries in your NVECTA panel. First, we'll select an `AppGroupID` and set it up in each of the `info.plist` of your two targets (i.e. Your App's `Main Target` and Your `Notification Service Extension Target`), and then we'll use the same `AppGroupID` to create and activate the same `AppGroup` in both target’s `Signing & Capabilities` Tabs. To configure this way, follow the steps listed below.
+
+**6.1.** Let’s assume the `AppGroupID` we want to use is `group.{Your App Bundle Identifier}.Notifyvisitors` where `{Your App Bundle identities}` is the same as your App Bundle Identifier of your Main App Target.
+
+**6.2.** Now from the Project Navigator, go to your Main App project target, open `info.plist` as source code (right-click on `info.plist` and select `Open as >> Source code`), and paste the following code into it.
+
+```xml
+<key>nvAppGroupKey</key>
+    <string>group.{Your App Bundle Identifier}.Notifyvisitors</string>
+```
+
+### OR
+
+You can simply open the `info.plist`, add a new row, and define a `nvAppGroupKey` as a `String` with a value of `group.{your app bundle identifier}.Notifyvisitors`
+
+![Notification Service Extension Custom AppGroup ID](images/ios/notification-service-ext/nse-info-plist-custom-app-group-id.png)
+
+**6.3.** Repeat `step 6.2` for the `info.plist` file in your `Notification Service Extension` Target project folder and enter the exact same key and values as in `step 6.2`.
+
+## 📘 Note
+
+Make sure it is `case sensitive` and is exactly the same in both the `info.plist` files.
+
+**6.4.** Now, from the Project Navigator, select your app's Main Target and go to the `Signing & Capabilities` tab. If `App Groups` have not already been added, click `+ Capabilities` symbol in the left corner of this tab and add `App Groups`, as shown in the screenshot below.
+
+![Main Target AppGroup Capabilities](images/ios/notification-service-ext/main-target-app-group-capabilites.png)
+
+**6.5.** Once you have finished adding `AppGroups` capabilities you will be able to see it in your `Signing & Capabilities` and then under `AppGroups` click `+` button to create a new app group with the same name as the value added to `info.plist` for both targets (i.e `group.{Your App Bundle Identifier}.Notifyvisitors`), as shown in the screenshot below. Finally, click OK.
+
+![New AppGroup ID](images/ios/notification-service-ext/nse-app-group-id.png)
+
+**6.6. Example:** If you have set the `AppGroupID` to `group.com.mySampleiOSApp.Notifyvisitors` in both `info.plist` files, then add the same `AppGroup` to `Signing & Capabilities`, and ensure that this newly created `AppGroup` is checked (Turned On), as shown in the screenshot below.
+
+![Active AppGroup ID](images/ios/notification-service-ext/nse-active-app-group-id.png)
+
+**6.7.** Once you have configured `AppGroups` in your `Main App Target`, you must `activate` the same `AppGroup` in your `Notification Service Extension Target`. To do so, select your `Notification Service Extension target` from the Project Navigator and go to the `Signing & Capabilities` tab. If `AppGroups` have not already been added, click the `+ Capabilities` symbol in the left corner of this tab and add `App Groups` as shown in the screenshot below.
+
+![Notification Service Extension AppGroup Capabilities](images/ios/notification-service-ext/nse-app-group-capabilites.png)
+
+Once you've added `AppGroups capabilities`, you'll be able to see them in your `Notification Service Extension` Target's `Signing & Capabilities`. If a previously created `AppGroupID` isn't visible, click the refresh button next to the `+` symbol under `App Groups` to refresh the list of `AppGroups` configured in your Apple Developer account. Select the previously created app group and ensure that the same `AppGroupID` is checked (Turned on) in your `Notification Service Extension Target` as you did for your `Main App Target`.
+
+**Example:** You have recently created an `AppGroupID` called `group.com.mySampleiOSApp.Notifyvisitors` for your `Main App Target`, and make sure the same `AppGroupID` is visible and checked (Turned On) in the `Signing & Capabilities` of your `Notification Service Extension Target`.
+
+![Active AppGroup ID](images/ios/notification-service-ext/nse-active-app-group-id.png)
