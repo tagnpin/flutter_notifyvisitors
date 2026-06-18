@@ -51,7 +51,7 @@ To configure your info.plist, go to ios folder inside your Flutter Project root 
                        <true/>       <!--OR--> <!-- <false/>-->
 ```
 
-`OR`
+### OR
 
 You can simply open the `info.plist` file as `Property List` and add the keys which work the same as above.
 
@@ -302,6 +302,14 @@ Make sure that the path of `bridge-header.h` file is included in build settings 
 > </details>
 > </br>
 
+</br>
+
 # 4. Push Notifications
 
 NotifyVisitors Flutter plugin enables you to send push notifications to your mobile apps from our dashboard. Kindly refer to our [Push Notifications](/docs/ios-push-integration.md) integration guide available on the next page.
+
+<br>
+
+# Support
+
+If you face any issues during integration, please contact the support team or raise an issue directly from the NVECTA Dashboard.
