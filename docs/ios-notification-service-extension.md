@@ -9,17 +9,17 @@ https://www.nvecta.com/docs/flutter-notification-service-extension
 
 ## 1. Add Notification Service Extension
 
-1.1. Now, go to the iOS folder inside your `Flutter Project's root folder` and open your iOS project in Xcode by double clicking on the `.xcworkspace` file and once your Flutter iOS project is opened in Xcode, create `Notification Service Extension` in your project. To do so, go to `File >> New >> Target`.
+**1.1.** Now, go to the iOS folder inside your `Flutter Project's root folder` and open your iOS project in Xcode by double clicking on the `.xcworkspace` file and once your Flutter iOS project is opened in Xcode, create `Notification Service Extension` in your project. To do so, go to `File >> New >> Target`.
 
-1.2 Now Select `Notification Service Extension` template under iOS section of the dialog box and click the next button to proceed.
+**1.2** Now Select `Notification Service Extension` template under iOS section of the dialog box and click the next button to proceed.
 
 ![Notification Service Extension Template Selection](images/ios/notification-service-ext/nse-template.png)
 
-1.3 In the next prompt, provide the name of the extension target and select the programming language which you want to use and then click on the Finish button as shown in the screenshot below.
+**1.3** In the next prompt, provide the name of the extension target and select the programming language which you want to use and then click on the Finish button as shown in the screenshot below.
 
 ![Notification Service Extension Name & Language Selection](images/ios/notification-service-ext/nse-name-and-language.png)
 
-1.4 Once the target is created, press 'Cancel' when prompted to activate the scheme. After this your notification service extension will be added to the project you will see a class with the extension name you specified during creation, as well as an info.plist file associated with it.
+**1.4** Once the target is created, press 'Cancel' when prompted to activate the scheme. After this your notification service extension will be added to the project you will see a class with the extension name you specified during creation, as well as an info.plist file associated with it.
 
 <details>
     <summary>Swift</summary>
@@ -33,13 +33,13 @@ https://www.nvecta.com/docs/flutter-notification-service-extension
 
 </details>
 
-1.5 Now we can proceed to add further configuration to this newly created target. Under this target you need to complete Import NVECTA SDK, Configure info.plist, add code to NotificationService file and configure AppGroup properly to complete this setup.
+**1.5** Now we can proceed to add further configuration to this newly created target. Under this target you need to complete Import NVECTA SDK, Configure info.plist, add code to NotificationService file and configure AppGroup properly to complete this setup.
 
 Further steps are defined below in detail to complete this setup.
 
 ## 2. Import NVECTA SDK in your Notification Service Extension:
 
-2.1. Now close your flutter ios project that's opened in Xcode, then open the terminal and navigate to the ios folder located within your `Flutter Project's` root folder using the `cd` command.
+**2.1.** Now close your flutter ios project that's opened in Xcode, then open the terminal and navigate to the ios folder located within your `Flutter Project's` root folder using the `cd` command.
 
 **For example** if your Project is saved on Desktop and its root folder name is `my_flutter_app`, then go to your project's ios folder by using the following command
 
@@ -47,7 +47,7 @@ Further steps are defined below in detail to complete this setup.
 $ cd ~/Desktop/my_flutter_app/ios
 ```
 
-2.2. Now go to ios folder inside your `Flutter Project's` root folder, open your `Podfile` and add the `notifyvisitorsNotificationService` dependency at the end within the `Podfile` for your `Notification Service Extension` name `target` like below.
+**2.2.** Now go to ios folder inside your `Flutter Project's` root folder, open your `Podfile` and add the `notifyvisitorsNotificationService` dependency at the end within the `Podfile` for your `Notification Service Extension` name `target` like below.
 
 ```ruby
 target 'YourNotificationServiceExtension' do
@@ -55,15 +55,15 @@ target 'YourNotificationServiceExtension' do
 end
 ```
 
-2.3 Now run the following commands in the terminal from the ios folder directory.
+**2.3** Now run the following commands in the terminal from the ios folder directory.
 
 ```ruby
 $ pod repo update && pod install && cd ..
 ```
 
-2.4. Now, re-open your flutter ios project in `Xcode` (by going to the ios folder present inside the `Flutter Project's` root folder) and follow the steps mentioned below in `Xcode` itself to complete the remaining `Notification Service Extension` integration process.
+**2.4.** Now, re-open your flutter ios project in `Xcode` (by going to the ios folder present inside the `Flutter Project's` root folder) and follow the steps mentioned below in `Xcode` itself to complete the remaining `Notification Service Extension` integration process.
 
-2.5. If you have selected `Objective-C` as the language while creating the `Notification Service Extension` in the above steps, then you can directly import our header file in your `NotificationService.m` file.
+**2.5.** If you have selected `Objective-C` as the language while creating the `Notification Service Extension` in the above steps, then you can directly import our header file in your `NotificationService.m` file.
 
 However, if you are using `Swift` language then you need to create a separate `Bridging-Header` file and then import our header file as done earlier in the app’s main target. To do so create a new header file and name it as per the following format `YOUR_ServiceExtension_NAME-Bridging-Header.h`
 

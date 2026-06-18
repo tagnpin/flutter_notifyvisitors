@@ -115,6 +115,7 @@ Make sure that the path of `bridge-header.h` file is included in build settings 
 > NotifyvisitorsPlugin.nvInitialize()
 >
 > // MARK: - Example Code
+>
 > override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 >
 >    // NotifyVisitors methods here
