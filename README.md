@@ -2,7 +2,7 @@
 
 # NVECTA Flutter SDK
 
-[![Static Badge](https://img.shields.io/badge/pub-1.6.3-blue?logo=flutter)](https://pub.dev/packages/flutter_notifyvisitors)     ![Formerly](https://img.shields.io/badge/Formerly-NotifyVisitors-blue)
+[![Static Badge](https://img.shields.io/badge/pub-1.6.3-blue?logo=flutter)](https://pub.dev/packages/flutter_notifyvisitors) ![Formerly](https://img.shields.io/badge/Formerly-NotifyVisitors-blue)
 
 <br>
 
@@ -42,9 +42,11 @@ import 'package:flutter_notifyvisitors/flutter_notifyvisitors.dart';
 ## ⚙️ Configurations
 
 ### 📱 Android Setup
+
 For Android-specific integration steps, please refer to our technical [Android](/docs/android-specific-integration.md) documentation.
 
 ### 🍎 iOS Setup
+
 For iOS-specific integration steps, please refer to our technical [iOS](/docs/ios-specific-integration.md) documentation.
 
 <br>
@@ -54,24 +56,25 @@ For iOS-specific integration steps, please refer to our technical [iOS](/docs/io
 Explore the following guides to learn how to use key NVECTA SDK features in your Flutter application.
 
 ### 🎯 Tracking Events
+
 Track user interactions and custom events to better understand user behavior and engagement within your application.
 
 ➡️ [View Event Tracking Documentation](/docs/event-tracking-integration.md)
 
-
 ### 👤 Tracking Users
+
 Identify users, manage user profiles, and associate user activity for personalized engagement and analytics.
 
 ➡️ [View User Tracking Documentation](/docs/user-tracking-integration.md)
 
-
 ### 💬 In-App Notifications
+
 Display targeted in-app messages and campaigns to engage users while they are actively using the application.
 
 ➡️ [View In-App Notification Documentation](/docs/inapp-integration.md)
 
-
 ### 🔔 Push Notifications
+
 Configure and send push notifications to re-engage users with real-time updates and personalized communication.
 
 **!IMPORTANT**
@@ -82,8 +85,8 @@ Configure and send push notifications to re-engage users with real-time updates 
 > ![Android](https://img.shields.io/badge/Android-Specific-green)
 > To receive push notifications on Android 12+ devices, you must configure the runtime push notification permission prompt in your application. Please refer to the [Android technical](/docs/android-push-integration.md) documentation to complete the setup correctly.
 
-
 ### 📥 Notification Center
+
 Manage and display user notifications within a centralized in-app notification center experience.
 
 ➡️ [View Notification Center Documentation](/docs/notification-center-integration.md)
@@ -91,14 +94,17 @@ Manage and display user notifications within a centralized in-app notification c
 <br>
 
 ## 🎯 Sample Integration
-The [demo application](nv_flutter_sdk_app) provides a practical implementation example to help you quickly integrate and test the NVECTA Flutter SDK.
+
+The [demo application](/docs/running-sample-app-in-local.md) provides a practical implementation example to help you quickly integrate and test the NVECTA Flutter SDK.
 
 <br>
 
 ## 🆕 Changelog
+
 Refer to the NVECTA Flutter SDK [Change Log](CHANGELOG.md).
 
 <br>
 
 ## ❓Questions
+
 Need help? Contact the NVECTA support team directly from the NVECTA Dashboard for assistance with integration, configuration, or troubleshooting.

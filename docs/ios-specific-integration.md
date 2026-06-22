@@ -79,7 +79,7 @@ You can simply open the `info.plist` file as `Property List` and add the keys wh
 
 In the example provided above, dummy Brand ID and Secret Key has been mentioned. Kindly login to your account to see your credentials.
 
-# 2. Import Header File
+# 3. Import Header File
 
 ### Objective-C
 
@@ -104,7 +104,7 @@ For example, if your project name is Runner. Then the header file name will be R
 
 Make sure that the path of `bridge-header.h` file is included in build settings under “Swift compiler-code generation” as: Objective C bridging header: `YOUR_FLUTTER_IOS_PROJECT_NAME/YOUR_FLUTTER_IOS_PROJECT_NAME-Bridging-Header.h`
 
-> # 3. Initialise SDK
+> # 4. Initialise SDK
 >
 > **Step 1.** Initialize the SDK in the application `didFinishLaunchingWithOptions` function.
 >
@@ -305,7 +305,7 @@ Make sure that the path of `bridge-header.h` file is included in build settings 
 
 </br>
 
-# 4. Push Notifications
+# 5. Push Notifications
 
 NotifyVisitors Flutter plugin enables you to send push notifications to your mobile apps from our dashboard. Kindly refer to our [Push Notifications](/docs/ios-push-integration.md) integration guide available on the next page.
 
