@@ -309,100 +309,6 @@ class MyApp extends StatelessWidget {
 
 ---
 
-## 📊 Complete Example: Todo App with Screen Tracking
-
-Here's a complete example showing how to implement screen tracking:
-
-```dart
-import 'package:flutter/material.dart';
-import 'package:notifyvisitors/notifyvisitors.dart';
-
-void main() {
-  runApp(TodoApp());
-}
-
-class TodoApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Todo App',
-      home: TodoListScreen(),
-      navigatorObservers: [AnalyticsObserver()],
-      routes: {
-        '/list': (context) => TodoListScreen(),
-        '/add': (context) => AddTodoScreen(),
-        '/settings': (context) => SettingsScreen(),
-      },
-    );
-  }
-}
-
-// Navigation Observer for automatic tracking
-class AnalyticsObserver extends NavigatorObserver {
-  @override
-  void didPush(Route route, Route? previousRoute) {
-    super.didPush(route, previousRoute);
-    String screenName = route.settings.name ?? 'Unknown';
-    Notifyvisitors.trackScreen(screenName);
-  }
-}
-
-// Todo List Screen
-class TodoListScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Todo List')),
-      body: ListView(
-        children: [
-          ListTile(
-            title: Text('Buy groceries'),
-            onTap: () {
-              Navigator.pushNamed(context, '/add');
-            },
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, '/add');
-        },
-        child: Icon(Icons.add),
-      ),
-    );
-  }
-}
-
-// Add Todo Screen
-class AddTodoScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Add Todo')),
-      body: Center(child: Text('Add new todo here')),
-    );
-  }
-}
-
-// Settings Screen
-class SettingsScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Settings')),
-      body: Center(child: Text('Settings')),
-    );
-  }
-}
-```
-
-When this app runs:
-1. Opens `/list` → Tracks "**List**" screen
-2. User taps "Add" → Tracks "**Add**" screen
-3. User goes back → Tracks "**List**" screen again
-
----
-
 ## ✅ Best Practices
 
 ### 1. **Use Meaningful Screen Names**
@@ -435,42 +341,6 @@ Notifyvisitors.trackScreen('ProductDetail_${productId}');
 
 ---
 
-## 🐛 Troubleshooting
-
-### Screens Not Being Tracked?
-
-**Check these things:**
-
-1. **Is `Notifyvisitors` initialized?**
-   ```dart
-   // Make sure you initialize in main()
-   await Notifyvisitors.initialize('your_api_key');
-   ```
-
-2. **Are you using named routes?**
-   - If using `Navigator.push()` without names, the observer won't work
-   - Use `Navigator.pushNamed()` or create the wrapper widget instead
-
-3. **Check the screen name**
-   - Print the screen name: `print('Tracking: $screenName')`
-   - Make sure it's not null or empty
-
-4. **Verify network connection**
-   - Screen tracking requires internet to send data
-   - Check that your app has network permission
-
----
-
-## 📈 What Data is Tracked?
-
-For each screen visit, the plugin records:
-- **Screen Name** - The name you provided
-- **Timestamp** - When the user opened the screen
-- **Session ID** - Which user session this belongs to
-- **Duration** - How long the user spent on the screen (in most analytics dashboards)
-
----
-
 ## 🎯 Summary
 
 | Method | Ease | Auto-Tracking | Best For |
@@ -482,12 +352,3 @@ For each screen visit, the plugin records:
 
 **For most apps, use Method 2 (Navigator Observer)** - it's automatic and requires minimal setup.
 
----
-
-## 📚 Next Steps
-
-1. Choose an implementation method
-2. Add the code to your app
-3. Test by navigating through screens
-4. Check your analytics dashboard to see the tracked screens
-5. Set up alerts or reports based on screen data
