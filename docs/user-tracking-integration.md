@@ -252,6 +252,244 @@ SET USER IDENTIFIER !!
 
 <br>
 
+# Event Tracking After User Identification
+
+## Overview
+
+To ensure events are properly mapped to user profiles on the NVECTA panel, you must wait for the user identification callback response before triggering any events. 
+
+**Important:** If you call event tracking and user identification in parallel, the SDK may not be able to merge the data correctly on the panel because the user profile hasn't been fully synchronized yet.
+
+---
+
+## Correct Implementation Flow
+
+```text
+User Login Triggered
+       ↓
+Call setUserIdentifier()
+       ↓
+Wait for Callback Response
+       ↓
+Check Response Status
+       ↓
+If Success: Track Events
+       ↓
+Events Get Mapped to User Profile
+```
+
+---
+
+## Implementation: Wait for User Identification Before Events
+
+**DO NOT do this (Parallel calls):**
+
+```dart
+// ❌ WRONG - Events triggered in parallel
+void handleLogin(String email) {
+    // User identification
+    Notifyvisitors.shared.setUserIdentifier({"email": email}).then((response) {
+        print(response);
+    });
+    
+    // Event triggered immediately (before user sync completes)
+    Notifyvisitors.shared.trackEvent("login_successful", {}).then((response) {
+        print(response);
+    });
+}
+```
+
+In this approach, the event may be tracked before the user profile is fully synchronized, resulting in the event not being associated with the correct user on the NVECTA panel.
+
+---
+
+**DO this instead (Sequential calls):**
+
+```dart
+// ✅ CORRECT - Wait for user identification callback
+void handleLogin(String email) {
+    var userAttributes = {"email": email, "name": "John Doe"};
+    
+    // Step 1: Identify User
+    Notifyvisitors.shared.setUserIdentifier(userAttributes).then((response) {
+        print("User Response: $response");
+        
+        // Step 2: Check if user identification was successful
+        if (response != null && response['status'] == 'success') {
+            // Step 3: Only then track the event
+            _trackLoginEvent();
+        } else {
+            print("User identification failed: $response");
+        }
+    }).catchError((error) {
+        print("Error identifying user: $error");
+    });
+}
+
+// Step 4: Track event in a separate function
+void _trackLoginEvent() {
+    var eventData = {
+        "login_method": "email",
+        "timestamp": DateTime.now().toString()
+    };
+    
+    Notifyvisitors.shared.trackEvent("login_successful", eventData).then((response) {
+        print("Event tracked: $response");
+    }).catchError((error) {
+        print("Error tracking event: $error");
+    });
+}
+```
+
+---
+
+## Advanced Implementation: Using Async/Await
+
+For cleaner code, use async/await pattern to handle sequential operations:
+
+```dart
+// ✅ CLEAN - Using async/await
+Future<void> handleLoginWithAwait(String email, String password) async {
+    try {
+        // Step 1: Call setUserIdentifier and wait for response
+        var identifyResponse = await Notifyvisitors.shared.setUserIdentifier({
+            "email": email,
+            "name": "User Name"
+        });
+        
+        print("User identification response: $identifyResponse");
+        
+        // Step 2: Verify success before proceeding
+        if (identifyResponse != null && identifyResponse['status'] == 'success') {
+            // Step 3: Now safely track the event
+            var eventResponse = await Notifyvisitors.shared.trackEvent(
+                "login_successful",
+                {
+                    "email": email,
+                    "timestamp": DateTime.now().toString(),
+                    "login_method": "email"
+                }
+            );
+            
+            print("Event tracked successfully: $eventResponse");
+        } else {
+            print("User identification failed, event not tracked");
+        }
+    } catch (e) {
+        print("Error during login process: $e");
+    }
+}
+```
+
+---
+
+## Practical Example: User Registration with Event Tracking
+
+```dart
+Future<void> registerNewUser(String name, String email, String mobile) async {
+    try {
+        // Step 1: Identify the user with registration details
+        print("Identifying user...");
+        var identifyResponse = await Notifyvisitors.shared.setUserIdentifier({
+            "name": name,
+            "email": email,
+            "mobile": mobile,
+            "registration_date": DateTime.now().toString()
+        });
+        
+        // Step 2: Validate response
+        if (identifyResponse == null || identifyResponse['status'] != 'success') {
+            print("Failed to identify user");
+            return;
+        }
+        
+        print("User identified successfully");
+        
+        // Step 3: Track registration event
+        var eventResponse = await Notifyvisitors.shared.trackEvent(
+            "user_registration",
+            {
+                "name": name,
+                "email": email,
+                "mobile": mobile,
+                "registration_source": "app",
+                "timestamp": DateTime.now().toString()
+            }
+        );
+        
+        print("Registration event tracked: $eventResponse");
+        
+        // Step 4: Optional - Track additional event
+        await _trackUserOnboardingStarted(email);
+        
+    } catch (e) {
+        print("Error during user registration: $e");
+    }
+}
+
+Future<void> _trackUserOnboardingStarted(String email) async {
+    try {
+        var response = await Notifyvisitors.shared.trackEvent(
+            "onboarding_started",
+            {"email": email}
+        );
+        print("Onboarding event tracked: $response");
+    } catch (e) {
+        print("Error tracking onboarding event: $e");
+    }
+}
+```
+
+---
+
+## Event Tracking After User Properties Update
+
+When updating user properties (e.g., subscription upgrade), follow the same pattern:
+
+```dart
+Future<void> upgradeSubscription(String userEmail, String newPlan) async {
+    try {
+        // Step 1: Update user properties
+        var updateResponse = await Notifyvisitors.shared.setUserIdentifier({
+            "email": userEmail,
+            "subscription_type": newPlan,
+            "subscription_updated_at": DateTime.now().toString()
+        });
+        
+        if (updateResponse != null && updateResponse['status'] == 'success') {
+            // Step 2: Track the upgrade event
+            await Notifyvisitors.shared.trackEvent(
+                "subscription_upgraded",
+                {
+                    "email": userEmail,
+                    "new_plan": newPlan,
+                    "upgrade_date": DateTime.now().toString()
+                }
+            );
+            
+            print("Subscription upgraded and event tracked");
+        }
+    } catch (e) {
+        print("Error upgrading subscription: $e");
+    }
+}
+```
+
+---
+
+## Key Takeaways
+
+1. **Always wait for `setUserIdentifier()` callback** before tracking events
+2. **Check the response status** to ensure user identification was successful
+3. **Use async/await pattern** for cleaner, more maintainable code
+4. **Verify response is not null** before accessing its properties
+5. **Handle errors gracefully** with try-catch blocks
+6. **Track events only after user sync completes** to ensure proper mapping on NVECTA panel
+
+---
+
+<br>
+
 # Recommended Flow
 
 ```text
@@ -260,6 +498,8 @@ App Launch
 User Login
     ↓
 Track User Profile
+    ↓
+Wait for Response
     ↓
 Track Custom Events
     ↓
@@ -278,6 +518,9 @@ Create User Segments
 - Avoid storing sensitive information
 - Maintain consistent attribute naming
 - Use custom attributes for segmentation
+- **Wait for user identification callback before tracking events**
+- **Check response status before proceeding**
+- **Use async/await for sequential operations**
 
 ---
 
@@ -323,3 +566,4 @@ With proper user identification, you can:
 - Improve retention
 - Analyze customer behavior
 
+**Remember:** Always wait for the user identification callback response before tracking events to ensure proper data synchronization and event mapping on the NVECTA panel.
