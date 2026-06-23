@@ -55,6 +55,24 @@ For iOS-specific integration steps, please refer to our technical [iOS](/docs/io
 
 Explore the following guides to learn how to use key NVECTA SDK features in your Flutter application.
 
+### 🎯 Tracking Screens
+
+Track user screen interactions to better understand user app behavior and engagement within your application.
+
+➡️ [View Screen Tracking Documentation](/docs/screen-tracking.md)
+
+### 🔔 Push Notifications
+
+Configure and send push notifications to re-engage users with real-time updates and personalized communication.
+
+**!IMPORTANT**
+
+> ![iOS](https://img.shields.io/badge/iOS-Specific-blue)
+> Rich push notifications on iOS require proper Notification Service Extension configuration. Please refer to the [iOS technical](/docs/ios-push-integration.md) documentation to complete the setup correctly.
+>
+> ![Android](https://img.shields.io/badge/Android-Specific-green)
+> To receive push notifications on Android 12+ devices, you must configure the runtime push notification permission prompt in your application. Please refer to the [Android technical](/docs/android-push-integration.md) documentation to complete the setup correctly.
+
 ### 🎯 Tracking Events
 
 Track user interactions and custom events to better understand user behavior and engagement within your application.
@@ -73,17 +91,6 @@ Display targeted in-app messages and campaigns to engage users while they are ac
 
 ➡️ [View In-App Notification Documentation](/docs/inapp-integration.md)
 
-### 🔔 Push Notifications
-
-Configure and send push notifications to re-engage users with real-time updates and personalized communication.
-
-**!IMPORTANT**
-
-> ![iOS](https://img.shields.io/badge/iOS-Specific-blue)
-> Rich push notifications on iOS require proper Notification Service Extension configuration. Please refer to the [iOS technical](/docs/ios-push-integration.md) documentation to complete the setup correctly.
->
-> ![Android](https://img.shields.io/badge/Android-Specific-green)
-> To receive push notifications on Android 12+ devices, you must configure the runtime push notification permission prompt in your application. Please refer to the [Android technical](/docs/android-push-integration.md) documentation to complete the setup correctly.
 
 ### 📥 Notification Center
 
