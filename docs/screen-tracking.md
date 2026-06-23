@@ -1,67 +1,493 @@
-# Screen Tracking
+# Screen Tracking Guide
 
-## What is Screen Tracking?
+## 📱 What is Screen Tracking?
 
-Screen tracking is a feature that monitors and records which screens (pages) a user visits within your Flutter app. It automatically tracks user navigation patterns and screen transitions, providing valuable insights into how users interact with your application.
+Screen tracking monitors which screens (pages) your users visit in your Flutter app. Think of it like a visitor counter for each page - it records when users open a screen and how long they stay there.
 
-## Why Do We Need Screen Tracking?
+**Simple Example:**
+- User opens your app → Home screen is tracked
+- User navigates to Profile → Profile screen is tracked
+- User goes back to Home → Home is tracked again
 
-Screen tracking is essential for several important reasons:
+## ❓ Why Should You Use Screen Tracking?
 
-### 1. **User Behavior Analytics**
+### 1. **Understand Your Users**
+- See which screens users visit most
+- Find out where users spend the most time
 - Understand how users navigate through your app
-- Identify which screens are most frequently visited
-- Discover user journey patterns and workflows
 
-### 2. **Performance Monitoring**
-- Track screen load times and performance metrics
-- Identify screens that may need optimization
-- Monitor app stability across different screens
+### 2. **Improve Your App**
+- Identify slow or buggy screens
+- Find screens that users leave quickly (and fix them)
+- Make data-driven decisions about new features
 
-### 3. **User Engagement Insights**
-- Measure how long users spend on each screen
-- Identify screens with high bounce or dropout rates
-- Optimize user experience based on real usage data
+### 3. **Track User Goals**
+- See how many users complete important actions
+- Find where users get stuck or stop using the app
+- Measure if your changes actually helped
 
-### 4. **Debugging & Troubleshooting**
-- Trace user actions to identify issues
-- Pinpoint where errors or crashes occur
-- Understand the context when bugs are reported
-
-### 5. **Feature Usage Analytics**
-- Determine which features are being used most
-- Identify underutilized features
-- Make data-driven decisions for feature development
-
-### 6. **Marketing & Growth**
-- Track conversion funnels through different screens
-- Identify drop-off points in critical user flows
-- Measure effectiveness of app changes and updates
-
-### 7. **A/B Testing**
-- Compare user behavior across different screen variations
-- Measure impact of UI/UX changes
-- Validate improvements before full rollout
+### 4. **Debug Problems**
+- When a user reports a bug, see exactly which screens they visited before it happened
+- Understand the sequence of screens leading to a crash
 
 ---
 
-## How It Works
+## 🚀 How to Implement Screen Tracking
 
-The flutter_notifyvisitors plugin automatically captures:
-- Screen names and routes
-- Navigation timestamps
-- User transitions between screens
-- Session information
+### ⚠️ Important: Manual Tracking Required
 
-This data is then sent to your analytics backend for analysis and reporting.
+**On hybrid platforms (like web and some Android/iOS implementations), screens do NOT track automatically.** You must manually call the tracking function on every screen.
 
-## Benefits Summary
+### The Basic Function
 
-| Benefit | Impact |
-|---------|--------|
-| Data-Driven Decisions | Make informed product improvements |
-| User Understanding | Know how users interact with your app |
-| Performance Optimization | Identify bottlenecks and optimize |
-| Problem Detection | Catch issues before users report them |
-| Growth Measurement | Track key metrics for app success |
+```dart
+Notifyvisitors.trackScreen('ScreenName');
+```
 
+This one line of code tells the plugin: *"User is now on 'ScreenName'"*
+
+---
+
+## 📋 Implementation Methods
+
+Choose one method below based on your app structure:
+
+---
+
+### **Method 1: Manual Tracking in Each Screen (Simplest)**
+
+Use this method if you have a small number of screens or just want to start simple.
+
+#### How it works:
+Add the tracking call to each screen's `initState()` method.
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:notifyvisitors/notifyvisitors.dart';
+
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Track this screen when it opens
+    Notifyvisitors.trackScreen('Home');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Home')),
+      body: Center(child: Text('Welcome to Home Screen')),
+    );
+  }
+}
+```
+
+**Pros:**
+- ✅ Simple and straightforward
+- ✅ No extra setup needed
+
+**Cons:**
+- ❌ Need to add code to every screen
+- ❌ Easy to forget on new screens
+
+---
+
+### **Method 2: Navigation Observer (Recommended)**
+
+Use this method if you want **automatic tracking** with minimal code. It works by watching all navigation changes.
+
+#### Step 1: Create a Custom Navigation Observer
+
+Create a new file `lib/observers/analytics_observer.dart`:
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:notifyvisitors/notifyvisitors.dart';
+
+class AnalyticsObserver extends NavigatorObserver {
+  @override
+  void didPush(Route route, Route? previousRoute) {
+    super.didPush(route, previousRoute);
+    _trackScreen(route);
+  }
+
+  @override
+  void didReplace({Route? newRoute, Route? oldRoute}) {
+    super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
+    _trackScreen(newRoute);
+  }
+
+  @override
+  void didPop(Route route, Route? previousRoute) {
+    super.didPop(route, previousRoute);
+    _trackScreen(previousRoute);
+  }
+
+  void _trackScreen(Route? route) {
+    if (route != null) {
+      String screenName = route.settings.name ?? 'Unknown';
+      Notifyvisitors.trackScreen(screenName);
+    }
+  }
+}
+```
+
+#### Step 2: Add to Your MaterialApp
+
+In your `main.dart`:
+
+```dart
+import 'package:flutter/material.dart';
+import 'observers/analytics_observer.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'My App',
+      home: HomeScreen(),
+      // Add this line
+      navigatorObservers: [AnalyticsObserver()],
+      routes: {
+        '/home': (context) => HomeScreen(),
+        '/profile': (context) => ProfileScreen(),
+        '/settings': (context) => SettingsScreen(),
+      },
+    );
+  }
+}
+```
+
+**How it works:**
+- Every time a user navigates to a new screen, the observer automatically tracks it
+- Uses the route name from `Navigator.pushNamed('routeName')`
+
+**Example Usage:**
+
+```dart
+// In your app, when you navigate
+Navigator.pushNamed(context, '/profile');
+// ✅ Automatically tracked as 'profile'
+```
+
+**Pros:**
+- ✅ Automatic tracking - no code needed on each screen
+- ✅ Works with named routes
+- ✅ Easy to maintain
+
+**Cons:**
+- ⚠️ Requires named routes
+- ⚠️ Screen names come from route names (make them consistent)
+
+---
+
+### **Method 3: Wrapper Widget**
+
+Use this method if you prefer wrapping screens or not using named routes.
+
+#### Create a Tracked Widget Wrapper
+
+Create `lib/widgets/tracked_screen.dart`:
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:notifyvisitors/notifyvisitors.dart';
+
+class TrackedScreen extends StatefulWidget {
+  final String screenName;
+  final Widget child;
+
+  const TrackedScreen({
+    required this.screenName,
+    required this.child,
+  });
+
+  @override
+  State<TrackedScreen> createState() => _TrackedScreenState();
+}
+
+class _TrackedScreenState extends State<TrackedScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Notifyvisitors.trackScreen(widget.screenName);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.child;
+  }
+}
+```
+
+#### Usage in Your Screens
+
+```dart
+class ProfileScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return TrackedScreen(
+      screenName: 'Profile',
+      child: Scaffold(
+        appBar: AppBar(title: Text('Profile')),
+        body: Center(child: Text('User Profile')),
+      ),
+    );
+  }
+}
+```
+
+**Pros:**
+- ✅ Clean separation of concerns
+- ✅ Reusable across all screens
+- ✅ Works with any navigation method
+
+**Cons:**
+- ⚠️ Requires wrapping each screen
+- ⚠️ One extra widget in the tree
+
+---
+
+### **Method 4: GoRouter Integration (Modern Routing)**
+
+If you're using GoRouter (recommended for modern Flutter apps):
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:notifyvisitors/notifyvisitors.dart';
+
+final router = GoRouter(
+  observers: [AnalyticsRouterObserver()],
+  routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) => HomeScreen(),
+      name: 'home',
+    ),
+    GoRoute(
+      path: '/profile',
+      builder: (context, state) => ProfileScreen(),
+      name: 'profile',
+    ),
+  ],
+);
+
+class AnalyticsRouterObserver extends NavigatorObserver {
+  @override
+  void didPush(Route route, Route? previousRoute) {
+    super.didPush(route, previousRoute);
+    if (route.settings.name != null) {
+      Notifyvisitors.trackScreen(route.settings.name!);
+    }
+  }
+}
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      routerConfig: router,
+    );
+  }
+}
+```
+
+---
+
+## 📊 Complete Example: Todo App with Screen Tracking
+
+Here's a complete example showing how to implement screen tracking:
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:notifyvisitors/notifyvisitors.dart';
+
+void main() {
+  runApp(TodoApp());
+}
+
+class TodoApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Todo App',
+      home: TodoListScreen(),
+      navigatorObservers: [AnalyticsObserver()],
+      routes: {
+        '/list': (context) => TodoListScreen(),
+        '/add': (context) => AddTodoScreen(),
+        '/settings': (context) => SettingsScreen(),
+      },
+    );
+  }
+}
+
+// Navigation Observer for automatic tracking
+class AnalyticsObserver extends NavigatorObserver {
+  @override
+  void didPush(Route route, Route? previousRoute) {
+    super.didPush(route, previousRoute);
+    String screenName = route.settings.name ?? 'Unknown';
+    Notifyvisitors.trackScreen(screenName);
+  }
+}
+
+// Todo List Screen
+class TodoListScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Todo List')),
+      body: ListView(
+        children: [
+          ListTile(
+            title: Text('Buy groceries'),
+            onTap: () {
+              Navigator.pushNamed(context, '/add');
+            },
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/add');
+        },
+        child: Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+// Add Todo Screen
+class AddTodoScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Add Todo')),
+      body: Center(child: Text('Add new todo here')),
+    );
+  }
+}
+
+// Settings Screen
+class SettingsScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Settings')),
+      body: Center(child: Text('Settings')),
+    );
+  }
+}
+```
+
+When this app runs:
+1. Opens `/list` → Tracks "**List**" screen
+2. User taps "Add" → Tracks "**Add**" screen
+3. User goes back → Tracks "**List**" screen again
+
+---
+
+## ✅ Best Practices
+
+### 1. **Use Meaningful Screen Names**
+```dart
+// ❌ Bad
+Notifyvisitors.trackScreen('Screen1');
+
+// ✅ Good
+Notifyvisitors.trackScreen('HomePage');
+Notifyvisitors.trackScreen('UserProfile');
+Notifyvisitors.trackScreen('ProductDetail_12345');
+```
+
+### 2. **Be Consistent**
+- Use the same screen name every time you visit that screen
+- Use camelCase or PascalCase consistently
+
+### 3. **Track Important Flows**
+Focus on tracking screens that matter:
+- Login/Signup flows
+- Purchase/Checkout flows
+- Onboarding screens
+- Error/Help screens
+
+### 4. **Include Context When Needed**
+```dart
+// Good: Includes item ID for detailed analytics
+Notifyvisitors.trackScreen('ProductDetail_${productId}');
+```
+
+---
+
+## 🐛 Troubleshooting
+
+### Screens Not Being Tracked?
+
+**Check these things:**
+
+1. **Is `Notifyvisitors` initialized?**
+   ```dart
+   // Make sure you initialize in main()
+   await Notifyvisitors.initialize('your_api_key');
+   ```
+
+2. **Are you using named routes?**
+   - If using `Navigator.push()` without names, the observer won't work
+   - Use `Navigator.pushNamed()` or create the wrapper widget instead
+
+3. **Check the screen name**
+   - Print the screen name: `print('Tracking: $screenName')`
+   - Make sure it's not null or empty
+
+4. **Verify network connection**
+   - Screen tracking requires internet to send data
+   - Check that your app has network permission
+
+---
+
+## 📈 What Data is Tracked?
+
+For each screen visit, the plugin records:
+- **Screen Name** - The name you provided
+- **Timestamp** - When the user opened the screen
+- **Session ID** - Which user session this belongs to
+- **Duration** - How long the user spent on the screen (in most analytics dashboards)
+
+---
+
+## 🎯 Summary
+
+| Method | Ease | Auto-Tracking | Best For |
+|--------|------|---------------|----------|
+| **Manual** | ⭐ Easy | ❌ No | Learning, small apps |
+| **Navigator Observer** | ⭐⭐ Medium | ✅ Yes | Named routes, most apps |
+| **Wrapper Widget** | ⭐⭐ Medium | ❌ No | Flexible navigation |
+| **GoRouter** | ⭐⭐⭐ Advanced | ✅ Yes | Modern Flutter apps |
+
+**For most apps, use Method 2 (Navigator Observer)** - it's automatic and requires minimal setup.
+
+---
+
+## 📚 Next Steps
+
+1. Choose an implementation method
+2. Add the code to your app
+3. Test by navigating through screens
+4. Check your analytics dashboard to see the tracked screens
+5. Set up alerts or reports based on screen data
