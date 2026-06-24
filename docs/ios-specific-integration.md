@@ -58,229 +58,230 @@ You can simply open the `info.plist` file as `Property List` and add the keys wh
 
 In the example provided above, dummy Brand ID and Secret Key has been mentioned. Kindly login to your account to see your credentials.
 
-# 3. Import Header File
+# 3. Import SDK Headers
 
-### Objective-C
+Before calling any NotifyVisitors iOS APIs from your `AppDelegate`, import the SDK header.
 
-Import the notifyvisitors header file in each file in which the SDK function is to be accessed as given below.
+## Objective-C
 
-```objc
-    #import <flutter_notifyvisitors/NotifyvisitorsPlugin.h>
-```
-
-### Swift
-
-If your project iOS platform is in Swift language then you have to create a `Bridging-Header.h` file.
-In this file you can import NVECTA (Formally Notifyvisitors) SDK to use it in your project's swift files. To do so create a new header file and name it as per the following format. `YOUR_FLUTTER_IOS_PROJECT_NAME-Bridging-Header.h`
-
-For example, if your project name is Runner. Then the header file name will be Runner-Bridging-Header.h. Now add the following import statement in `YOUR_FLUTTER_IOS_PROJECT_NAME-Bridging-Header.h` for accessing SDK Classes.
+Add the following import statement to your `AppDelegate.m` file:
 
 ```objc
-    #import "NotifyvisitorsPlugin.h"
+#import <flutter_notifyvisitors/NotifyvisitorsPlugin.h>
 ```
 
-## 📘 Note
+## Swift
 
-Make sure that the path of `bridge-header.h` file is included in build settings under “Swift compiler-code generation” as: Objective C bridging header: `YOUR_FLUTTER_IOS_PROJECT_NAME/YOUR_FLUTTER_IOS_PROJECT_NAME-Bridging-Header.h`
+If your Flutter iOS project uses Swift and needs to access the Objective-C SDK APIs directly, create a bridging header file:
 
-# 4. Initialise SDK
-
-**Step 1.** Initialize the SDK in the application `didFinishLaunchingWithOptions` function.
-
-<details>
-   <summary>Swift</summary>
-
-```swift
- NotifyvisitorsPlugin.nvInitialize()
-
- // MARK: - Example Code
-
-override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
-    // NotifyVisitors methods here
-    NotifyvisitorsPlugin.nvInitialize()
-    // ----------------------------
-
-    GeneratedPluginRegistrant.register(with: self)
-    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
- }
+```text
+YOUR_PROJECT_NAME-Bridging-Header.h
 ```
 
-</details>
+For example:
 
-<details>
- <summary>Objective-C</summary>
-
-```objC
-[NotifyvisitorsPlugin nvInitialize];
-
-// MARK: - Example Code
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
- // NotifyVisitors methods here
-   [NotifyvisitorsPlugin Initialize];
- // ----------------------------
-
-  [GeneratedPluginRegistrant registerWithRegistry:self];
-   return [super application:application didFinishLaunchingWithOptions:launchOptions];
-}
+```text
+Runner-Bridging-Header.h
 ```
 
- </details>
- </br>
+Add the following import statement:
 
-**Step 2.** Add the following method in `applicationDidEnterBackground` in your AppDelegate file.
-
- <details>
- <summary>Swift</summary>
-
-```swift
-NotifyvisitorsPlugin.applicationDidEnterBackground(application)
-
-// MARK: - Example Code
-override func applicationDidEnterBackground(_ application: UIApplication) {
- NotifyvisitorsPlugin.applicationDidEnterBackground(application)
-   }
+```objc
+#import <flutter_notifyvisitors/NotifyvisitorsPlugin.h>
 ```
 
- </details>
- <details>
- <summary>Objective-C</summary>
+### Configure the Bridging Header
 
-```objC
-[NotifyvisitorsPlugin applicationDidEnterBackground: application];
+Open:
 
-// MARK: - Example Code
-- (void)applicationDidEnterBackground:(UIApplication \*)application {
-  [NotifyvisitorsPlugin applicationDidEnterBackground: application];
-  }
+```text
+Xcode → Target → Build Settings
 ```
 
- </details>
- </br>
+Search for:
 
-**Step 3.** Add the following method in `applicationWillEnterForeground` in your AppDelegate file.
-
-<details>
-   <summary>Swift</summary>
-
-```swift
-NotifyvisitorsPlugin.applicationWillEnterForeground(application)
-
-// MARK: - Example Code
-override func applicationWillEnterForeground(_ application: UIApplication) {
-       NotifyvisitorsPlugin.applicationWillEnterForeground(application)
-   }
+```text
+Objective-C Bridging Header
 ```
 
- </details>
-<details>
- <summary>Objective-C</summary>
+Set the value to:
 
-```objC
-[NotifyvisitorsPlugin applicationWillEnterForeground: application];
-
-// MARK: - Example Code
-- (void)applicationWillEnterForeground:(UIApplication *)application {
- [NotifyvisitorsPlugin applicationWillEnterForeground: application];
-}
+```text
+YOUR_PROJECT_NAME/YOUR_PROJECT_NAME-Bridging-Header.h
 ```
 
- </details>
- </br>
+For example:
 
-**Step 4.** Add the following method in `applicationDidBecomeActive` in your AppDelegate file.
-
- <details>
- <summary>Swift</summary>
-
-```swift
-NotifyvisitorsPlugin.applicationDidBecomeActive(application)
-
-// MARK: - Example Code
-override func applicationDidBecomeActive(_ application: UIApplication) {
-       NotifyvisitorsPlugin.applicationDidBecomeActive(application)
-   }
+```text
+Runner/Runner-Bridging-Header.h
 ```
 
- </details>
- <details>
- <summary>Objective-C</summary>
+> **Note**
+>
+> A bridging header is only required when Swift code needs to access Objective-C SDK APIs directly.
 
-```objC
-[NotifyvisitorsPlugin applicationDidBecomeActive: application];
+## 4. Initialize SDK (iOS)
 
-// MARK: - Example Code
-- (void)applicationDidBecomeActive:(UIApplication *)application {
- [NotifyvisitorsPlugin applicationDidBecomeActive: application];
-}
-```
+The iOS SDK requires application lifecycle callbacks for session tracking, analytics, and deep-link handling.
 
-</details>
-</br>
+### AppDelegate Integration
 
-**Step 5.** Add the following method in `applicationWillTerminate` in your AppDelegate file.
+Add the following code to your `AppDelegate` file.
 
 <details>
 <summary>Swift</summary>
 
 ```swift
-NotifyvisitorsPlugin.applicationWillTerminate()
+import UIKit
+import Flutter
 
-// MARK: - Example Code
-override func applicationWillTerminate(_ application: UIApplication) {
+@main
+@objc class AppDelegate: FlutterAppDelegate {
+
+    override func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+
+        // Initialize NotifyVisitors SDK
+        NotifyvisitorsPlugin.nvInitialize()
+
+        GeneratedPluginRegistrant.register(with: self)
+
+        return super.application(
+            application,
+            didFinishLaunchingWithOptions: launchOptions
+        )
+    }
+
+    override func applicationDidEnterBackground(
+        _ application: UIApplication
+    ) {
+        NotifyvisitorsPlugin.applicationDidEnterBackground(application)
+    }
+
+    override func applicationWillEnterForeground(
+        _ application: UIApplication
+    ) {
+        NotifyvisitorsPlugin.applicationWillEnterForeground(application)
+    }
+
+    override func applicationDidBecomeActive(
+        _ application: UIApplication
+    ) {
+        NotifyvisitorsPlugin.applicationDidBecomeActive(application)
+    }
+
+    override func applicationWillTerminate(
+        _ application: UIApplication
+    ) {
         NotifyvisitorsPlugin.applicationWillTerminate()
     }
-```
 
- </details>
- <details>
- <summary>Objective-C</summary>
+    override func application(
+        _ app: UIApplication,
+        open url: URL,
+        options: [UIApplication.OpenURLOptionsKey : Any] = [:]
+    ) -> Bool {
 
-```objC
-[NotifyvisitorsPlugin applicationWillTerminate];
+        NotifyvisitorsPlugin.openUrl(app, open: url)
 
-// MARK: - Example Code
-- (void) applicationWillTerminate:(UIApplication *)application{
-   [NotifyvisitorsPlugin applicationWillTerminate];
+        return super.application(
+            app,
+            open: url,
+            options: options
+        )
+    }
 }
 ```
 
- </details>
- </br>
-
-**Step 6. Deep Linking:** Use the following method in your AppDelegate `openURL` method that will check the deep-linking and open your app from custom URL Scheme.
+</details>
 
 <details>
-   <summary>Swift</summary>
+<summary>Objective-C</summary>
 
-```swift
-NotifyvisitorsPlugin.openUrl(app, open: url)
+```objective-c
+#import "AppDelegate.h"
+#import <Flutter/Flutter.h>
+#import <NotifyvisitorsPlugin/NotifyvisitorsPlugin.h>
 
-// MARK: - Example Code
-override func application(_ app: UIApplication, open url: URL, options: [UIApplication OpenURLOptionsKey : Any] = [:]) -> Bool {
-      NotifyvisitorsPlugin.openUrl(app, open: url)
-       return super.application(app, open: url)
-   }
-```
+@implementation AppDelegate
 
- </details>
- <details>
- <summary>Objective-C</summary>
+- (BOOL)application:(UIApplication *)application
+didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-```objC
-[NotifyvisitorsPlugin openUrl:app openURL:url];
+    // Initialize NotifyVisitors SDK
+    [NotifyvisitorsPlugin nvInitialize];
 
-// MARK: - Example Code
--(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options (NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    [GeneratedPluginRegistrant registerWithRegistry:self];
 
-[NotifyvisitorsPlugin openUrl:app openURL:url];
-return [super application: app openURL: url options: options];
+    return [super application:application
+didFinishLaunchingWithOptions:launchOptions];
 }
+
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    [NotifyvisitorsPlugin applicationDidEnterBackground:application];
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+    [NotifyvisitorsPlugin applicationWillEnterForeground:application];
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    [NotifyvisitorsPlugin applicationDidBecomeActive:application];
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application {
+    [NotifyvisitorsPlugin applicationWillTerminate];
+}
+
+- (BOOL)application:(UIApplication *)app
+            openURL:(NSURL *)url
+            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+
+    [NotifyvisitorsPlugin openUrl:app openURL:url];
+
+    return [super application:app
+                      openURL:url
+                      options:options];
+}
+
+@end
 ```
 
- </details>
- </br>
+</details>
+
+### Lifecycle Methods
+
+The SDK uses the following application lifecycle callbacks:
+
+| Method                             | Purpose                                           |
+| ---------------------------------- | ------------------------------------------------- |
+| `nvInitialize()`                   | Initializes the SDK                               |
+| `applicationDidEnterBackground()`  | Tracks app background events                      |
+| `applicationWillEnterForeground()` | Tracks app foreground transitions                 |
+| `applicationDidBecomeActive()`     | Starts and resumes user sessions                  |
+| `applicationWillTerminate()`       | Performs SDK cleanup before app termination       |
+| `openUrl()`                        | Handles deep-link routing and URL scheme launches |
+
+> **Note**
+>
+> These callbacks are required for accurate session tracking, analytics collection, and deep-link processing on iOS.
+
+### Verify Integration
+
+After launching the application, verify that the SDK initializes successfully by checking the Xcode console logs.
+
+If the SDK is not initialized:
+
+1. Confirm that `NotifyvisitorsPlugin.nvInitialize()` is called in `didFinishLaunchingWithOptions`.
+2. Verify that all lifecycle methods are forwarded to the SDK.
+3. Clean and rebuild the iOS project.
+4. Run `flutter clean` and `flutter pub get`, then rebuild the application.
+
+```
+
+```
 
 # 5. Push Notifications
 
