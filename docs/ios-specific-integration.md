@@ -281,10 +281,11 @@ This guide covers:
 Once the SDK has been successfully integrated, you can continue with:
 
 - [Push Notifications](/docs/ios-push-integration.md)
-- In-App Messaging
-- Event Tracking
-- User Identification
-- Deep Linking
+- [Event Tracking](/docs/event-tracking-integration.md)
+- [User Identification](/docs/user-tracking-integration.md)
+- [In-App Messaging](/docs/inapp-integration.md)
+- [Screen View Tracking](/docs/screen-tracking.md)
+- [Configure Notification Center](/docs/notification-center-integration.md)
 
 Refer to the official documentation for detailed implementation guides.
 
@@ -294,6 +295,5 @@ Refer to the official documentation for detailed implementation guides.
 
 If you encounter any issues during integration:
 
-- Review the troubleshooting steps in the documentation.
 - Contact the NVECTA Support Team.
 - Raise a support request directly from the NVECTA Dashboard.

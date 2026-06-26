@@ -280,9 +280,9 @@ To enable advanced notification features such as:
 - Badge Count Updates
 - Delivery Tracking
 
-configure a **Notification Service Extension** together with an **App Group**.
+configure a **[Notification Service Extension](/docs/ios-notification-service-extension.md)** together with an **App Group**.
 
-Refer to the dedicated Notification Service Extension guide for complete setup instructions.
+Refer to the dedicated [Notification Service Extension](/docs/ios-notification-service-extension.md) guide for complete setup instructions.
 
 ---
 
@@ -300,22 +300,9 @@ If Rich Notifications are configured, verify that images, action buttons, and de
 
 ---
 
-# Next Steps
-
-Once Push Notifications are configured, you can continue with:
-
-- Rich Notifications
-- Deep Linking
-- Push Analytics
-- User Segmentation
-- Notification Action Buttons
-
----
-
 # Support
 
 If you encounter any issues during integration:
 
-- Review the troubleshooting documentation.
 - Contact the NVECTA Support Team.
 - Raise a support request from the NVECTA Dashboard.

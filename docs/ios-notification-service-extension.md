@@ -238,3 +238,12 @@ Once you've added `AppGroups capabilities`, you'll be able to see them in your `
 **Example:** You have recently created an `AppGroupID` called `group.com.mySampleiOSApp.Notifyvisitors` for your `Main App Target`, and make sure the same `AppGroupID` is visible and checked (Turned On) in the `Signing & Capabilities` of your `Notification Service Extension Target`.
 
 ![Active AppGroup ID](images/ios/notification-service-ext/nse-active-app-group-id.png)
+
+---
+
+# Support
+
+If you encounter any issues during integration:
+
+- Contact the NVECTA Support Team.
+- Raise a support request from the NVECTA Dashboard.
