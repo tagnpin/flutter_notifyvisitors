@@ -1,219 +1,321 @@
 # Push Notifications (Flutter iOS)
 
-This document explains additional push notification methods available in the NVECTA Flutter SDK, including notification preferences, subscription management, callback handling, and push interaction tracking.
+This guide explains how to configure Push Notifications for the NotifyVisitors Flutter SDK on iOS.
 
-Official Documentation:  
+**Official Documentation**
 https://www.nvecta.com/docs/flutter-push-notifications
 
 ---
 
-## 1. Configure in NVECTA Dashboard
+## Overview
 
-### 1.1. Generate APNS Auth Key or APNS Certificate from Your Apple Developer Account:
+This guide covers:
 
-You need to upload either [APNS Auth Key (recommended)](https://docs.notifyvisitors.com/docs/apns-auth-keys) or [APNS Push Certificate](https://docs.notifyvisitors.com/docs/apns-certificate) and some details from your Apple Developer Account into your NVECTA Dashboard settings. For assistance to generate one of these certificates you can refer to the one of the following doc but we recommend you to use APNS Auth Key instead of APNS Push Certificate because it expires every year and you need to renew and reupload it each year.
+- APNs configuration
+- Registering for push notifications
+- Configuring Xcode capabilities
+- Handling notification callbacks
+- Rich notifications using Notification Service Extension
 
-- [APNS Auth Keys](https://docs.notifyvisitors.com/docs/apns-auth-keys)
-- [APNS Push Certificate](https://docs.notifyvisitors.com/docs/apns-certificate)
+---
 
-### 1.2. Upload APNS Auth Key (.p8) or APNS Certificate (.pem) file in NVECTA Account:
+## Prerequisites
 
-- After completing the previous step (1.1) you have either a .p8 file (recommended) or a .pem file (make sure to use the correct .pem file as described in the documentation because you will generate 3 different .pem files in that doc). You need to upload this file in your NVECTA account.
+Before proceeding, ensure that:
 
-- Goto your `NVECTA` panel and under any one of Analytics Product and now from the left side menu goto `Settings >> App Push (under Channel section) >> iOS tab`.
+- The NotifyVisitors Flutter SDK has been integrated successfully.
+- Your iOS application is configured and builds successfully.
+- You have access to your Apple Developer Account.
+- You have access to the NVECTA Dashboard.
 
-- Now make sure status should be Active if not make it active state.
+---
 
-- Select your `Authentication Type` as per the file created in the step (1.1). If you have created `APNS Auth key (i.e. .p8 file)` then select `APNs Auth Key` but if you have created `APNS Push Certificate (i.e. .pem file)` then select `APNs Certificate` option.
+# 1. Configure APNs in the NVECTA Dashboard
 
-- Provide the others details as shown on this page from your Apple developer account and click on `Save Changes` button after providing the details. Make sure the given details must be correct and case sensitive so if details are mismatched then push may not be delivered to the device.
+Before configuring your application, upload your Apple Push Notification credentials to the NVECTA Dashboard.
 
-- Upload the `.p8` file if you have selected `APNS Auth Key` or upload the correct `.pem` file (as described in doc) if you have selected the `APNS Certificate` option as created in previous steps.
+### Generate an APNs Authentication Key
 
-- Now you can go to your app and configure push notifications as described in next step and after that step you can come back to your panel to create and send push notification from NVECTA panel to your iOS devices.
+Create an APNs Authentication Key (`.p8`) from your Apple Developer account.
 
-## 2. Configure in your App
+For detailed instructions, refer to:
 
-After completing the `Configure in NVECTA Panel` step, you need to configure push in your app which includes `Register for push notifications, Enabling the Push Notifications Capability, Handling push and its click delegates`, and `Configure Notification Service Extension`. Let’s discuss each step one by one in detail.
+- [APNs Auth Keys](https://docs.notifyvisitors.com/docs/apns-auth-keys)
 
-### 2.1. Upload AP Register for push notifications:
+### Upload the APNs Authentication Key
 
-It’s required to ask user permission first to enable push notifications on an iPhone device to do that goto your App’s `AppDelegate.swift / AppDelegate.h` file and import `User Notifications` and to handle push notifications click using delegate you need to use `UNUserNotificationCenterDelegate` in your `AppDelegate` file as shown below.
+In the NVECTA Dashboard:
 
-<details>
-    <summary>Swift</summary>
+```
+Settings
+    └── App Push
+            └── iOS
+```
+
+Configure the following:
+
+- Enable Push Notifications
+- Select **APNs Auth Key** as the authentication type
+- Upload the generated `.p8` file
+- Enter the required Apple Developer credentials
+- Save the configuration
+
+> **Important**
+>
+> Ensure that all Apple Developer credentials are entered exactly as provided. Incorrect values may prevent push notifications from being delivered.
+
+---
+
+# 2. Configure Push Notifications in Your App
+
+The iOS application must:
+
+- Register for remote notifications
+- Enable Push Notification capabilities
+- Forward notification delegates to the SDK
+- Configure a Notification Service Extension (recommended)
+
+---
+
+## 2.1 Register for Push Notifications
+
+Import the User Notifications framework and adopt the `UNUserNotificationCenterDelegate` protocol.
+
+### Swift
 
 ```swift
 import UserNotifications
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate
+class AppDelegate: FlutterAppDelegate, UNUserNotificationCenterDelegate
 ```
 
-</details>
-<details>
-    <summary>Objective-C</summary>
+### Objective-C
 
-```objC
+```objective-c
 #import <UserNotifications/UserNotifications.h>
-#import <flutter_notifyvisitors/NotifyvisitorsPlugin.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, UNUserNotificationCenterDelegate>
+@interface AppDelegate () <UNUserNotificationCenterDelegate>
+@end
 ```
 
-</details>
+After initializing the SDK in `didFinishLaunchingWithOptions`, register for push notifications.
 
-Add the following method in your `AppDelegate.swift / AppDelegate.m` file under `didFinishLaunchingWithOptions` method after SDK initialization as done in the Integration section.
-
-<details>
-    <summary>Swift</summary>
+### Swift
 
 ```swift
-NotifyvisitorsPlugin.registerPush(withDelegate: self, app: application, launchOptions: launchOptions)
-
-// MARK: - Example Code
-func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
-/* before NotifyvisitorsPlugin.nvInitialize() method */
 UNUserNotificationCenter.current().delegate = self
 
-/* after NotifyvisitorsPlugin.nvInitialize() method */
-NotifyvisitorsPlugin.registerPush(withDelegate: self, app: application, launchOptions: launchOptions)
-GeneratedPluginRegistrant.register(with: self)
-return true
-}
+NotifyvisitorsPlugin.registerPush(
+    withDelegate: self,
+    app: application,
+    launchOptions: launchOptions
+)
 ```
 
-</details>
-<details>
-    <summary>Objective-C</summary>
+### Objective-C
 
-```objC
-[NotifyvisitorsPlugin RegisterPushWithDelegate: self App: application launchOptions: launchOptions];
+```objective-c
+[UNUserNotificationCenter currentNotificationCenter].delegate = self;
 
-// MARK: - Example Code
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
-    /* before NotifyvisitorsPlugin Initialize method */
-    [UNUserNotificationCenter currentNotificationCenter].delegate = self;
-
-    /* after NotifyvisitorsPlugin Initialize method */
-    [NotifyvisitorsPlugin RegisterPushWithDelegate:self App:application launchOptions:launchOptions];
-
-    [GeneratedPluginRegistrant registerWithRegistry:self];
-    return [super application:application didFinishLaunchingWithOptions:launchOptions];
-    }
+[NotifyvisitorsPlugin RegisterPushWithDelegate:self
+                                           App:application
+                                 launchOptions:launchOptions];
 ```
 
-</details>
+---
 
-Now add the following delegate method in your `AppDelegate.swift / AppDelegate.m` file to handle the registering events of push notification.
+### Forward APNs Registration Callbacks
 
-<details>
-    <summary>Swift</summary>
+Forward the following callbacks to the SDK.
+
+#### Swift
 
 ```swift
-
-func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-
-    NotifyvisitorsPlugin.application(application, didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)
-
+func application(
+    _ application: UIApplication,
+    didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
+) {
+    NotifyvisitorsPlugin.application(
+        application,
+        didRegisterForRemoteNotificationsWithDeviceToken: deviceToken
+    )
 }
 
-func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-
-    NotifyvisitorsPlugin.application(application, didFailToRegisterForRemoteNotificationsWithError: error)
-
+func application(
+    _ application: UIApplication,
+    didFailToRegisterForRemoteNotificationsWithError error: Error
+) {
+    NotifyvisitorsPlugin.application(
+        application,
+        didFailToRegisterForRemoteNotificationsWithError: error
+    )
 }
 ```
 
-</details>
-<details>
-    <summary>Objective-C</summary>
+#### Objective-C
 
-```objC
+```objective-c
+- (void)application:(UIApplication *)application
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 
--(void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-
-    [NotifyvisitorsPlugin application: application didRegisterForRemoteNotificationsWithDeviceToken: deviceToken];
-
+    [NotifyvisitorsPlugin application:application
+didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 
--(void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*) error {
+- (void)application:(UIApplication *)application
+didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
 
-    [NotifyvisitorsPlugin application: application didFailToRegisterForRemoteNotificationsWithError: error];
-
-    }
+    [NotifyvisitorsPlugin application:application
+didFailToRegisterForRemoteNotificationsWithError:error];
+}
 ```
 
-</details>
+---
 
-### 2.2. Configure Push in SignIn and Capabilities:
+## 2.2 Configure Xcode Capabilities
 
-Goto `Signing & Capabilities` tab and click on `+` symbol on the left corner of this tab and add `Push Notifications` and if you have `upgraded Xcode` and `Push Notifications` was already added in previous version of Xcode then remove `Push Notifications` and add it again to configure push notification properly for the upgraded devices.
+Open your iOS project in Xcode and select:
 
-![Push Capabilities Setup](images/ios/push-notification/PushCapabilities_NV_SDK.png)
+```
+Runner
+    └── Signing & Capabilities
+```
 
-Again in the `Signing & Capabilitie`s tab if `Background Modes` is not already added then click on the `+` symbol again and add `Background Modes` make sure to select `2 checkboxes`. If it is already added then make sure to select `2 checkboxes` (i.e. `Background fetch`, `Remote notifications`) as shown in the screenshot below.
+Enable the following capabilities:
 
-![Background Mode Capabilities Setup](images/ios/push-notification/BgModeCapabilities_NV_SDK.png)
+### Push Notifications
 
-### 2.3. Handling Push Notifications Delegates & Its Clicks:
+Add the **Push Notifications** capability if it is not already enabled.
 
-Now by using `UNUserNotificationCenterDelegate` protocol in your `AppDelegate.swift / AppDelegate.m` file you need to implement below given delegate methods to handle push receiving (while app is in foreground) and push click events as described below.
+### Background Modes
 
-<details>
-    <summary>Swift</summary>
+Enable **Background Modes** and select:
+
+- Background fetch
+- Remote notifications
+
+These capabilities are required for reliable push notification delivery and background processing.
+
+---
+
+## 2.3 Forward Notification Delegates
+
+Forward all notification callbacks to the SDK.
+
+### Swift
 
 ```swift
-func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-
-    NotifyvisitorsPlugin.willPresent(notification, withCompletionHandler: completionHandler)
-
+func userNotificationCenter(
+    _ center: UNUserNotificationCenter,
+    willPresent notification: UNNotification,
+    withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+) {
+    NotifyvisitorsPlugin.willPresent(
+        notification,
+        withCompletionHandler: completionHandler
+    )
 }
 
-func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-
-    NotifyvisitorsPlugin.application(application, didReceiveRemoteNotification: userInfo)
-
+func application(
+    _ application: UIApplication,
+    didReceiveRemoteNotification userInfo: [AnyHashable : Any],
+    fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+) {
+    NotifyvisitorsPlugin.application(
+        application,
+        didReceiveRemoteNotification: userInfo
+    )
 }
 
-func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-
+func userNotificationCenter(
+    _ center: UNUserNotificationCenter,
+    didReceive response: UNNotificationResponse,
+    withCompletionHandler completionHandler: @escaping () -> Void
+) {
     NotifyvisitorsPlugin.didReceive(response)
-
 }
-
 ```
 
-</details>
-<details>
-    <summary>Objective-C</summary>
+### Objective-C
 
-```objc
--(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler {
+```objective-c
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+       willPresentNotification:(UNNotification *)notification
+         withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler {
 
-    [NotifyvisitorsPlugin willPresentNotification:notification withCompletionHandler:completionHandler];
-
+    [NotifyvisitorsPlugin willPresentNotification:notification
+                           withCompletionHandler:completionHandler];
 }
 
--(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+- (void)application:(UIApplication *)application
+didReceiveRemoteNotification:(NSDictionary *)userInfo
+fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
 
-    [NotifyvisitorsPlugin application:application didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
-
+    [NotifyvisitorsPlugin application:application
+didReceiveRemoteNotification:userInfo
+fetchCompletionHandler:completionHandler];
 }
 
--(void)userNotificationCenter:(UNUserNotificationCenter*)center didReceiveNotificationResponse: (UNNotificationResponse*)response withCompletionHandler:(void (^)(void))completionHandler {
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+didReceiveNotificationResponse:(UNNotificationResponse *)response
+         withCompletionHandler:(void (^)(void))completionHandler {
 
     [NotifyvisitorsPlugin didReceiveNotificationResponse:response];
-
 }
 ```
 
-</details>
+---
 
-### 2.4. Enable Rich Media Content by using Notification Service Extension:
+# 3. Enable Rich Notifications (Recommended)
 
-Till the above steps are completed you will be able to receive only text content (i.e. title and message text) in push notifications and also delivery count can not be tracked in NVECTA panel. You need to configure `Notification Service Extension` along with AppGroup properly to complete `Push integration` and it will enable your push notification to receive `rich media (image, audio or video)` and also NVECTA SDK used it to enable you to add `Action buttons, badge counts and to track delivery counts` in your NVECTA panel.
+By default, iOS displays only the notification title and body.
 
-You need to refer to our [Notification Service Extension](/docs/ios-notification-service-extension.md) guide for detailed configuration steps for the same.
+To enable advanced notification features such as:
+
+- Images
+- Audio
+- Video
+- Action Buttons
+- Badge Count Updates
+- Delivery Tracking
+
+configure a **Notification Service Extension** together with an **App Group**.
+
+Refer to the dedicated Notification Service Extension guide for complete setup instructions.
+
+---
+
+# 4. Verify Integration
+
+After completing the configuration:
+
+- Build and run the application.
+- Accept the notification permission prompt.
+- Confirm that the device is successfully registered with APNs.
+- Send a test push notification from the NVECTA Dashboard.
+- Verify that notifications are received on the device.
+
+If Rich Notifications are configured, verify that images, action buttons, and delivery tracking work as expected.
+
+---
+
+# Next Steps
+
+Once Push Notifications are configured, you can continue with:
+
+- Rich Notifications
+- Deep Linking
+- Push Analytics
+- User Segmentation
+- Notification Action Buttons
+
+---
+
+# Support
+
+If you encounter any issues during integration:
+
+- Review the troubleshooting documentation.
+- Contact the NVECTA Support Team.
+- Raise a support request from the NVECTA Dashboard.

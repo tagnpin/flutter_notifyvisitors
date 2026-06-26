@@ -1,135 +1,100 @@
 # iOS Integration
 
-This document explains the iOS-specific integration steps required for the Flutter plugin.
+This guide explains the iOS-specific configuration required to integrate the NotifyVisitors Flutter plugin into your Flutter application.
 
-Official Documentation:  
+**Official Documentation:**
 https://www.nvecta.com/docs/flutter-ios-integration
 
 ---
 
-<br>
+## Overview
 
-# 1. Cocoapods Install
+The iOS integration consists of the following steps:
 
-Once you have completed the Plugin Installation step, inside the terminal, go to the ios folder located within your Flutter Project root folder using cd command, then run this command from terminal
+1. Install iOS dependencies
+2. Configure SDK credentials
+3. Configure the AppDelegate
+4. Initialize the SDK
+5. Verify the integration
+6. Configure Push Notifications (optional)
 
-```ruby
-    cd ios && pod install && cd ..
-```
+---
 
-For example, if your Project is saved on Desktop and its root folder name is my_flutter_app, then go to your project's ios folder by using the following command
+## Prerequisites
 
-```ruby
-    $ cd ~/Desktop/my_flutter_app/ios && pod install && cd ..
+Before proceeding, ensure that:
+
+- Flutter is installed and configured.
+- Xcode is installed.
+- CocoaPods is installed.
+- The NotifyVisitors Flutter plugin has been added to your project's `pubspec.yaml`.
+- You have your **Brand ID** and **Secret Key** from the NVECTA Dashboard.
+
+---
+
+## 1. Install iOS Dependencies
+
+From the root directory of your Flutter project, install the iOS dependencies by running:
+
+```bash
+cd ios
+pod install
+cd ..
 ```
 
 ---
 
-# 2. Configure info.plist
+## 2. Configure SDK Credentials
 
-To configure your info.plist, go to ios folder inside your Flutter Project root folder and open your iOS project into Xcode by double click on `.xcworkspace` file and once your Flutter iOS project is open in Xcode, go to `info.plist`, open `info.plist` file as source code (right-click on info.plist and click on Open as >> Source code) and add the following code in it.
+Open the iOS project using:
+
+```text
+ios/Runner.xcworkspace
+```
+
+Open **Info.plist** and add the following keys.
 
 ```xml
 <key>nvBrandID</key>
-         <integer>Your BRANDID comes here</integer>
-              <key>nvSecretKey</key>
-	        <string>Your SECRET KEY comes here</string>
-             <key>nvPushCategory</key>
-                       <string>nvpush</string>
+<integer>YOUR_BRAND_ID</integer>
+
+<key>nvSecretKey</key>
+<string>YOUR_SECRET_KEY</string>
+
+<key>nvPushCategory</key>
+<string>nvpush</string>
 ```
 
-### OR
+### SDK Configuration
 
-You can simply open the `info.plist` file as `Property List` and add the keys which work the same as above.
+| Key              | Type   | Description                                                  |
+| ---------------- | ------ | ------------------------------------------------------------ |
+| `nvBrandID`      | Number | Your NotifyVisitors Brand ID                                 |
+| `nvSecretKey`    | String | Your NotifyVisitors Secret Key                               |
+| `nvPushCategory` | String | Push notification category. Use the default value: `nvpush`. |
 
-1. Add a new row again and set up a `nvBrandID` as Number and fill this field with your `BRANDID`
-
-   ![BrandID Setup](images/ios/integration/InfoPlist_BrandID.png)
-
-2. Add a new row again and set up a `nvSecretKey` as String and fill this field with your `SECRET KEY`
-
-   ![BrandID Setup](images/ios/integration/InfoPlist_SecretKey.png)
-
-3. Add a new row again and set up a `nvPushCategory` as String and set it’s value nvpush.
-
-   ![Push Category Setup](images/ios/integration/InfoPlist_nvPushCategory.png)
-
-## ⚠️ Important Note
-
-In the example provided above, dummy Brand ID and Secret Key has been mentioned. Kindly login to your account to see your credentials.
-
-# 3. Import SDK Headers
-
-Before calling any NotifyVisitors iOS APIs from your `AppDelegate`, import the SDK header.
-
-## Objective-C
-
-Add the following import statement to your `AppDelegate.m` file:
-
-```objc
-#import <flutter_notifyvisitors/NotifyvisitorsPlugin.h>
-```
-
-## Swift
-
-If your Flutter iOS project uses Swift and needs to access the Objective-C SDK APIs directly, create a bridging header file:
-
-```text
-YOUR_PROJECT_NAME-Bridging-Header.h
-```
-
-For example:
-
-```text
-Runner-Bridging-Header.h
-```
-
-Add the following import statement:
-
-```objc
-#import <flutter_notifyvisitors/NotifyvisitorsPlugin.h>
-```
-
-### Configure the Bridging Header
-
-Open:
-
-```text
-Xcode → Target → Build Settings
-```
-
-Search for:
-
-```text
-Objective-C Bridging Header
-```
-
-Set the value to:
-
-```text
-YOUR_PROJECT_NAME/YOUR_PROJECT_NAME-Bridging-Header.h
-```
-
-For example:
-
-```text
-Runner/Runner-Bridging-Header.h
-```
-
-> **Note**
+> **Tip**
 >
-> A bridging header is only required when Swift code needs to access Objective-C SDK APIs directly.
+> You can edit `Info.plist` either as a **Property List** or as **Source Code**. Both approaches produce the same result.
 
-## 4. Initialize SDK (iOS)
+> **Important**
+>
+> Replace the sample values above with your actual Brand ID and Secret Key available from the NVECTA Dashboard.
 
-The iOS SDK requires application lifecycle callbacks for session tracking, analytics, and deep-link handling.
+---
 
-### AppDelegate Integration
+## 3. Configure AppDelegate
 
-Add the following code to your `AppDelegate` file.
+The SDK uses iOS application lifecycle callbacks to support:
 
-<details>
-<summary>Swift</summary>
+- Session tracking
+- Analytics
+- Deep-link handling
+- SDK lifecycle management
+
+Forward the following callbacks from your `AppDelegate`.
+
+### Swift
 
 ```swift
 import UIKit
@@ -143,7 +108,6 @@ import Flutter
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
 
-        // Initialize NotifyVisitors SDK
         NotifyvisitorsPlugin.nvInitialize()
 
         GeneratedPluginRegistrant.register(with: self)
@@ -195,22 +159,19 @@ import Flutter
 }
 ```
 
-</details>
-
 <details>
 <summary>Objective-C</summary>
 
 ```objective-c
 #import "AppDelegate.h"
 #import <Flutter/Flutter.h>
-#import <NotifyvisitorsPlugin/NotifyvisitorsPlugin.h>
+#import <flutter_notifyvisitors/NotifyvisitorsPlugin.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-    // Initialize NotifyVisitors SDK
     [NotifyvisitorsPlugin nvInitialize];
 
     [GeneratedPluginRegistrant registerWithRegistry:self];
@@ -253,42 +214,86 @@ didFinishLaunchingWithOptions:launchOptions];
 
 ### Lifecycle Methods
 
-The SDK uses the following application lifecycle callbacks:
-
-| Method                             | Purpose                                           |
-| ---------------------------------- | ------------------------------------------------- |
-| `nvInitialize()`                   | Initializes the SDK                               |
-| `applicationDidEnterBackground()`  | Tracks app background events                      |
-| `applicationWillEnterForeground()` | Tracks app foreground transitions                 |
-| `applicationDidBecomeActive()`     | Starts and resumes user sessions                  |
-| `applicationWillTerminate()`       | Performs SDK cleanup before app termination       |
-| `openUrl()`                        | Handles deep-link routing and URL scheme launches |
+| Method                             | Description                                                          |
+| ---------------------------------- | -------------------------------------------------------------------- |
+| `nvInitialize()`                   | Initializes the SDK.                                                 |
+| `applicationDidEnterBackground()`  | Notifies the SDK when the application enters the background.         |
+| `applicationWillEnterForeground()` | Notifies the SDK when the application returns to the foreground.     |
+| `applicationDidBecomeActive()`     | Starts or resumes SDK session tracking.                              |
+| `applicationWillTerminate()`       | Allows the SDK to perform cleanup before the application terminates. |
+| `openUrl()`                        | Handles custom URL schemes and deep links.                           |
 
 > **Note**
 >
-> These callbacks are required for accurate session tracking, analytics collection, and deep-link processing on iOS.
+> These lifecycle callbacks are required for proper SDK functionality, including analytics, session tracking, and deep-link processing.
 
-### Verify Integration
+---
 
-After launching the application, verify that the SDK initializes successfully by checking the Xcode console logs.
+## 4. Verify the Integration
 
-If the SDK is not initialized:
+Build and launch the application.
 
-1. Confirm that `NotifyvisitorsPlugin.nvInitialize()` is called in `didFinishLaunchingWithOptions`.
-2. Verify that all lifecycle methods are forwarded to the SDK.
-3. Clean and rebuild the iOS project.
-4. Run `flutter clean` and `flutter pub get`, then rebuild the application.
+Verify that:
 
+- The application builds successfully.
+- The SDK initializes without errors.
+- Initialization logs appear in the Xcode console.
+- No runtime exceptions are reported.
+
+If the SDK does not initialize correctly:
+
+1. Verify that `NotifyvisitorsPlugin.nvInitialize()` is called from `didFinishLaunchingWithOptions`.
+2. Ensure all required lifecycle callbacks are forwarded to the SDK.
+3. Run:
+
+```bash
+flutter clean
+flutter pub get
 ```
 
+4. Reinstall CocoaPods dependencies:
+
+```bash
+cd ios
+pod install
 ```
 
-# 5. Push Notifications
+5. Clean and rebuild the project in Xcode.
 
-NotifyVisitors Flutter plugin enables you to send push notifications to your mobile apps from our dashboard. Kindly refer to our [Push Notifications](/docs/ios-push-integration.md) integration guide available on the next page.
+---
 
-<br>
+## 5. Push Notifications
+
+To enable Push Notifications for iOS, follow the dedicated Push Notification Integration guide.
+
+This guide covers:
+
+- APNs configuration
+- Push capabilities
+- Device token registration
+- Rich notifications
+- Notification handling
+
+---
+
+## Next Steps
+
+Once the SDK has been successfully integrated, you can continue with:
+
+- Push Notifications
+- In-App Messaging
+- Event Tracking
+- User Identification
+- Deep Linking
+
+Refer to the official documentation for detailed implementation guides.
+
+---
 
 # Support
 
-If you face any issues during integration, please contact the support team or raise an issue directly from the NVECTA Dashboard.
+If you encounter any issues during integration:
+
+- Review the troubleshooting steps in the documentation.
+- Contact the NVECTA Support Team.
+- Raise a support request directly from the NVECTA Dashboard.
