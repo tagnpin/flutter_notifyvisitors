@@ -21,11 +21,10 @@ https://www.nvecta.com/docs/flutter-notification-service-extension
 
 **1.4** Once the target is created, press 'Cancel' when prompted to activate the scheme. After this your notification service extension will be added to the project you will see a class with the extension name you specified during creation, as well as an info.plist file associated with it.
 
-<details>
-    <summary>Swift</summary>
-    
+### Swift
+
 ![Notification Service Extension Swift Project Navigator](images/ios/notification-service-ext/nse-project-navigator-swift.png)
-</details>
+
 <details>
     <summary>Objective-C</summary>
 
@@ -63,23 +62,57 @@ $ pod repo update && pod install && cd ..
 
 **2.4.** Now, re-open your flutter ios project in `Xcode` (by going to the ios folder present inside the `Flutter Project's` root folder) and follow the steps mentioned below in `Xcode` itself to complete the remaining `Notification Service Extension` integration process.
 
-**2.5.** If you have selected `Objective-C` as the language while creating the `Notification Service Extension` in the above steps, then you can directly import our header file in your `NotificationService.m` file.
+### **2.5. Import the SDK**
 
-However, if you are using `Swift` language then you need to create a separate `Bridging-Header` file and then import our header file as done earlier in the app’s main target. To do so create a new header file and name it as per the following format `YOUR_ServiceExtension_NAME-Bridging-Header.h`
-
-**For example:** if your Service Extension name is `MyNotificationServiceExtension`, then the header file name will be `MyNotificationServiceExtension-Bridging-Header.h`. Now add the following import statement in `YOUR_ServiceExtension_NAME-Bridging-Header.h` for accessing SDK Classes.
+If your Notification Service Extension is written in **Objective-C**, import the SDK header directly into your `NotificationService.m` file.
 
 ```objc
-    #import <notifyvisitorsNotificationService/notifyvisitorsNotificationService.h>
+#import <notifyvisitorsNotificationService/notifyvisitorsNotificationService.h>
 ```
 
-## 📘 Note
+If your Notification Service Extension is written in **Swift**, create an **Objective-C Bridging Header** and import the SDK header to make the Objective-C APIs available to your Swift code.
 
-Make sure that the path of `bridge-header.h` file is included in build settings under “Swift compiler-code generation” as: Objective C bridging header: `YOUR_ServiceExtension_NAME/YOUR_ServiceExtension_NAME-Bridging-Header.h`
+Create a bridging header using the following naming convention:
 
-## 3. Configure Service Extension’s info.plist
+```text
+<NotificationServiceExtensionName>-Bridging-Header.h
+```
 
-Now in Xcode inside the project navigator go to your `Notification Service Extension` project target and open `info.plist` as source code (right click on `info.plist` and click on `Open as >> Source code`) and add the following code in it.
+For example, if your Notification Service Extension is named:
+
+```text
+MyNotificationServiceExtension
+```
+
+then the bridging header file should be:
+
+```text
+MyNotificationServiceExtension-Bridging-Header.h
+```
+
+Add the following import statement to the bridging header:
+
+```objc
+#import <notifyvisitorsNotificationService/notifyvisitorsNotificationService.h>
+```
+
+> **Note**
+>
+> Configure the bridging header path in your Notification Service Extension target:
+>
+> **Target → Build Settings → Swift Compiler - General → Objective-C Bridging Header**
+>
+> For example:
+>
+> ```text
+> MyNotificationServiceExtension/MyNotificationServiceExtension-Bridging-Header.h
+> ```
+>
+> A bridging header is only required when your Notification Service Extension is implemented in **Swift** and needs to access the Objective-C SDK APIs.
+
+## 3. Configure the Notification Service Extension info.plist
+
+Open your iOS project in Xcode, select the `Notification Service Extension` target, and open its `Info.plist` file as source code (right click on `info.plist` and click on `Open as >> Source code`) and add the following code in it.
 
 ```xml
 <key>App Bundle identifier</key>
@@ -112,6 +145,10 @@ You can simply open the info.plist & add the keys which works the same as above 
 
   ![Notification Service Extension Info Extension Attributes](images/ios/notification-service-ext/nse-iInfo-plist-ext-attributes.png)
 
+> **Important**
+>
+> The value of **App Bundle identifier** must exactly match the **Bundle Identifier** of your application's main target. An incorrect value may prevent the Notification Service Extension from communicating with the main application.
+
 ## 4. Configure Push in SignIn and Capabilities:
 
 Go to `Signing & Capabilities` tab of your `Notification Service Extension` target and click on `+` symbol on the left corner of this tab and add `Push Notifications` and if you have upgraded `Xcode` and `Push Notifications` was already added in previous version of Xcode then remove `Push Notifications` and add it again to configure push notification properly for the upgraded devices.
@@ -122,8 +159,7 @@ Go to `Signing & Capabilities` tab of your `Notification Service Extension` targ
 
 Now you need to update the code to download and attach media content if available in your push payload to display rich media content (`image, audio or video`). To do so, go to your `NotificationService.swift/NotificationService.m` file and update the `didReceiveNotificationRequest()` method as shown below.
 
-<details>
-    <summary>Swift</summary>
+### Swift
 
 ```swift
 override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
@@ -162,8 +198,7 @@ Make sure `notifyvisitorsNotificationService.didReceive()` method of our SDK is 
 
 Now in your same `NotificationService.swift/NotificationService.m` file update the `serviceExtensionTimeWillExpire()` method as shown below.
 
-<details>
-    <summary>Swift</summary>
+### Swift
 
 ```swift
 override func serviceExtensionTimeWillExpire() {

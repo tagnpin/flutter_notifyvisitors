@@ -113,7 +113,8 @@ NotifyvisitorsPlugin.registerPush(
 )
 ```
 
-### Objective-C
+<details>
+<summary>Objective-C</summary>
 
 ```objective-c
 [UNUserNotificationCenter currentNotificationCenter].delegate = self;
@@ -122,6 +123,8 @@ NotifyvisitorsPlugin.registerPush(
                                            App:application
                                  launchOptions:launchOptions];
 ```
+
+</details>
 
 ---
 
@@ -153,7 +156,8 @@ func application(
 }
 ```
 
-#### Objective-C
+<details>
+<summary>Objective-C</summary>
 
 ```objective-c
 - (void)application:(UIApplication *)application
@@ -170,6 +174,8 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
 didFailToRegisterForRemoteNotificationsWithError:error];
 }
 ```
+
+</details>
 
 ---
 
@@ -237,7 +243,8 @@ func userNotificationCenter(
 }
 ```
 
-### Objective-C
+<details>
+<summary>Objective-C</summary>
 
 ```objective-c
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center
@@ -264,6 +271,8 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
     [NotifyvisitorsPlugin didReceiveNotificationResponse:response];
 }
 ```
+
+</details>
 
 ---
 
