@@ -264,7 +264,7 @@ pod install
 
 ## 5. Push Notifications
 
-To enable Push Notifications for iOS, follow the dedicated Push Notification Integration guide.
+To enable Push Notifications for iOS, follow the dedicated [Push Notifications](/docs/ios-push-integration.md) Integration guide.
 
 This guide covers:
 
@@ -280,7 +280,7 @@ This guide covers:
 
 Once the SDK has been successfully integrated, you can continue with:
 
-- Push Notifications
+- [Push Notifications](/docs/ios-push-integration.md)
 - In-App Messaging
 - Event Tracking
 - User Identification
