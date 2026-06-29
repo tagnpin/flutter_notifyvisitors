@@ -228,5 +228,5 @@ If you face any issues during integration, please contact the support team or ra
 
 ## Next Steps
 
-- Continue with the iOS integration guide: [iOS Integration](/docs/ios-push-integration.md)
+- Continue with the iOS integration guide: [iOS Integration](/docs/ios-specific-integration.md)
 - Learn how to run the example project locally: [Running the Example Project](/docs/running-sample-app-in-local.md)
