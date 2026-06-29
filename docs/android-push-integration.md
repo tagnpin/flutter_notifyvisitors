@@ -199,9 +199,17 @@ Incoming Push Notification
 <br>
 
 ## (6) [Push Notification Channels](/docs/android-push-notification-channels.md)
-With the introduction of Android Oreo, Google has strived to make the Notifications system more user-friendly. Android Oreo has completely redesigned notifications.
+Starting with Android Oreo (Android 8.0), every notification must belong to a **Notification Channel**.
 
-Notification Channels are somewhat like groups or categories of notifications - say you’re building a social networking app, the channels can be “activity” - likes, or comments on your posts, “messages”, etc.
+You can think of a Notification Channel as a folder or category for notifications. Instead of treating all notifications the same, Android groups them by purpose.
+
+For example, a social media app could have:
+
+* **Messages** channel for chat notifications.
+* **Activity** channel for likes and comments.
+* **Promotions** channel for marketing messages.
+
+Users can then decide which categories they want to receive notifications from. For instance, they may choose to receive chat messages but turn off promotional notifications.
 
 ---
 
