@@ -93,7 +93,7 @@ If no large icon is configured, the application icon will be used automatically.
 
 ## (3) Push Notification Runtime Permission -- IMPORTANT
 
-Android 13 (API level 33) and higher supports runtime permission for sending non-exempt (including Foreground Services (FGS)) notifications from an app. We recommend targeting Android 13 or higher as soon as possible to benefit from this feature's additional control and flexibility. [Click here](/docs/android-push-runtime-permission) to learn more about push prompt notification permission.
+Android 13 (API level 33) and higher supports runtime permission for sending non-exempt (including Foreground Services (FGS)) notifications from an app. We recommend targeting Android 13 or higher as soon as possible to benefit from this feature's additional control and flexibility. [Click here](/docs/android-push-runtime-permission.md) to learn more about push prompt notification permission.
 
 ---
 
