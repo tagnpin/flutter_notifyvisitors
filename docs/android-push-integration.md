@@ -97,7 +97,7 @@ Android 13 (API level 33) and higher supports runtime permission for sending non
 
 NVECTA supports three different ways to request notification permission:
 
-1. **Use your own custom permission flow** *(shown above)*
+1. **Use your own custom permission flow** *(shown below)*
 2. **Use NVECTA's customizable permission prompt**
 3. **Use the native Android system permission dialog**
 
