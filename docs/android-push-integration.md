@@ -93,7 +93,38 @@ If no large icon is configured, the application icon will be used automatically.
 
 ## (3) Push Notification Runtime Permission -- IMPORTANT
 
-Android 13 (API level 33) and higher supports runtime permission for sending non-exempt (including Foreground Services (FGS)) notifications from an app. We recommend targeting Android 13 or higher as soon as possible to benefit from this feature's additional control and flexibility. [Click here](/docs/android-push-runtime-permission.md) to learn more about push prompt notification permission.
+Android 13 (API level 33) and higher supports runtime permission for sending non-exempt (including Foreground Services (FGS)) notifications from an app. We recommend targeting Android 13 or higher as soon as possible to benefit from this feature's additional control and flexibility.
+
+NVECTA supports three different ways to request notification permission:
+
+1. **Use your own custom permission flow** *(shown above)*
+2. **Use NVECTA's customizable permission prompt**
+3. **Use the native Android system permission dialog**
+
+### Option 1 — Use Your Own Permission Flow
+
+If your application already has a custom onboarding or permission screen, simply inform the NVECTA SDK whether the user granted or denied notification permission.
+
+```dart
+Notifyvisitors.shared.enablePushPermission(isAllowed);
+```
+
+### Parameters
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| `isAllowed` | `bool` | Pass `true` if the user granted notification permission, otherwise pass `false`. |
+
+### Example
+
+```dart
+Notifyvisitors.shared.enablePushPermission(true);
+```
+<br>
+
+For complete implementation details, customization options, callback responses, and recommended best practices for all three approaches, see the dedicated guide:
+
+➡️ **[Notification Runtime Permission (Android)](https://github.com/tagnpin/flutter_notifyvisitors/blob/dev/docs/android-push-runtime-permission.md)**
 
 ---
 
