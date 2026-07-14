@@ -101,6 +101,8 @@ NVECTA supports three different ways to request notification permission:
 2. **Use NVECTA's customizable permission prompt**
 3. **Use the native Android system permission dialog**
 
+For comprehensive implementation instructions, configuration options, callback handling, and best practices for all three permission request approaches, refer to the **[Notification Runtime Permission (Android)](https://github.com/tagnpin/flutter_notifyvisitors/blob/dev/docs/android-push-runtime-permission.md)** guide.
+
 ### Option 1 — Use Your Own Permission Flow
 
 If your application already has a custom onboarding or permission screen, simply inform the NVECTA SDK whether the user granted or denied notification permission.
@@ -121,11 +123,6 @@ Notifyvisitors.shared.enablePushPermission(isAllowed);
 Notifyvisitors.shared.enablePushPermission(true);
 ```
 <br>
-
-For complete implementation details, customization options, callback responses, and recommended best practices for all three approaches, see the dedicated guide:
-
-➡️ **[Notification Runtime Permission (Android)](https://github.com/tagnpin/flutter_notifyvisitors/blob/dev/docs/android-push-runtime-permission.md)**
-
 ---
 
 <br>
