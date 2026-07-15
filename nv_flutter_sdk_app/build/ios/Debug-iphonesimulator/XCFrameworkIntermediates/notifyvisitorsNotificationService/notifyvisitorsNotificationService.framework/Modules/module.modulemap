@@ -1,0 +1,6 @@
+framework module notifyvisitorsNotificationService {
+  umbrella header "notifyvisitorsNotificationService.h"
+  export *
+
+  module * { export * }
+}

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "295276722676",
+    "project_id": "nv-mobile-sdk-fcm-project",
+    "storage_bucket": "nv-mobile-sdk-fcm-project.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:295276722676:android:efe522d4853e1bf4f6a1a1",
+        "android_client_info": {
+          "package_name": "com.notifyvisitors.flutter.sdkapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMDUFIGOV5WNj5wKlSMHTY0E_p9EZTXDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:295276722676:android:72838b00dd92082ef6a1a1",
+        "android_client_info": {
+          "package_name": "com.notifyvisitors.rn.sdkapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMDUFIGOV5WNj5wKlSMHTY0E_p9EZTXDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

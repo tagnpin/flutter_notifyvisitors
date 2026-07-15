@@ -1,0 +1,4 @@
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/flutter_native_splash.framework
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/notifyvisitors.framework
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/notifyvisitorsNudges.framework
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/notifyvisitorsNotificationService.framework

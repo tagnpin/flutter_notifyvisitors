@@ -1,0 +1,6 @@
+framework module flutter_notifyvisitors {
+  umbrella header "flutter_notifyvisitors-umbrella.h"
+
+  export *
+  module * { export * }
+}
