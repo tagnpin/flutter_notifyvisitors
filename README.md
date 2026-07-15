@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# flutter_notifyvisitors
-flutter-notifyvisitors plugin with Sample App
-=======
 ![NVECTA logo; Formerly NotifyVisitors](https://i.ibb.co/MybKMHDm/NVECTA-000.jpg)
 
 # NVECTA Flutter SDK
@@ -95,7 +91,6 @@ Display targeted in-app messages and campaigns to engage users while they are ac
 
 ➡️ [View In-App Notification Documentation](/docs/inapp-integration.md)
 
-
 ### 📥 Notification Center
 
 Manage and display user notifications within a centralized in-app notification center experience.
@@ -119,4 +114,3 @@ Refer to the NVECTA Flutter SDK [Change Log](CHANGELOG.md).
 ## ❓Questions
 
 Need help? Contact the NVECTA support team directly from the NVECTA Dashboard for assistance with integration, configuration, or troubleshooting.
->>>>>>> stage
