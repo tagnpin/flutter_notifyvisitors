@@ -90,7 +90,8 @@ import UserNotifications
 class AppDelegate: FlutterAppDelegate, UNUserNotificationCenterDelegate
 ```
 
-### Objective-C
+<details>
+<summary>Objective-C</summary>
 
 ```objective-c
 #import <UserNotifications/UserNotifications.h>
@@ -98,6 +99,8 @@ class AppDelegate: FlutterAppDelegate, UNUserNotificationCenterDelegate
 @interface AppDelegate () <UNUserNotificationCenterDelegate>
 @end
 ```
+
+</details>
 
 After initializing the SDK in `didFinishLaunchingWithOptions`, register for push notifications.
 
@@ -194,12 +197,16 @@ Enable the following capabilities:
 
 Add the **Push Notifications** capability if it is not already enabled.
 
+![Push Notifications Capability](images/ios/push-notification/PushCapabilities_NV_SDK.png)
+
 ### Background Modes
 
 Enable **Background Modes** and select:
 
 - Background fetch
 - Remote notifications
+
+![Background Modes Capabilities](images/ios/push-notification/BgModeCapabilities_NV_SDK.png)
 
 These capabilities are required for reliable push notification delivery and background processing.
 
