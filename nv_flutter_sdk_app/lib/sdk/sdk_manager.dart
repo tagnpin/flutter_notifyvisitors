@@ -398,9 +398,14 @@ class SDKManager {
    * --------------------------------------------------- */
 
   static Future<dynamic> setUserDetails(Map<String, dynamic> data) async {
-    Notifyvisitors.shared.setUserIdentifier(data).then((callback) {
+    final dynamic userParams = data;
+    debugPrint("Setting user details in nvecta ios sdk with data: $userParams");
+    dynamic result;
+    await Notifyvisitors.shared.setUserIdentifier(userParams).then((callback) {
       debugPrint("Set User Details Callback: $callback");
+      result = callback;
     });
+    return result;
   }
 
   static Future<dynamic> getNVUID() async {
