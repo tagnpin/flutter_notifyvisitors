@@ -199,11 +199,17 @@ final trackEventActions = [
     ],
     execute: (params) async {
       String eventName = params['event_name'];
+      debugPrint("Tracking custom event with event_name: $eventName");
       dynamic attributes = params['event_attributes'] ?? <String, dynamic>{};
-      String ltv = params['event_ltv'];
+      debugPrint("Tracking custom event with attributes: $attributes");
+      String ltv = params['event_ltv'] ?? "";
+      debugPrint("Tracking custom event with ltv: $ltv");
 
-      int scopeInt = params['event_scope'];
+      int scopeInt = params['event_scope'] ?? 2;
+      debugPrint("Tracking custom event with scope: $scopeInt");
       String scopeStr = scopeInt.toString();
+      debugPrint("Tracking custom event with scope: $scopeStr");
+
       debugPrint(
           'Tracking custom event: {eventName = $eventName, attributes = $attributes, ltv = $ltv, scope = $scopeStr}');
       final result = await SDKManager.trackEvent(
@@ -271,15 +277,13 @@ final List<FeatureActionDefinition> userPropertyActions = [
       )
     ],
     execute: (params) async {
-      debugPrint(
-          "Setting custom user with user_params: ${params['user_params']}");
-      Map<String, dynamic> result = {};
-      await SDKManager.setUserDetails(params).then((callback) {
-        result = callback;
-        debugPrint('Custom user property set successfully: $callback');
-      });
-      debugPrint('setCustomUserProperty result: $result');
-      return result;
+      dynamic userParams = params['user_params'] ?? <String, dynamic>{};
+      debugPrint("Setting custom user with user_params: $userParams");
+      final result = await SDKManager.setUserDetails(userParams);
+      return {
+        'request': userParams,
+        'callback': result,
+      };
     },
   ),
 ];
