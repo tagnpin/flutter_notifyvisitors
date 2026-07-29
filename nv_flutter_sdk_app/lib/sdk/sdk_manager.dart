@@ -295,8 +295,73 @@ class SDKManager {
   }
 
   /* ---------------------------------------------------
+   *  Global Attributes
+   * --------------------------------------------------- */
+
+  static Future<void> setglobalAttributes(
+      Map<String, dynamic>? attributes) async {
+    debugPrint(
+        "Setting global attributes in nvecta ios sdk with attributes: $attributes");
+    if (attributes == null || attributes.isEmpty) return;
+    Notifyvisitors.shared.setGlobalAttributes(attributes);
+  }
+
+  static Future<void> removeGlobalAttribute({String? key}) async {
+    debugPrint("Removing global attribute with key: $key");
+    if (key == null || key.isEmpty) return;
+    Notifyvisitors.shared.removeGlobalAttributeForKey(key);
+  }
+
+  static Future<void> clearGlobalAttributes() async {
+    debugPrint("Clearing global attributes");
+    Notifyvisitors.shared.clearGlobalAttributes();
+  }
+
+  /* ---------------------------------------------------
    *  Analytics
    * --------------------------------------------------- */
+
+  // static final Map<String, dynamic> tmpEventAttributes = {
+  //   "product_name": "Arogya Top Up",
+  //   "deep_link":
+  //       "https://mobileapi.sbigeneral.in/api/drop_off/redirect_to_drop_off?reference_id=74888af4-eb3e-4996-9164-8578c37200d0&mobile=9010203050&product=arogya_topup",
+  //   "amount": "1170",
+  // };
+
+  // static Map<String, dynamic> _nvPlatformAttributes(
+  //   Map<String, dynamic> eventAttributes,
+  // ) {
+  //   if (kIsWeb && !Platform.isIOS) {
+  //     return eventAttributes;
+  //   }
+
+  //   return eventAttributes.map(
+  //     (String key, dynamic value) =>
+  //         MapEntry<String, dynamic>(key, value?.toString() ?? ""),
+  //   );
+  // }
+
+  // static Future<dynamic> trackEvent({
+  //   required String eventName,
+  //   Map<String, dynamic>? attributes,
+  //   String ltv = '',
+  //   String scope = '',
+  // }) async {
+  //   final Map<String, dynamic> platformAttributes = _nvPlatformAttributes(
+  //     tmpEventAttributes,
+  //   );
+
+  //   debugPrint("nv_Cart_Page eventAttributes = $platformAttributes");
+  //   Notifyvisitors.shared.event(
+  //     "nv_Cart_Page",
+  //     platformAttributes,
+  //     "abc",
+  //     "1",
+  //     (response) {
+  //       debugPrint("event callback response = $response");
+  //     },
+  //   );
+  // }
 
   static Future<dynamic> trackEvent({
     required String eventName,

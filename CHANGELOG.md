@@ -1,5 +1,12 @@
 ## CHANGE LOG
 
+### Version 1.6.4 *(July 29, 2026)*
+-------------------------------------------
+- iOS Updates:
+  - internal event tracking optimisations
+- Minor bug fixes
+- Code optimisation and performance enhancement.
+
 ### Version 1.6.3 *(May 29, 2026)*
 -------------------------------------------
 - Android Updates:
@@ -11,7 +18,6 @@
   - Updated GIF push CTA styling:
     - Background changed to transparent.
     - Text color updated to match the accent color.
-
 
 ### Version 1.6.2 *(May 22, 2026)*
 -------------------------------------------

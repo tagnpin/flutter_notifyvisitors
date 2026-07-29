@@ -139,12 +139,15 @@ UIColor * mUnselectedTabBgColor;
         [self getSessionData: call withResult: result];
     } else if([NOTIFICATION_CLICK_CALLBACK isEqualToString:call.method]) {
         [self notificationClickCallback: call withResult: result];
+    }  else if ([SET_GLOBAL_ATTRIBUTES isEqualToString:call.method]) {
+        [self setGlobalAttributes:call withResult:result];
+    } else if ([REMOVE_GLOBAL_ATTRIBUTE isEqualToString:call.method]) {
+        [self removeGlobalAttributeForKey:call withResult:result];
+    } else if ([CLEAR_GLOBAL_ATTRIBUTES isEqualToString:call.method]) {
+        [self clearGlobalAttributes:call withResult:result];
     } else if([ANDROID_AUTO_START isEqualToString:call.method] || [ANDROID_CREATE_NOTIFICATION_CHANNEL isEqualToString:call.method] || [ANDROID_DELETE_NOTIFICATION_CHANNEL isEqualToString:call.method] || [ANDROID_CREATE_NOTIFICATION_CHANNEL_GROUP isEqualToString:call.method] || [ANDROID_DELETE_NOTIFICATION_CHANNEL_GROUP isEqualToString:call.method] || [ANDROID_PUSH_PERMISSION_PROMPT isEqualToString:call.method] || [ANDROID_ENABLE_PUSH_PERMISSION isEqualToString:call.method] || [ANDROID_NATIVE_PUSH_PERMISSION_PROMPT isEqualToString:call.method] || [ANDROID_IS_PAYLOAD_FROM_NV_PLATFORM isEqualToString:call.method] || [ANDROID_GET_NV_FCM_PAYLOAD isEqualToString:call.method]) {
-        
         NSLog(@"%@ NOT AVAILABLE IN iOS !!", TAG);
-    }
-    
-    else {
+    } else {
         result(FlutterMethodNotImplemented);
     }
 }
@@ -604,6 +607,50 @@ UIColor * mUnselectedTabBgColor;
     result(nvJsonString);
 }
 
+#pragma mark - Global Attributes methods
+
+- (void) setGlobalAttributes:(FlutterMethodCall *)call withResult:(FlutterResult)result {
+     NSLog(@"%@ SET-GLOBAL-ATTRIBUTES !!", TAG);
+     NSDictionary *attributes = nil;
+        @try{
+            attributes = call.arguments[@"attributes"];
+            if ([attributes isEqual:[NSNull null]]){
+                attributes = nil;
+            }
+        }
+        @catch(NSException *exception){
+            NSLog(@"%@ SET-GLOBAL-ATTRIBUTES ERROR : %@", TAG, exception.reason);   
+        }
+        if (attributes != nil && [attributes count] > 0) {
+            [notifyvisitors setGlobalAttributes: attributes];
+        } else {
+            NSLog(@"%@ SET-GLOBAL-ATTRIBUTES ERROR : Attributes dictionary is null or empty", TAG);
+        }
+}
+- (void) removeGlobalAttributeForKey:(FlutterMethodCall *)call withResult:(FlutterResult)result {
+     NSLog(@"%@ REMOVE-GLOBAL-ATTRIBUTE-FOR-KEY !!", TAG);
+     NSString *attributeKeyName;
+        @try{
+            attributeKeyName = call.arguments[@"key"];
+            if([attributeKeyName isEqual:[NSNull null]] || [attributeKeyName length] == 0){
+                attributeKeyName = nil;
+            }
+        }
+        @catch(NSException *exception){
+            NSLog(@"%@ REMOVE-GLOBAL-ATTRIBUTE-FOR-KEY ERROR : %@", TAG, exception.reason);
+        }
+        if (attributeKeyName != nil && [attributeKeyName length] > 0) {
+            [notifyvisitors removeGlobalAttributeForKey: attributeKeyName];
+        } else {
+            NSLog(@"%@ REMOVE-GLOBAL-ATTRIBUTE-FOR-KEY ERROR : Attribute key name is null or empty", TAG);
+        }
+    }
+    
+    - (void) clearGlobalAttributes:(FlutterMethodCall *)call withResult:(FlutterResult)result {
+     NSLog(@"%@ CLEAR-GLOBAL-ATTRIBUTES !!", TAG);
+        [notifyvisitors clearGlobalAttributes];
+    }
+    
 #pragma mark - Track Events method
 
 - (void) event:(FlutterMethodCall *)call withResult:(FlutterResult)result {
@@ -1199,6 +1246,12 @@ NSLog(@"%@ INITIALIZE WITH BRANDID SECRETKEY & LAUNCHING-OPTIONS !!", TAG);
 #endif
     [notifyvisitors Initialize:nvMode];
     
+}
+
++ (void)globalAttributesPersistenceOptions:(nvGlobalAttributePersistenceType) persistenceType expiryInDays:(NSInteger)expiryInDays {
+    
+    NSLog(@"%@ GLOBAL ATTRIBUTES PERSISTENCE OPTIONS !!", TAG);
+    [notifyvisitors globalAttributesPersistenceOptions: persistenceType expiryInDays: expiryInDays];
 }
 
 //Applecation State Handler functions

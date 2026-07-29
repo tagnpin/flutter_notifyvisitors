@@ -8,6 +8,122 @@ import 'package:nv_flutter_sdk_app/shared/widgets/models/feature_action_definiti
 import 'package:nv_flutter_sdk_app/shared/widgets/models/feature_action_field.dart';
 
 /// -------------------------
+/// GLOBAL ATTRIBUTE ACTIONS
+/// -------------------------
+final globalAttributeActions = [
+  FeatureActionDefinition(
+    id: 'set_global_attributes',
+    title: 'Set Global Attributes',
+    description: 'Sets global attributes for analytics',
+    uiType: ActionUIType.form,
+    actionLabel: 'Set Global Attributes',
+    showResult: false,
+    resultTitle: 'Global Attributes Response:',
+    fields: [
+      const FeatureActionField(
+        key: 'attributes',
+        label: 'Global Attributes (JSON)',
+        type: FieldType.json,
+        required: true,
+      )
+    ],
+    execute: (params) async {
+      debugPrint(
+          "Setting global attributes with attributes: ${params['attributes']}");
+      await SDKManager.setglobalAttributes(params['attributes']);
+      return null;
+    },
+  ),
+  FeatureActionDefinition(
+    id: 'remove_global_attribute',
+    title: 'Remove Global Attribute',
+    description:
+        'Removes a global attribute for a given key name for analytics',
+    uiType: ActionUIType.form,
+    actionLabel: 'Remove Global Attribute',
+    showResult: false,
+    resultTitle: 'Removed Global Attribute Response:',
+    fields: [
+      const FeatureActionField(
+        key: 'ga_key_name',
+        label: 'Global Attribute Key',
+        required: true,
+      ),
+    ],
+    execute: (params) async {
+      debugPrint(
+          "Removing global attribute with key: ${params['ga_key_name']}");
+      await SDKManager.removeGlobalAttribute(key: params['ga_key_name']);
+      return null;
+    },
+  ),
+  FeatureActionDefinition(
+    id: 'clear_global_attributes',
+    title: 'Clear Global Attributes',
+    description: 'Clears all global attributes',
+    actionLabel: 'Clear Global Attributes',
+    execute: (params) async {
+      debugPrint('Tracking screen view event');
+      SDKManager.clearGlobalAttributes();
+      return null;
+    },
+  ),
+  FeatureActionDefinition(
+    id: 'track_custom_event',
+    uiType: ActionUIType.form,
+    title: 'Track Custom Event',
+    description: 'Tracks a custom event with parameters',
+    actionLabel: 'Track Event',
+    showResult: true,
+    resultTitle: 'Event Response',
+    fields: [
+      const FeatureActionField(
+        key: 'event_name',
+        label: 'Event Name',
+        required: true,
+      ),
+      const FeatureActionField(
+        key: 'event_attributes',
+        label: 'Event Attributes (JSON)',
+        type: FieldType.json,
+        hint: "{\"key\": \"value\"}",
+      ),
+      const FeatureActionField(
+        key: 'event_ltv',
+        label: 'LTV',
+      ),
+      const FeatureActionField(
+        key: 'event_scope',
+        label: 'Scope',
+        required: true,
+        type: FieldType.number,
+      ),
+    ],
+    execute: (params) async {
+      String eventName = params['event_name'];
+      dynamic attributes = params['event_attributes'] ?? <String, dynamic>{};
+      String ltv = params['event_ltv'];
+
+      int scopeInt = params['event_scope'];
+      String scopeStr = scopeInt.toString();
+      debugPrint(
+          'Tracking custom event: {eventName = $eventName, attributes = $attributes, ltv = $ltv, scope = $scopeStr}');
+      final result = await SDKManager.trackEvent(
+        eventName: eventName,
+        attributes: attributes,
+        ltv: ltv,
+        scope: scopeStr,
+      );
+
+      return {
+        'request': params,
+        'callback': result,
+      };
+    },
+  ),
+];
+
+/// -------------------------
 /// TRACK EVENT ACTIONS
 /// -------------------------
 final trackEventActions = [

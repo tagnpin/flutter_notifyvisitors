@@ -20,6 +20,7 @@ enum FeatureSection {
   notificationCenter,
   inappMessageActions,
   inappNudgeActions,
+  analyticsGlobalAttributes,
   analyticsTrackEvents,
   analyticsUserProperties,
 }
@@ -35,6 +36,7 @@ class ClientFeatureRegistry {
       FeatureSection.notificationCenter => notificationCenterActions,
       FeatureSection.inappMessageActions => inAppMessageActions,
       FeatureSection.inappNudgeActions => inAppNudgesActions,
+      FeatureSection.analyticsGlobalAttributes => globalAttributeActions,
       FeatureSection.analyticsTrackEvents => trackEventActions,
       FeatureSection.analyticsUserProperties => userPropertyActions,
     };
@@ -58,6 +60,7 @@ class ClientFeatureRegistry {
       case FeatureSection.inappNudgeActions:
         return ClientFeature.inAppNudges;
 
+      case FeatureSection.analyticsGlobalAttributes:
       case FeatureSection.analyticsTrackEvents:
       case FeatureSection.analyticsUserProperties:
         return ClientFeature.analytics;
