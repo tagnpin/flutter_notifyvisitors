@@ -90,7 +90,8 @@ import UserNotifications
 class AppDelegate: FlutterAppDelegate, UNUserNotificationCenterDelegate
 ```
 
-### Objective-C
+<details>
+<summary>Objective-C</summary>
 
 ```objective-c
 #import <UserNotifications/UserNotifications.h>
@@ -98,6 +99,8 @@ class AppDelegate: FlutterAppDelegate, UNUserNotificationCenterDelegate
 @interface AppDelegate () <UNUserNotificationCenterDelegate>
 @end
 ```
+
+</details>
 
 After initializing the SDK in `didFinishLaunchingWithOptions`, register for push notifications.
 

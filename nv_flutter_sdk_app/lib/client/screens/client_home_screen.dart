@@ -229,6 +229,14 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
               description: 'Track events & user properties',
               children: [
                 FeatureChildItem(
+                  title: 'Global Attributes',
+                  onTap: () => _openFeature(
+                    context,
+                    FeatureSection.analyticsGlobalAttributes,
+                    'Global Attributes',
+                  ),
+                ),
+                FeatureChildItem(
                   title: 'Track Events',
                   onTap: () => _openFeature(
                     context,

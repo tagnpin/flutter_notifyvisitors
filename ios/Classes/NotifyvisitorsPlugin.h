@@ -6,7 +6,7 @@
 #import "UserNotifications.h"
 #endif
 #define TAG @"[FLUTTER-NOTIFYVISITORS]:"
-#define PLUGIN_VERSION @"1.6.3" //Flutter plugin version number.
+#define PLUGIN_VERSION @"1.6.4" //Flutter plugin version number.
 #define SHOW @"show"
 #define SHOW_INAPP_MESSAGE @"showInAppMessage"
 #define NOTIFICATION_CENTER @"showNotifications"
@@ -36,6 +36,10 @@
 #define GET_SESSION_DATA @"getSessionData"
 #define NOTIFICATION_CLICK_CALLBACK @"notificationClickCallback"
 
+#define SET_GLOBAL_ATTRIBUTES @"setGlobalAttributes"
+#define REMOVE_GLOBAL_ATTRIBUTE @"removeGlobalAttribute"
+#define CLEAR_GLOBAL_ATTRIBUTES @"clearGlobalAttributes"
+
 #define ANDROID_AUTO_START @"autoStartPermission"
 #define ANDROID_CREATE_NOTIFICATION_CHANNEL @"createNotificationChannel"
 #define ANDROID_DELETE_NOTIFICATION_CHANNEL @"deleteNotificationChannel"
@@ -63,6 +67,8 @@
 +(void)nvInitialize;
 
 +(void)initializeWithBrandId:(NSInteger)brandID secretKey:(NSString *_Nullable)secretKey launchingOptions:(NSDictionary *_Nullable)launchingOptions;
+
++ (void)globalAttributesPersistenceOptions:(nvGlobalAttributePersistenceType) persistenceType expiryInDays:(NSInteger)expiryInDays;
 
 
 //App State Handler function
