@@ -1,6 +1,6 @@
 ## CHANGE LOG
 
-### Version 1.6.4 *(July 29, 2026)*
+### Version 1.6.4 *(August 01, 2026)*
 -------------------------------------------
 - iOS Updates:
   - internal event tracking optimisations

@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '13.0'
   s.static_framework = true
-  s.dependency 'notifyvisitors', '8.0.0'
+  s.dependency 'notifyvisitors', '8.0.1'
   s.dependency 'notifyvisitorsNudges', '0.0.3'
   s.public_header_files = 'Classes/**/*.h'
 
