@@ -4,9 +4,9 @@ PODS:
     - Flutter
   - flutter_notifyvisitors (1.6.4):
     - Flutter
-    - notifyvisitors (= 8.0.0)
+    - notifyvisitors (= 8.0.1)
     - notifyvisitorsNudges (= 0.0.3)
-  - notifyvisitors (8.0.0)
+  - notifyvisitors (8.0.1)
   - notifyvisitorsNotificationService (1.0.0)
   - notifyvisitorsNudges (0.0.3)
 
@@ -33,8 +33,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   flutter_native_splash: 6cad9122ea0fad137d23137dd14b937f3e90b145
-  flutter_notifyvisitors: fbaf5d408551de328b6a90f798005335777e534b
-  notifyvisitors: 726d98f024ec9be02e2709b1e611468d615f5274
+  flutter_notifyvisitors: 68c816378ef3059a7b2d6748cffb0ce4ae30e92d
+  notifyvisitors: 02f7f99b8dcd0f02f5426aa4f3eb7564981a1c22
   notifyvisitorsNotificationService: ef0ac1d14d3c3b168eec98d9aa1bff14f592e6a2
   notifyvisitorsNudges: 5d1d931d1c09107a0fa5d7cfc388ee3cc2e68cf2
 
