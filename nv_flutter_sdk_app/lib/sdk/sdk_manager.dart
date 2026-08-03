@@ -4,13 +4,19 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_notifyvisitors/PushPromptInfo.dart';
 import 'package:flutter_notifyvisitors/flutter_notifyvisitors.dart';
+import 'package:nv_flutter_sdk_app/sdk/models/device_info_model.dart';
+import 'package:nv_flutter_sdk_app/sdk/sdk_version.dart';
 import 'package:nv_flutter_sdk_app/shared/theme/app_colors.dart';
+
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:intl/intl.dart';
 // import 'package:device_info_plus/device_info_plus.dart';
 // import 'package:package_info_plus/package_info_plus.dart';
 
 class SDKManager {
+  // const String sdkVersion = sdk_version.sdkversion ?? '';
   // static const String sdkVersion = '1.0.0';
 
   // static final eventAttributes = <String, dynamic>{
@@ -55,6 +61,43 @@ class SDKManager {
   //   _emitCallback('getDeviceInfo', result);
   //   return result;
   // }
+
+  static Future<DeviceInfoModel> getDeviceInfo() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    final deviceInfoPlugin = DeviceInfoPlugin();
+
+    String platform;
+    String osVersion;
+    String deviceId;
+
+    if (Platform.isIOS) {
+      final iosInfo = await deviceInfoPlugin.iosInfo;
+
+      platform = 'iOS';
+      osVersion = iosInfo.systemVersion;
+      deviceId = iosInfo.identifierForVendor ?? '';
+    } else {
+      final androidInfo = await deviceInfoPlugin.androidInfo;
+
+      platform = 'Android';
+      osVersion = androidInfo.version.release;
+      deviceId = androidInfo.id;
+    }
+
+    return DeviceInfoModel(
+      appVersion: packageInfo.version,
+      buildNumber: packageInfo.buildNumber,
+      environment: kReleaseMode ? 'release' : 'debug',
+      sdkVersion: sdkVersion,
+      brandId: '--',
+      platform: platform,
+      osVersion: osVersion,
+      deviceId: deviceId,
+      pushToken: '--',
+      advertisingId: null,
+      trackingStatus: null,
+    );
+  }
 
   /* ---------------------------------------------------
    *  Date Helper
@@ -303,18 +346,18 @@ class SDKManager {
     debugPrint(
         "Setting global attributes in nvecta ios sdk with attributes: $attributes");
     if (attributes == null || attributes.isEmpty) return;
-    Notifyvisitors.shared.setGlobalAttributes(attributes);
+    // Notifyvisitors.shared.setGlobalAttributes(attributes);
   }
 
   static Future<void> removeGlobalAttribute({String? key}) async {
     debugPrint("Removing global attribute with key: $key");
     if (key == null || key.isEmpty) return;
-    Notifyvisitors.shared.removeGlobalAttributeForKey(key);
+    // Notifyvisitors.shared.removeGlobalAttributeForKey(key);
   }
 
   static Future<void> clearGlobalAttributes() async {
     debugPrint("Clearing global attributes");
-    Notifyvisitors.shared.clearGlobalAttributes();
+    // Notifyvisitors.shared.clearGlobalAttributes();
   }
 
   /* ---------------------------------------------------

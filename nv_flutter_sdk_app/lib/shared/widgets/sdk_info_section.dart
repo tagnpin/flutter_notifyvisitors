@@ -4,10 +4,14 @@ class SDKInfoCard extends StatelessWidget {
   final String status;
   final String sdkVersion;
   final String appVersion;
+  final String buildNumber;
+  final String environment;
+  final String osVersion;
   final String platform;
   final String deviceId;
   final String pushToken;
   final String? adID;
+  final String? brandId;
 
   const SDKInfoCard({
     super.key,
@@ -18,6 +22,10 @@ class SDKInfoCard extends StatelessWidget {
     required this.deviceId,
     required this.pushToken,
     this.adID,
+    this.osVersion = '',
+    this.brandId = '',
+    this.buildNumber = '',
+    this.environment = '',
   });
 
   @override
@@ -38,9 +46,28 @@ class SDKInfoCard extends StatelessWidget {
           children: [
             _header(theme, colors),
             const SizedBox(height: 12),
-            _row(theme, 'SDK Version', sdkVersion),
+            Text(
+              'App Info',
+              style: theme.textTheme.titleMedium
+                  ?.copyWith(fontWeight: FontWeight.w600),
+            ),
             _row(theme, 'App Version', appVersion),
+            _row(theme, 'Build Number', buildNumber),
+            _row(theme, 'Environment', environment),
+            Text(
+              'SDK Info',
+              style: theme.textTheme.titleMedium
+                  ?.copyWith(fontWeight: FontWeight.w600),
+            ),
+            _row(theme, 'NVECTA Flutter SDK', sdkVersion),
+            _row(theme, 'BrandID', brandId ?? ""),
+            Text(
+              'Device Info',
+              style: theme.textTheme.titleMedium
+                  ?.copyWith(fontWeight: FontWeight.w600),
+            ),
             _row(theme, 'Platform', platform),
+            _row(theme, 'OS Version', osVersion),
             _selectableRow(theme, 'Device ID', deviceId),
             _selectableRow(theme, 'Push Token', pushToken),
             _row(theme, 'AdID', adID ?? ""),
