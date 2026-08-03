@@ -4,12 +4,7 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_notifyvisitors/PushPromptInfo.dart';
 import 'package:flutter_notifyvisitors/flutter_notifyvisitors.dart';
-import 'package:nv_flutter_sdk_app/sdk/models/device_info_model.dart';
-import 'package:nv_flutter_sdk_app/sdk/sdk_version.dart';
 import 'package:nv_flutter_sdk_app/shared/theme/app_colors.dart';
-
-import 'package:device_info_plus/device_info_plus.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:intl/intl.dart';
 // import 'package:device_info_plus/device_info_plus.dart';
@@ -62,42 +57,42 @@ class SDKManager {
   //   return result;
   // }
 
-  static Future<DeviceInfoModel> getDeviceInfo() async {
-    final packageInfo = await PackageInfo.fromPlatform();
-    final deviceInfoPlugin = DeviceInfoPlugin();
+  // static Future<DeviceInfoModel> getDeviceInfo() async {
+  //   final packageInfo = await PackageInfo.fromPlatform();
+  //   final deviceInfoPlugin = DeviceInfoPlugin();
 
-    String platform;
-    String osVersion;
-    String deviceId;
+  //   String platform;
+  //   String osVersion;
+  //   String deviceId;
 
-    if (Platform.isIOS) {
-      final iosInfo = await deviceInfoPlugin.iosInfo;
+  //   if (Platform.isIOS) {
+  //     final iosInfo = await deviceInfoPlugin.iosInfo;
 
-      platform = 'iOS';
-      osVersion = iosInfo.systemVersion;
-      deviceId = iosInfo.identifierForVendor ?? '';
-    } else {
-      final androidInfo = await deviceInfoPlugin.androidInfo;
+  //     platform = 'iOS';
+  //     osVersion = iosInfo.systemVersion;
+  //     deviceId = iosInfo.identifierForVendor ?? '';
+  //   } else {
+  //     final androidInfo = await deviceInfoPlugin.androidInfo;
 
-      platform = 'Android';
-      osVersion = androidInfo.version.release;
-      deviceId = androidInfo.id;
-    }
+  //     platform = 'Android';
+  //     osVersion = androidInfo.version.release;
+  //     deviceId = androidInfo.id;
+  //   }
 
-    return DeviceInfoModel(
-      appVersion: packageInfo.version,
-      buildNumber: packageInfo.buildNumber,
-      environment: kReleaseMode ? 'release' : 'debug',
-      sdkVersion: sdkVersion,
-      brandId: '--',
-      platform: platform,
-      osVersion: osVersion,
-      deviceId: deviceId,
-      pushToken: '--',
-      advertisingId: null,
-      trackingStatus: null,
-    );
-  }
+  //   return DeviceInfoModel(
+  //     appVersion: packageInfo.version,
+  //     buildNumber: packageInfo.buildNumber,
+  //     environment: kReleaseMode ? 'release' : 'debug',
+  //     sdkVersion: sdkVersion,
+  //     brandId: '--',
+  //     platform: platform,
+  //     osVersion: osVersion,
+  //     deviceId: deviceId,
+  //     pushToken: '--',
+  //     advertisingId: null,
+  //     trackingStatus: null,
+  //   );
+  // }
 
   /* ---------------------------------------------------
    *  Date Helper

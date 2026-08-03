@@ -5,10 +5,10 @@ import 'dart:io';
 
 import 'package:nv_flutter_sdk_app/client/screens/feature_action_screen.dart';
 import 'package:nv_flutter_sdk_app/config/client_feature_registry.dart';
-import 'package:nv_flutter_sdk_app/sdk/models/device_info_model.dart';
+// import 'package:nv_flutter_sdk_app/sdk/models/device_info_model.dart';
 import 'package:nv_flutter_sdk_app/sdk/sdk_manager.dart';
 import 'package:nv_flutter_sdk_app/shared/providers/advertising_id_provider.dart';
-import 'package:nv_flutter_sdk_app/shared/providers/device_info_provider.dart';
+// import 'package:nv_flutter_sdk_app/shared/providers/device_info_provider.dart';
 // import 'package:nv_flutter_sdk_app/shared/providers/native_app_version_info.dart';
 import 'package:nv_flutter_sdk_app/shared/providers/notification_badge_provider.dart';
 import 'package:nv_flutter_sdk_app/shared/widgets/advanced_action_tile.dart';
@@ -59,7 +59,7 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
     // final adInfo = ref.watch(advertisingInfoProvider);
     // final myDeviceInfo = ref.watch(deviceInfoProvider);
     final adInfo = ref.watch(advertisingInfoProvider);
-    final myDeviceInfo = ref.watch(deviceInfoProvider);
+    // final myDeviceInfo = ref.watch(deviceInfoProvider);
 
     // final myNativeAppVersionInfo = ref.watch(nativeAppVersionInfoProvider);
 
@@ -159,68 +159,64 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
 
             const SizedBox(height: 20),
 
-            myDeviceInfo.when(
-              loading: () => const Card(
-                child: Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
-              ),
-              error: (error, stackTrace) => const Card(
-                child: Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Text(
-                    'Failed to load device information',
-                  ),
-                ),
-              ),
-              data: (device) {
-                return SDKInfoCard(
-                  status: 'Initialized',
-                  appVersion: device.appVersion,
-                  buildNumber: device.buildNumber,
-                  environment: device.environment,
-                  sdkVersion: device.sdkVersion,
-                  brandId: device.brandId,
-                  platform: device.platform,
-                  osVersion: device.osVersion,
-                  deviceId: device.deviceId,
-                  adID: adInfo.when(
-                    loading: () => 'Loading...',
-                    error: (_, __) => 'Unavailable',
-                    data: (info) => info.advertisingId ?? 'Not Available',
-                  ),
-                  // trackingStatus: adInfo.when(
-                  //   loading: () => 'Loading...',
-                  //   error: (_, __) => 'Unavailable',
-                  //   data: (info) => info.trackingStatus,
-                  // ),
-                  pushToken: device.pushToken,
-                );
-              },
-            ),
+            // myDeviceInfo.when(
+            //   loading: () => const Card(
+            //     child: Padding(
+            //       padding: EdgeInsets.all(20),
+            //       child: Center(
+            //         child: CircularProgressIndicator(),
+            //       ),
+            //     ),
+            //   ),
+            //   error: (error, stackTrace) => const Card(
+            //     child: Padding(
+            //       padding: EdgeInsets.all(20),
+            //       child: Text(
+            //         'Failed to load device information',
+            //       ),
+            //     ),
+            //   ),
+            //   data: (device) {
+            //     return SDKInfoCard(
+            //       status: 'Initialized',
+            //       appVersion: device.appVersion,
+            //       buildNumber: device.buildNumber,
+            //       environment: device.environment,
+            //       sdkVersion: device.sdkVersion,
+            //       brandId: device.brandId,
+            //       platform: device.platform,
+            //       osVersion: device.osVersion,
+            //       deviceId: device.deviceId,
+            //       adID: adInfo.when(
+            //         loading: () => 'Loading...',
+            //         error: (_, __) => 'Unavailable',
+            //         data: (info) => info.advertisingId ?? 'Not Available',
+            //       ),
+            //       // trackingStatus: adInfo.when(
+            //       //   loading: () => 'Loading...',
+            //       //   error: (_, __) => 'Unavailable',
+            //       //   data: (info) => info.trackingStatus,
+            //       // ),
+            //       pushToken: device.pushToken,
+            //     );
+            //   },
+            // ),
 
             /// SDK Info
             ///
-            // SDKInfoCard(
-            //   status: 'Initialized',
-            //   sdkVersion: '3.2.1',
-            //   appVersion: '1.0.0 (100)',
-            //   platform: myDeviceInfo.when(
-            //     loading: () => "Fetching Platform Name...",
-            //     error: (error, stackTrace) => "Unavailable",
-            //     data: (data) => "${data.platform} | ${data.osVersion}",
-            //   ),
-            //   deviceId: '7f3c9a2b8d1e...',
-            //   pushToken: 'fcm_abc123xyz...',
-            //   adID: adInfo.when(
-            //     loading: () => "Fetching Advertising ID...",
-            //     error: (error, stackTrace) => "Unavailable",
-            //     data: (info) => info.advertisingId ?? "Not Available",
-            //   ),
-            // ),
+            SDKInfoCard(
+              status: 'Initialized',
+              sdkVersion: '3.2.1',
+              appVersion: '1.0.0 (100)',
+              platform: '0.0.0',
+              deviceId: '7f3c9a2b8d1e...',
+              pushToken: 'fcm_abc123xyz...',
+              adID: adInfo.when(
+                loading: () => "Fetching Advertising ID...",
+                error: (error, stackTrace) => "Unavailable",
+                data: (info) => info.advertisingId ?? "Not Available",
+              ),
+            ),
 
             const SizedBox(height: 28),
 
