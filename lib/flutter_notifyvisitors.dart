@@ -83,19 +83,19 @@ class Notifyvisitors {
     await _channel.invokeMethod('openNotificationCenter', showInfo);
   }
 
-  Future<void> setGlobalAttributes(var attributes) async {
-    var gaInfo = {'attributes': attributes};
-    await _channel.invokeMethod('setGlobalAttributes', gaInfo);
-  }
+  // Future<void> setGlobalAttributes(var attributes) async {
+  //   var gaInfo = {'attributes': attributes};
+  //   await _channel.invokeMethod('setGlobalAttributes', gaInfo);
+  // }
 
-  Future<void> removeGlobalAttributeForKey(String key) async {
-    var gaKeyInfo = {'key': key};
-    await _channel.invokeMethod('removeGlobalAttribute', gaKeyInfo);
-  }
+  // Future<void> removeGlobalAttributeForKey(String key) async {
+  //   var gaKeyInfo = {'key': key};
+  //   await _channel.invokeMethod('removeGlobalAttribute', gaKeyInfo);
+  // }
 
-  Future<void> clearGlobalAttributes() async {
-    await _channel.invokeMethod('clearGlobalAttributes');
-  }
+  // Future<void> clearGlobalAttributes() async {
+  //   await _channel.invokeMethod('clearGlobalAttributes');
+  // }
 
   Future<void> event(String eventName, var attributes, String lifeTimeValue,
       String scope, EventCallback handler) async {

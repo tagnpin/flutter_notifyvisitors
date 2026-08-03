@@ -10,16 +10,43 @@ import AppTrackingTransparency
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
       
+      print("trying to find user defaults from nv sdk.....")
+      
+      
+      guard let defaults = UserDefaults(suiteName: "com.notifyvisitors.ios.sdk") else {
+          return false;
+      }
+
+      let prefix = "nv_"
+      var storedData: [String: Any]? = [:]
+      var previousVersion: String? = ""
+      var currentVersion: String? = ""
+      
+      
+      let values = defaults.dictionaryRepresentation()
+      
+      for (key, value) in values where key.hasPrefix(prefix) {
+          if (key == "nv_appVersion") {
+              previousVersion = value as? String
+          }
+          storedData?[key] = value;
+      }
+      
+      print("[FLUTTER-NOTIFYVISITORS]: previousVersion = \(previousVersion ?? "not found")")
+
+
       
       let controller = window?.rootViewController as! FlutterViewController
       
       let channel = FlutterMethodChannel(name: "native.advertising", binaryMessenger: controller.binaryMessenger)
 
               channel.setMethodCallHandler { call, result in
-
+                  print("[APP_advertising] Method = \(call.method)")
                   if call.method == "getAdvertisingInfo" {
-
+                      print("[APP_advertising] Returning data")
                       self.handleAdvertising(result: result)
+                  } else {
+                      print("[APP_VERSION] Not Implemented")
                   }
               }
       
@@ -36,9 +63,64 @@ import AppTrackingTransparency
       NotifyvisitorsPlugin.registerPush(withDelegate: self, app: application, launchOptions: launchOptions)
       
       // RNNotifyvisitors.initialize(withBrandId: nvAccountBrnadIDInt, secretKey: nvAccountSecretKey, launchingOptions: launchOptions)
+      
+      
+      let newValuesAfterInit = defaults.dictionaryRepresentation()
+      for (key, value) in newValuesAfterInit where key.hasPrefix(prefix) {
+          if (key == "nv_appVersion") {
+              currentVersion = value as? String
+          }
+      }
+      
+      print("[FLUTTER-NOTIFYVISITORS]: currentVersion = \(currentVersion ?? "not found")")
+      
+      let appVersionInfoChannel = FlutterMethodChannel(name: "native.appVersionInfo", binaryMessenger: controller.binaryMessenger)
+      appVersionInfoChannel.setMethodCallHandler { call, result in
+
+          print("[APP_VERSION] Method = \(call.method)")
+
+          if call.method == "getAppVersionInfo" {
+
+              print("[APP_VERSION] Returning data")
+
+              self.handleAppVersionsing(
+                  previousVersion ?? "",
+                  currentVersion: currentVersion ?? "",
+                  result: result
+              )
+
+          } else {
+
+              print("[APP_VERSION] Not Implemented")
+              result(FlutterMethodNotImplemented)
+          }
+      }
+//
+//      let appVersionInfoChannel = FlutterMethodChannel(name: "native.appVersionInfo", binaryMessenger: controller.binaryMessenger)
+//      
+//      appVersionInfoChannel.setMethodCallHandler { call, result in
+//          print("[APP_VERSION] Method = \(call.method)")
+//          
+//          if call.method == "getAppVersionInfoInfo" {
+//              print("[APP_VERSION] Returning data")
+//              
+//              self.handleAppVersionsing(previousVersion ?? "", currentVersion: currentVersion ?? "", result: result)
+//          } else {
+//              print("[APP_VERSION] Not Implemented")
+//              result(FlutterMethodNotImplemented)
+//          }
+//      }
+      
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
+    
+    private func handleAppVersionsing(_ previousVersion: String, currentVersion: String, result: @escaping FlutterResult) {
+        result([
+            "previousAppVersion": previousVersion,
+            "currentAppVersion": currentVersion
+        ])
+    }
     
     private func handleAdvertising(result: @escaping FlutterResult) {
 
