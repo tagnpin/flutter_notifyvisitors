@@ -49,8 +49,8 @@ dependencies:
   flutter_notifyvisitors:
     path: ../../flutter_notifyvisitors
   intl: ^0.20.2
-  device_info_plus: ^13.2.0
-  package_info_plus: ^10.2.1
+  # device_info_plus: ^13.2.0
+  # package_info_plus: ^10.2.1
   # advertising_id: ^2.7.1
   # app_tracking_transparency: ^2.0.6+1
 
