@@ -2,7 +2,7 @@
 
 # NVECTA Flutter SDK
 
-[![Static Badge](https://img.shields.io/badge/pub-1.6.3-blue?logo=flutter)](https://pub.dev/packages/flutter_notifyvisitors) ![Formerly](https://img.shields.io/badge/Formerly-NotifyVisitors-blue)
+[![Static Badge](https://img.shields.io/badge/pub-1.6.4-blue?logo=flutter)](https://pub.dev/packages/flutter_notifyvisitors) ![Formerly](https://img.shields.io/badge/Formerly-NotifyVisitors-blue)
 
 <br>
 
@@ -22,7 +22,7 @@ Ready to get started? [Sign up here](https://console.notifyvisitors.com/console/
 
 ```
 dependencies:
-    flutter_notifyvisitors: ^1.6.3
+    flutter_notifyvisitors: ^1.6.4
 ```
 
 #### Step2- After adding the dependency, run the following command to install the package:
@@ -90,7 +90,6 @@ Identify users, manage user profiles, and associate user activity for personaliz
 Display targeted in-app messages and campaigns to engage users while they are actively using the application.
 
 ➡️ [View In-App Notification Documentation](/docs/inapp-integration.md)
-
 
 ### 📥 Notification Center
 
