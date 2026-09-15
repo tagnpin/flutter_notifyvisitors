@@ -92,6 +92,60 @@ The SDK uses iOS application lifecycle callbacks to support:
 - Deep-link handling
 - SDK lifecycle management
 
+### Import the SDK
+
+Before calling any NotifyVisitors APIs from your `AppDelegate`, import the SDK.
+
+<details>
+<summary>Swift</summary>
+
+If your Swift `AppDelegate` cannot access `NotifyvisitorsPlugin`, create an **Objective-C Bridging Header** and import:
+
+```objc
+#import <flutter_notifyvisitors/NotifyvisitorsPlugin.h>
+```
+
+Name the bridging header using:
+
+```text
+YOUR_PROJECT_NAME-Bridging-Header.h
+```
+
+Example:
+
+```text
+Runner-Bridging-Header.h
+```
+
+Configure the path under:
+
+**Target → Build Settings → Swift Compiler - General → Objective-C Bridging Header**
+
+Example:
+
+```text
+Runner/Runner-Bridging-Header.h
+```
+
+> **Note**
+>
+> A bridging header is only required if your Swift project cannot directly access the Objective-C plugin APIs.
+
+</details>
+
+<details>
+<summary>Objective-C</summary>
+
+Import the SDK header in `AppDelegate.m`:
+
+```objc
+#import <flutter_notifyvisitors/NotifyvisitorsPlugin.h>
+```
+
+</details>
+
+### AppDelegate Integration
+
 Forward the following callbacks from your `AppDelegate`.
 
 ### Swift
