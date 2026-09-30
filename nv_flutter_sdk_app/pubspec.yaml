@@ -48,6 +48,7 @@ dependencies:
   # NVECTA (Formally NotifyVisitors) Flutter SDK
   flutter_notifyvisitors:
     path: ../../flutter_notifyvisitors
+
   intl: ^0.20.2
   # device_info_plus: ^13.2.0
   # package_info_plus: ^10.2.1
@@ -76,6 +77,9 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  config:
+    enable-swift-package-manager: true
 
   # To add assets to your application, add an assets section, like this:
   assets:

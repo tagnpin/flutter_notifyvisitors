@@ -1,6 +1,11 @@
 #import "NotifyvisitorsPlugin.h"
 #import "NVSDKNativeDisplayViewFactory.h"
 
+// Safe compile-time check for optional frameworks
+#if __has_include(<flutter_NVECTAAdTrackingSDK/flutter_NVECTAAdTrackingSDK-Swift.h>)
+#import <flutter_NVECTAAdTrackingSDK/flutter_NVECTAAdTrackingSDK-Swift.h>
+#endif
+
 BOOL nvDismissNCenterOnAction;
 
 BOOL nvPushObserverReady;
@@ -58,13 +63,11 @@ UIColor * mUnselectedTabBgColor;
     NotifyvisitorsPlugin.sharedInstance.channel = [FlutterMethodChannel
                                                    methodChannelWithName:@"flutter_notifyvisitors"
                                                    binaryMessenger:[registrar messenger]];
-    //NotifyvisitorsPlugin* instance = [[NotifyvisitorsPlugin alloc] init];
     
-    [registrar addMethodCallDelegate:NotifyvisitorsPlugin.sharedInstance channel:NotifyvisitorsPlugin.sharedInstance.channel];
+    [registrar addMethodCallDelegate: NotifyvisitorsPlugin.sharedInstance channel: NotifyvisitorsPlugin.sharedInstance.channel];
     
     // Register your Objective-C PlatformViewFactory
     NVSDKNativeDisplayViewFactory *nvNativeDisplayFactory = [[NVSDKNativeDisplayViewFactory alloc] initWithMessenger: [registrar messenger]];
-    // "notifyvisitors_embed_view" is the unique identifier that will be used in Dart's UiKitView
     [registrar registerViewFactory: nvNativeDisplayFactory withId:@"notifyvisitors_embed_view"];
     // initialize variables
     [NotifyvisitorsPlugin.sharedInstance nvInit];
@@ -74,7 +77,33 @@ UIColor * mUnselectedTabBgColor;
     NSLog(@"%@ NV INIT !!", TAG);
     [self setNvDeepLinkObserver];
     _handlers = [[NSMutableArray alloc] init];
-    [notifyvisitors sharedInstance].delegate = self;
+     // Safely verify core notifyvisitors SDK delegate
+    if ([notifyvisitors respondsToSelector:@selector(sharedInstance)]) {
+        [notifyvisitors sharedInstance].delegate = self;
+    }
+}
+
+#pragma mark - Safe Module Delegation Helpers
+
+/**
+ * Executes a class method dynamically on an optional framework module if it exists in the runtime.
+ */
++ (BOOL)invokeOptionalModuleClass:(NSString *)className selectorName:(NSString *)selectorName withObject:(id)object {
+    Class targetClass = NSClassFromString(className);
+    if (targetClass) {
+        SEL selector = NSSelectorFromString(selectorName);
+        if ([targetClass respondsToSelector:selector]) {
+            NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[targetClass methodSignatureForSelector:selector]];
+            [invocation setTarget:targetClass];
+            [invocation setSelector:selector];
+            if (object) {
+                [invocation setArgument:&object atIndex:2];
+            }
+            [invocation invoke];
+            return YES;
+        }
+    }
+    return NO;
 }
 
 
@@ -145,6 +174,8 @@ UIColor * mUnselectedTabBgColor;
         [self removeGlobalAttributeForKey:call withResult:result];
     } else if ([CLEAR_GLOBAL_ATTRIBUTES isEqualToString:call.method]) {
         [self clearGlobalAttributes:call withResult:result];
+    } else if ([REQUEST_IOS_IDFA_TRACKING_OPTIONAL isEqualToString: call.method]) {
+        [self requestTrackingAuthorization:call withResult:result];
     } else if([ANDROID_AUTO_START isEqualToString:call.method] || [ANDROID_CREATE_NOTIFICATION_CHANNEL isEqualToString:call.method] || [ANDROID_DELETE_NOTIFICATION_CHANNEL isEqualToString:call.method] || [ANDROID_CREATE_NOTIFICATION_CHANNEL_GROUP isEqualToString:call.method] || [ANDROID_DELETE_NOTIFICATION_CHANNEL_GROUP isEqualToString:call.method] || [ANDROID_PUSH_PERMISSION_PROMPT isEqualToString:call.method] || [ANDROID_ENABLE_PUSH_PERMISSION isEqualToString:call.method] || [ANDROID_NATIVE_PUSH_PERMISSION_PROMPT isEqualToString:call.method] || [ANDROID_IS_PAYLOAD_FROM_NV_PLATFORM isEqualToString:call.method] || [ANDROID_GET_NV_FCM_PAYLOAD isEqualToString:call.method]) {
         NSLog(@"%@ NOT AVAILABLE IN iOS !!", TAG);
     } else {
@@ -1048,7 +1079,6 @@ UIColor * mUnselectedTabBgColor;
     
 }
 
-
 #pragma mark - GetLinkInfo and other callbacks handler methods
 
 - (void) getLinkInfo:(FlutterMethodCall *)call withResult:(FlutterResult)result {
@@ -1215,6 +1245,24 @@ UIColor * mUnselectedTabBgColor;
         CGFloat alpha = [[rgba componentsSeparatedByString:@","][3] floatValue];
         UIColor *ResultColor = [UIColor colorWithRed:R/255 green:G/255 blue:B/255 alpha:alpha];
         return ResultColor;
+    }
+}
+
+#pragma mark - Optional Framework Handler (IDFA / App Tracking Transparency)
+
+- (void)requestTrackingAuthorization:(FlutterMethodCall *)call withResult:(FlutterResult)result {
+    NSLog(@"%@ REQUEST TRACKING AUTHORIZATION !!", TAG);
+
+    Class adTrackerClass = NSClassFromString(@"NVECTAAdTracker");
+    if (adTrackerClass && [adTrackerClass respondsToSelector:@selector(requestIDFAWithCompletion:)]) {
+        [adTrackerClass performSelector:@selector(requestIDFAWithCompletion:) withObject:^(NSString *idfa) {
+            result(idfa ? idfa : @"null");
+        }];
+    } else {
+        NSLog(@"%@ NVECTA Ads TrackingSDK NOT LINKED !!", TAG);
+        result([FlutterError errorWithCode:@"NVECTAAdTrackingSDK_NOT_LINKED"
+                                   message:@"flutter_NVECTAAdTrackingSDK is not linked to target."
+                                   details:nil]);
     }
 }
 

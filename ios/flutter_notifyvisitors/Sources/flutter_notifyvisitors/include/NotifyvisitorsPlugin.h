@@ -6,7 +6,7 @@
 #import "UserNotifications.h"
 #endif
 #define TAG @"[FLUTTER-NOTIFYVISITORS]:"
-#define PLUGIN_VERSION @"1.6.4" //Flutter plugin version number.
+#define PLUGIN_VERSION @"1.7.0" //Flutter plugin version number.
 #define SHOW @"show"
 #define SHOW_INAPP_MESSAGE @"showInAppMessage"
 #define NOTIFICATION_CENTER @"showNotifications"
@@ -39,6 +39,8 @@
 #define SET_GLOBAL_ATTRIBUTES @"setGlobalAttributes"
 #define REMOVE_GLOBAL_ATTRIBUTE @"removeGlobalAttribute"
 #define CLEAR_GLOBAL_ATTRIBUTES @"clearGlobalAttributes"
+
+#define REQUEST_IOS_IDFA_TRACKING_OPTIONAL @"requestTrackingAuthorization"
 
 #define ANDROID_AUTO_START @"autoStartPermission"
 #define ANDROID_CREATE_NOTIFICATION_CHANNEL @"createNotificationChannel"

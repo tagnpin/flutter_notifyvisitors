@@ -6,6 +6,7 @@
 //
 
 import UserNotifications
+import notifyvisitorsNotificationService
 
 class NotificationService: UNNotificationServiceExtension {
 
@@ -17,6 +18,7 @@ class NotificationService: UNNotificationServiceExtension {
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
         
         if let bestAttemptContent = bestAttemptContent {
+           
             // Modify the notification content here...
             notifyvisitorsNotificationService.didReceive(request, withBestAttempt: bestAttemptContent, withContentHandler: self.contentHandler)
         }

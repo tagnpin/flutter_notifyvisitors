@@ -197,6 +197,8 @@ Enable the following capabilities:
 
 Add the **Push Notifications** capability if it is not already enabled.
 
+![Push Notifications Capability](images/ios/push-notification/PushCapabilities_NV_SDK.png)
+
 ### Background Modes
 
 Enable **Background Modes** and select:
@@ -204,9 +206,9 @@ Enable **Background Modes** and select:
 - Background fetch
 - Remote notifications
 
-These capabilities are required for reliable push notification delivery and background processing.
+![Background Modes Capabilities](images/ios/push-notification/BgModeCapabilities_NV_SDK.png)
 
----
+These capabilities are required for reliable push notification delivery and background processing.
 
 ## 2.3 Forward Notification Delegates
 
@@ -220,10 +222,7 @@ func userNotificationCenter(
     willPresent notification: UNNotification,
     withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
 ) {
-    NotifyvisitorsPlugin.willPresent(
-        notification,
-        withCompletionHandler: completionHandler
-    )
+    RNNotifyvisitors.willPresent(notification, withCompletionHandler: completionHandler)
 }
 
 func application(
@@ -231,10 +230,7 @@ func application(
     didReceiveRemoteNotification userInfo: [AnyHashable : Any],
     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
 ) {
-    NotifyvisitorsPlugin.application(
-        application,
-        didReceiveRemoteNotification: userInfo
-    )
+   RNNotifyvisitors.application(application, didReceiveRemoteNotification: userInfo, fetchCompletionHandler: completionHandler)
 }
 
 func userNotificationCenter(
@@ -242,7 +238,7 @@ func userNotificationCenter(
     didReceive response: UNNotificationResponse,
     withCompletionHandler completionHandler: @escaping () -> Void
 ) {
-    NotifyvisitorsPlugin.didReceive(response)
+   RNNotifyvisitors.didReceive(response)
 }
 ```
 
@@ -253,25 +249,19 @@ func userNotificationCenter(
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center
        willPresentNotification:(UNNotification *)notification
          withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler {
-
-    [NotifyvisitorsPlugin willPresentNotification:notification
-                           withCompletionHandler:completionHandler];
+    [RNNotifyvisitors willPresentNotification: notification withCompletionHandler: completionHandler];
 }
 
 - (void)application:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo
 fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-
-    [NotifyvisitorsPlugin application:application
-didReceiveRemoteNotification:userInfo
-fetchCompletionHandler:completionHandler];
+    [RNNotifyvisitors application: application didReceiveRemoteNotification: userInfo fetchCompletionHandler: completionHandler];
 }
 
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center
 didReceiveNotificationResponse:(UNNotificationResponse *)response
          withCompletionHandler:(void (^)(void))completionHandler {
-
-    [NotifyvisitorsPlugin didReceiveNotificationResponse:response];
+    [RNNotifyvisitors didReceiveNotificationResponse: response];
 }
 ```
 

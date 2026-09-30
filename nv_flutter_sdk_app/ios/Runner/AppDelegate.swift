@@ -97,13 +97,13 @@ import AppTrackingTransparency
       }
 //
 //      let appVersionInfoChannel = FlutterMethodChannel(name: "native.appVersionInfo", binaryMessenger: controller.binaryMessenger)
-//      
+//
 //      appVersionInfoChannel.setMethodCallHandler { call, result in
 //          print("[APP_VERSION] Method = \(call.method)")
-//          
+//
 //          if call.method == "getAppVersionInfoInfo" {
 //              print("[APP_VERSION] Returning data")
-//              
+//
 //              self.handleAppVersionsing(previousVersion ?? "", currentVersion: currentVersion ?? "", result: result)
 //          } else {
 //              print("[APP_VERSION] Not Implemented")

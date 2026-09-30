@@ -298,12 +298,16 @@ class SDKManager {
 
   static Future<dynamic> getUnreadCount() async {
     dynamic result;
-    await Notifyvisitors.shared
-        .getNotificationCenterCount(_nvCenterTabs)
-        .then((callback) {
+    await Notifyvisitors.shared.getNotificationCenterData().then((callback) {
       debugPrint("Notification Center Unread Count Callback: $callback");
       result = callback;
     });
+    // await Notifyvisitors.shared
+    //     .getNotificationCenterCount(_nvCenterTabs)
+    //     .then((callback) {
+    //   debugPrint("Notification Center Unread Count Callback: $callback");
+    //   result = callback;
+    // });
     return result;
   }
 
