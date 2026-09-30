@@ -45,29 +45,39 @@ class Notifyvisitors {
     return version;
   }
 
-  Future<void> show(var tokens, var customRules, var fragmentName,
-      ShowCallback handler) async {
+  Future<void> show(
+    var tokens,
+    var customRules,
+    var fragmentName,
+    ShowCallback handler,
+  ) async {
     _showCallback = handler;
     var inAppInfo = {
       'tokens': tokens,
       'customRules': customRules,
-      'fragmentName': fragmentName
+      'fragmentName': fragmentName,
     };
     await _channel.invokeMethod('show', inAppInfo);
   }
 
-  Future<String> showInAppMessage(var tokens, var customRules, var fragmentName,
-      ShowCallback handler) async {
+  Future<String> showInAppMessage(
+    var tokens,
+    var customRules,
+    var fragmentName,
+    ShowCallback handler,
+  ) async {
     _showCallback = handler;
 
     var inAppInfo = {
       'tokens': tokens,
       'customRules': customRules,
-      'fragmentName': fragmentName
+      'fragmentName': fragmentName,
     };
 
-    String callback =
-        await _channel.invokeMethod('showInAppMessage', inAppInfo);
+    String callback = await _channel.invokeMethod(
+      'showInAppMessage',
+      inAppInfo,
+    );
     return callback;
   }
 
@@ -77,7 +87,10 @@ class Notifyvisitors {
   }
 
   Future<void> openNotificationCenter(
-      var appInboxInfo, int dismiss, NotificationCenterCallback handler) async {
+    var appInboxInfo,
+    int dismiss,
+    NotificationCenterCallback handler,
+  ) async {
     _notificationCenterCallback = handler;
     var showInfo = {'dismissValue': dismiss, 'appInboxInfo': appInboxInfo};
     await _channel.invokeMethod('openNotificationCenter', showInfo);
@@ -97,14 +110,19 @@ class Notifyvisitors {
   //   await _channel.invokeMethod('clearGlobalAttributes');
   // }
 
-  Future<void> event(String eventName, var attributes, String lifeTimeValue,
-      String scope, EventCallback handler) async {
+  Future<void> event(
+    String eventName,
+    var attributes,
+    String lifeTimeValue,
+    String scope,
+    EventCallback handler,
+  ) async {
     _eventCallback = handler;
     var eventInfo = {
       'eventName': eventName,
       'attributes': attributes,
       'lifeTimeValue': lifeTimeValue,
-      'scope': scope
+      'scope': scope,
     };
     await _channel.invokeMethod('event', eventInfo);
   }
@@ -116,8 +134,10 @@ class Notifyvisitors {
 
   Future<String> setUserIdentifier(var attributes) async {
     var userInfo = {'attributes': attributes};
-    String callback =
-        await _channel.invokeMethod('setUserIdentifier', userInfo);
+    String callback = await _channel.invokeMethod(
+      'setUserIdentifier',
+      userInfo,
+    );
     return callback;
   }
 
@@ -145,8 +165,15 @@ class Notifyvisitors {
     return count;
   }
 
-  Future<void> scheduleNotification(String nid, String tag, String time,
-      String title, String msg, String url, String icon) async {
+  Future<void> scheduleNotification(
+    String nid,
+    String tag,
+    String time,
+    String title,
+    String msg,
+    String url,
+    String icon,
+  ) async {
     var notificationInfo = {
       'nid': nid,
       'tag': tag,
@@ -154,16 +181,16 @@ class Notifyvisitors {
       'title': title,
       'msg': msg,
       'url': url,
-      'icon': icon
+      'icon': icon,
     };
     await _channel.invokeMethod('scheduleNotification', notificationInfo);
   }
 
-  Future<void> stopGeofencePushforDateTime(
-      String dateTime, String additionalHours) async {
-    var timeInfo = {'dateTime': dateTime, 'additionalHours': additionalHours};
-    await _channel.invokeMethod('stopGeofencePushforDateTime', timeInfo);
-  }
+  // Future<void> stopGeofencePushforDateTime(
+  //     String dateTime, String additionalHours) async {
+  //   var timeInfo = {'dateTime': dateTime, 'additionalHours': additionalHours};
+  //   await _channel.invokeMethod('stopGeofencePushforDateTime', timeInfo);
+  // }
 
   Future<void> getLinkInfo(GetClickInfo handler) async {
     _getClickInfo = handler;
@@ -191,15 +218,16 @@ class Notifyvisitors {
   }
 
   Future<void> createNotificationChannel(
-      String channelId,
-      String channelName,
-      String channelDescription,
-      String channelImportance,
-      bool enableLights,
-      bool shouldVibrate,
-      String lightColor,
-      String soundFileName,
-      String vibrationPattern) async {
+    String channelId,
+    String channelName,
+    String channelDescription,
+    String channelImportance,
+    bool enableLights,
+    bool shouldVibrate,
+    String lightColor,
+    String soundFileName,
+    String vibrationPattern,
+  ) async {
     var channelInfo = {
       'channelId': channelId,
       'channelName': channelName,
@@ -209,20 +237,20 @@ class Notifyvisitors {
       'shouldVibrate': shouldVibrate,
       'lightColor': lightColor,
       'soundFileName': soundFileName,
-      'vibrationPattern': vibrationPattern
+      'vibrationPattern': vibrationPattern,
     };
     await _channel.invokeMethod('createNotificationChannel', channelInfo);
   }
 
   Future<void> deleteNotificationChannel(String channelId) async {
-    var channelInfo = {
-      'channelId': channelId,
-    };
+    var channelInfo = {'channelId': channelId};
     await _channel.invokeMethod('deleteNotificationChannel', channelInfo);
   }
 
   Future<void> createNotificationChannelGroup(
-      String groupId, String groupName) async {
+    String groupId,
+    String groupName,
+  ) async {
     var channelInfo = {'groupId': groupId, 'groupName': groupName};
     await _channel.invokeMethod('createNotificationChannelGroup', channelInfo);
   }
@@ -257,23 +285,29 @@ class Notifyvisitors {
   }
 
   Future<void> subscribePushCategory(
-      var categoryArray, bool unsubscribeSignal) async {
+    var categoryArray,
+    bool unsubscribeSignal,
+  ) async {
     var categoryInfo = {
       'categoryArray': categoryArray,
-      'unsubscribeSignal': unsubscribeSignal
+      'unsubscribeSignal': unsubscribeSignal,
     };
     await _channel.invokeMethod('subscribePushCategory', categoryInfo);
   }
 
   Future<String> getNotificationCenterCount(var tabCountInfo) async {
     var tabInfo = {'tabCountInfo': tabCountInfo};
-    String countInfo =
-        await _channel.invokeMethod('notificationCenterCount', tabInfo);
+    String countInfo = await _channel.invokeMethod(
+      'notificationCenterCount',
+      tabInfo,
+    );
     return countInfo;
   }
 
   Future<void> pushPermissionPrompt(
-      pushPromptInfo, PromptCallback handler) async {
+    pushPromptInfo,
+    PromptCallback handler,
+  ) async {
     _promptCallback = handler;
     var temp;
     if (pushPromptInfo != null) {
@@ -286,9 +320,7 @@ class Notifyvisitors {
   }
 
   Future<void> enablePushPermission(bool isAllowed) async {
-    var data = {
-      'isAllowed': isAllowed,
-    };
+    var data = {'isAllowed': isAllowed};
     await _channel.invokeMethod('enablePushPermission', data);
   }
 
@@ -301,9 +333,10 @@ class Notifyvisitors {
     return info;
   }
 
-//for multiple callback
+  //for multiple callback
   Future<void> getNotificationCenterDetails(
-      NotificationCenterDataCallback handler) async {
+    NotificationCenterDataCallback handler,
+  ) async {
     _notificationCenterDataCallback = handler;
     await _channel.invokeMethod('getNotificationCenterDetails');
   }
@@ -327,7 +360,7 @@ class Notifyvisitors {
       "buttonTwoBorderRadius": pushPromptInfo.buttonTwoBorderRadius,
       "numberOfSessions": pushPromptInfo.numberOfSessions,
       "resumeInDays": pushPromptInfo.setResumeInDays,
-      "numberOfTimesPerSession": pushPromptInfo.setNumberOfTimesPerSession
+      "numberOfTimesPerSession": pushPromptInfo.setNumberOfTimesPerSession,
     };
     return promptInfo;
   }
@@ -361,14 +394,13 @@ class Notifyvisitors {
       this._eventCallback!(call.arguments.toString());
     } /*else if (call.method == "ChatBotResponse" && this._chatBotClick != null) {
       this._chatBotClick!(call.arguments.toString());
-    }*/
-    else if (call.method == "promptResponse" && this._promptCallback != null) {
+    }*/ else if (call.method == "promptResponse" &&
+        this._promptCallback != null) {
       this._promptCallback!(call.arguments.toString());
     } /*else if (call.method == "EventSurveyResponse" &&
         this._eventSurvryInfo != null) {
       this._eventSurvryInfo!(call.arguments.toString());
-    }*/
-    else if (call.method == "EventSurveyResponse" &&
+    }*/ else if (call.method == "EventSurveyResponse" &&
         this._eventSurvryInfo != null) {
       this._eventSurvryInfo!(call.arguments.toString());
     } else if (call.method == "KnownUserIdentified" &&
@@ -393,10 +425,8 @@ class NotifyVisitorsEmbedWidget extends StatelessWidget {
 
   //key is used internally by Flutter’s widget tree system.
   //propertyName is your own custom logic/parameter needed to render your widget.
-  const NotifyVisitorsEmbedWidget({
-    Key? key,
-    required this.propertyName,
-  }) : super(key: key);
+  const NotifyVisitorsEmbedWidget({Key? key, required this.propertyName})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -418,9 +448,7 @@ class NotifyVisitorsEmbedWidget extends StatelessWidget {
         creationParamsCodec: const StandardMessageCodec(),
       );
     } else {
-      return const Center(
-        child: Text('Platform not supported'),
-      );
+      return const Center(child: Text('Platform not supported'));
     }
   }
 }
