@@ -1,0 +1,39 @@
+{
+  "name": "flutter_notifyvisitors",
+  "version": "1.6.2",
+  "summary": "NotifyVisitors Flutter SDK for marketing automation software that designed to help marketers take their campaigns to the next level.",
+  "description": "NotifyVisitors sdk to attribute and analyse user behaviour analytics like funnel, cohort, RFM also used to increase Mobile App engagement through push notification, in-app nudges.",
+  "source_files": "Classes/**/*",
+  "dependencies": {
+    "Flutter": [],
+    "notifyvisitors": [
+      "7.4.0"
+    ],
+    "notifyvisitorsNudges": [
+      "0.0.3"
+    ]
+  },
+  "platforms": {
+    "ios": "12.0"
+  },
+  "homepage": "http://www.notifyvisitors.com",
+  "license": {
+    "file": "../LICENSE"
+  },
+  "authors": {
+    "Neeraj Sharma": "neeraj.s@notifyvisitors.com"
+  },
+  "source": {
+    "path": "."
+  },
+  "static_framework": true,
+  "public_header_files": "Classes/**/*.h",
+  "pod_target_xcconfig": {
+    "EXCLUDED_ARCHS[sdk=iphonesimulator*]": "arm64"
+  },
+  "user_target_xcconfig": {
+    "EXCLUDED_ARCHS[sdk=iphonesimulator*]": "arm64"
+  },
+  "swift_versions": "5.0",
+  "swift_version": "5.0"
+}

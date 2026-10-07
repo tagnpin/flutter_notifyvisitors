@@ -1,0 +1,5 @@
+${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh
+${BUILT_PRODUCTS_DIR}/flutter_native_splash/flutter_native_splash.framework
+${PODS_XCFRAMEWORKS_BUILD_DIR}/notifyvisitors/notifyvisitors.framework/notifyvisitors
+${PODS_XCFRAMEWORKS_BUILD_DIR}/notifyvisitorsNudges/notifyvisitorsNudges.framework/notifyvisitorsNudges
+${PODS_XCFRAMEWORKS_BUILD_DIR}/notifyvisitorsNotificationService/notifyvisitorsNotificationService.framework/notifyvisitorsNotificationService

@@ -197,12 +197,16 @@ Enable the following capabilities:
 
 Add the **Push Notifications** capability if it is not already enabled.
 
+![Push Notifications Capability](images/ios/push-notification/PushCapabilities_NV_SDK.png)
+
 ### Background Modes
 
 Enable **Background Modes** and select:
 
 - Background fetch
 - Remote notifications
+
+![Background Modes Capabilities](images/ios/push-notification/BgModeCapabilities_NV_SDK.png)
 
 These capabilities are required for reliable push notification delivery and background processing.
 
