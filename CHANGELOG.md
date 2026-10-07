@@ -1,5 +1,12 @@
 ## CHANGE LOG
 
+### Version 1.6.6 *(October 08, 2026)*
+-------------------------------------------
+- iOS Updates:
+  - Swift Package Manager (SPM) Support enabled for iOS platform.
+- Minor bug fixes
+- Code optimisation and performance enhancement.
+
 ### Version 1.6.5 *(Septemer 30, 2026)*
 -------------------------------------------
 - Android Updates:

@@ -2,7 +2,7 @@
 
 # NVECTA Flutter SDK
 
-[![Static Badge](https://img.shields.io/badge/pub-1.6.4-blue?logo=flutter)](https://pub.dev/packages/flutter_notifyvisitors) ![Formerly](https://img.shields.io/badge/Formerly-NotifyVisitors-blue)
+[![Static Badge](https://img.shields.io/badge/pub-1.6.6-blue?logo=flutter)](https://pub.dev/packages/flutter_notifyvisitors) ![Formerly](https://img.shields.io/badge/Formerly-NotifyVisitors-blue)
 
 <br>
 
