@@ -5,7 +5,7 @@ export "FLUTTER_APPLICATION_PATH=/Users/siddharth/TagnpinWorkspace/notifyvisitor
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=/Users/siddharth/TagnpinWorkspace/notifyvisitors/nvCrossPlatformSDKs/nvFlutter/urgent_iOS_Changes/flutter_notifyvisitors/nv_flutter_sdk_app/lib/main.dart"
 export "FLUTTER_BUILD_DIR=build"
-export "FLUTTER_BUILD_NAME=1.6.6"
+export "FLUTTER_BUILD_NAME=1.6.5"
 export "FLUTTER_BUILD_NUMBER=1"
 export "DART_DEFINES=RkxVVFRFUl9WRVJTSU9OPTMuNDEuNA==,RkxVVFRFUl9DSEFOTkVMPXN0YWJsZQ==,RkxVVFRFUl9HSVRfVVJMPWh0dHBzOi8vZ2l0aHViLmNvbS9mbHV0dGVyL2ZsdXR0ZXIuZ2l0,RkxVVFRFUl9GUkFNRVdPUktfUkVWSVNJT049ZmYzN2JlZjYwMw==,RkxVVFRFUl9FTkdJTkVfUkVWSVNJT049ZTRiOGRjYTNmMQ==,RkxVVFRFUl9EQVJUX1ZFUlNJT049My4xMS4x"
 export "DART_OBFUSCATION=false"
