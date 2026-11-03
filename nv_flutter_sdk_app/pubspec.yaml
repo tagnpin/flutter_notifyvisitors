@@ -82,8 +82,8 @@ flutter:
   assets:
     - assets/images/
 
-  # config:
-  #   enable-swift-package-manager: true
+  config:
+    enable-swift-package-manager: false
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
