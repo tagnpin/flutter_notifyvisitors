@@ -65,7 +65,7 @@ android {
             if (signingConfigs.release.storeFile != null) {
                 signingConfig signingConfigs.release
             } else {
-                println("⚠️ Release signing-Config not found. APK will NOT be signed.")
+                println("⚠️ Release signingConfig not found. APK will NOT be signed.")
             }
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             // minifyEnabled enableProguardInReleaseBuilds

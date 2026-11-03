@@ -1,12 +1,10 @@
 import Flutter
 import UIKit
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-//class SceneDelegate: FlutterSceneDelegate {
-    
-    var window: UIWindow?
 
-    func scene(
+class SceneDelegate: FlutterSceneDelegate {
+
+    override func scene(
         _ scene: UIScene,
         willConnectTo session: UISceneSession,
         options connectionOptions: UIScene.ConnectionOptions
@@ -20,19 +18,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         )
     }
     
-    func sceneDidBecomeActive(_ scene: UIScene) {
+    override func sceneDidBecomeActive(_ scene: UIScene) {
         NotifyvisitorsPlugin.sceneDidBecomeActive(scene)
     }
     
-    func sceneWillEnterForeground(_ scene: UIScene) {
+    override func sceneWillEnterForeground(_ scene: UIScene) {
         NotifyvisitorsPlugin.sceneWillEnterForeground(scene)
     }
 
-    func sceneDidEnterBackground(_ scene: UIScene) {
+    override func sceneDidEnterBackground(_ scene: UIScene) {
         NotifyvisitorsPlugin.sceneDidEnterBackground(scene)
     }
     
-    func scene(
+    override func scene(
         _ scene: UIScene,
         openURLContexts URLContexts: Set<UIOpenURLContext>
     ) {
