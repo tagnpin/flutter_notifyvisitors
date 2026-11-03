@@ -1220,6 +1220,50 @@ UIColor * mUnselectedTabBgColor;
 
 #pragma mark - AppDelegate Integration Methods (INITIALIZE Notifyvisitors SDK and Basic Integration Methods)
 
+
+// SDK Auto Integration
+
+
+
++(void)nvRegisterWithConfiguration:(NVConfiguration *)configuration {
+    
+    // 1. Guard against a nil configuration object
+    if (configuration == nil) {
+        NSLog(@"%@ ERROR: NV-CONFIGURATION PASSED TO REGISTER WITH CONFIGURATION IS NIL. REGISTRATION ABORTED !!", TAG);
+            return;
+        }
+        
+        // 2. Type Safety Check (Guards against invalid objects passed from dynamic runtime/Swift)
+        if (![configuration isKindOfClass: [NVConfiguration class]]) {
+            NSLog(@"%@ ERROR: INVALID OBJECT TYPE PASSED TO REGISTER WITH CONFIGURATION. EXPECTED TYPE IS  NVConfiguration !!", TAG);
+            
+            return;
+        }
+    
+    // 3. Mandatory Field Validations
+        if (configuration.brandID <= 0) {
+            NSLog(@"%@ ERROR: INVALID BRANDID (%ld). !!", TAG, (long)configuration.brandID);
+            return;
+        }
+
+        // Validate secretKey (check for nil, empty string, or NSNull)
+        NSString *secretKey = configuration.secretKey;
+        if (secretKey == nil ||
+            ![secretKey isKindOfClass: [NSString class]] ||
+            [secretKey stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]].length == 0 ||
+            [secretKey isEqualToString: @"(null)"]) {
+            NSLog(@"%@ ERROR: INVALID SECRET KEY. SECRET KEY CAN NOT BE NIL OR EMPTY. KINDLY PROVIDE A VALID SECRET KEY FROM YOUR DASHBOARD !!", TAG);
+            return;
+        }
+    
+    // 4. Catch Native Runtime Exceptions
+        @try {
+            [notifyvisitors registerWithConfiguration: configuration];
+        } @catch (NSException *exception) {
+            NSLog(@"%@ SOMETHING WENT WRONG DURING REGISTER WITH CONFIGURATION. REASON: %@ !!", TAG, exception.reason);
+        }
+}
+
 // SDK initialization
 
 + (void)initializeWithBrandId:(NSInteger)brandID secretKey:(NSString *)secretKey launchingOptions:(NSDictionary *)launchingOptions {
