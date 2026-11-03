@@ -1,18 +1,15 @@
 PODS:
   - Flutter (1.0.0)
-  - flutter_native_splash (2.4.3):
-    - Flutter
-  - flutter_notifyvisitors (1.6.4):
+  - flutter_notifyvisitors (1.6.5):
     - Flutter
     - notifyvisitors (= 8.0.2)
     - notifyvisitorsNudges (= 0.0.3)
   - notifyvisitors (8.0.2)
-  - notifyvisitorsNotificationService (1.0.0)
+  - notifyvisitorsNotificationService (2.0.0)
   - notifyvisitorsNudges (0.0.3)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - flutter_notifyvisitors (from `.symlinks/plugins/flutter_notifyvisitors/ios`)
   - notifyvisitorsNotificationService
 
@@ -25,19 +22,16 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  flutter_native_splash:
-    :path: ".symlinks/plugins/flutter_native_splash/ios"
   flutter_notifyvisitors:
     :path: ".symlinks/plugins/flutter_notifyvisitors/ios"
 
 SPEC CHECKSUMS:
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
-  flutter_native_splash: 6cad9122ea0fad137d23137dd14b937f3e90b145
-  flutter_notifyvisitors: 406e308fddc43805733a330a7b728d54c73e6e51
+  flutter_notifyvisitors: 82ae90b10546e523170cfdb8798a7ad3c9c5fd6f
   notifyvisitors: 79db12fa21bb7fe98f81a69312e0c2d18035ebfe
-  notifyvisitorsNotificationService: ef0ac1d14d3c3b168eec98d9aa1bff14f592e6a2
+  notifyvisitorsNotificationService: 757634715cc2f15fa0c165150551de719b6f9673
   notifyvisitorsNudges: 5d1d931d1c09107a0fa5d7cfc388ee3cc2e68cf2
 
-PODFILE CHECKSUM: e570b20c5b175623fd7e921c72153bcb4f83d577
+PODFILE CHECKSUM: f4594aed7085a62f01df36725b2bd5f14f73a1ab
 
 COCOAPODS: 1.16.2
