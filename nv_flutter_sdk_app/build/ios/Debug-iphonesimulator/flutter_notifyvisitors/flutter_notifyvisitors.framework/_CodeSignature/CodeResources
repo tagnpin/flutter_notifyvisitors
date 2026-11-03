@@ -14,11 +14,11 @@
 		</data>
 		<key>Headers/NotifyvisitorsPlugin.h</key>
 		<data>
-		zOc/hBPkqfafTrEFoEtI2ZLQPd0=
+		GFKitKms0absjP2JoYhgTdJckGw=
 		</data>
 		<key>Headers/flutter_notifyvisitors-Swift.h</key>
 		<data>
-		PoP4mrHpls9XhprOjIoDm1WqW0E=
+		XSrcOkOOr5DH6khXCe0zaR6KEOE=
 		</data>
 		<key>Headers/flutter_notifyvisitors-umbrella.h</key>
 		<data>
@@ -26,11 +26,11 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		UFwa/P/jAbq2Ih3gguJuIKA4Q4s=
+		AT6nJe6XHu/jKpCVEiyTXyTzCq0=
 		</data>
 		<key>Modules/flutter_notifyvisitors.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		jdJmhG2osqCW/klvJYzAZWTbis0=
+		KCgHVZrouaHYBvHfaBIZ+rxvXFo=
 		</data>
 		<key>Modules/flutter_notifyvisitors.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -38,15 +38,15 @@
 		</data>
 		<key>Modules/flutter_notifyvisitors.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		I2/E24TajLzpbhr1Ullf1+B5Qxw=
+		NY1HZpEMPwBNeqdnDcVdpH97WT4=
 		</data>
 		<key>Modules/flutter_notifyvisitors.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		vjjADuPFR+ZDZyNTE2mrAw7w1yM=
+		5qXCfrJhMjfDvjswnV7DRiO7MRQ=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
-		uyt/UPWlZHtp2Lqh+6FFFJJpCNY=
+		mUOZkxnXlAZ7N9J7MVQvZMOxfb0=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -69,14 +69,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			j5zCSPkfS9V9+ogBpVshqZ3r43yx92lTkSunNl7zw+M=
+			evzwlnIKWV8nZ9aUd38FtJyWtjLKnZm/s3VEYkvZ5fw=
 			</data>
 		</dict>
 		<key>Headers/flutter_notifyvisitors-Swift.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			qAZDWbDTTJpHAK7AAn/yytxvJrV4Ro9wJyA/In/2G+o=
+			qT3BILopGCv9kRksXVkkmJrlN/gq2Qiejsak9Gt4wRI=
 			</data>
 		</dict>
 		<key>Headers/flutter_notifyvisitors-umbrella.h</key>
@@ -90,7 +90,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			kvPZI4WjnE/HcI47MpM+8UtcXnSP0z1Bb2FJ08bjkPo=
+			buIwPSRzDvTHnTgEHRfQ30DvZHefEe7rg1vxc9+PvKI=
 			</data>
 		</dict>
 		<key>Modules/flutter_notifyvisitors.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -104,21 +104,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			4i2q3/fAtjQNHoX3CE3WEUbvJxObkKvxiODoRYY7VPA=
+			/9NVa5/IOybM0TwriJT/Hs4QR6+faise2ts4SF1JTdo=
 			</data>
 		</dict>
 		<key>Modules/flutter_notifyvisitors.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			tlb9Gpd74Edk9E51mQr74+9dz3+nWsQJIzRGV3G5Ww8=
+			nwLCn0AVEZt7cT3JtCM7QOI8bF7YlfBUDug+scXaOvA=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			EcKu+vw3WbJNtALk83eQznZ1NKw3Gf1LOctxE4v8cCM=
+			gCBmzyuOwNNyeRHK+ucoN1zgSBcH4VnhvBDCDxrJJqM=
 			</data>
 		</dict>
 	</dict>
