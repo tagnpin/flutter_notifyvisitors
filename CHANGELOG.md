@@ -1,5 +1,12 @@
 ## CHANGE LOG
 
+### Version 1.6.5 *(Septemer 30, 2026)*
+-------------------------------------------
+- Android Updates:
+  - Removed geofencing-related code and manifest declarations from the SDK to prevent unused geofencing components from being included in applications that do not require geofencing.
+- Minor bug fixes
+- Code optimisation and performance enhancement.
+
 ### Version 1.6.4 *(August 03, 2026)*
 -------------------------------------------
 - iOS Updates:

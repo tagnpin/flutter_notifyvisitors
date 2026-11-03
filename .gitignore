@@ -23,12 +23,15 @@ migrate_working_dir/
 # Flutter/Dart/Pub related
 **/doc/api/
 **/ios/Flutter/.last_build_id
+**/Flutter/Generated.xcconfig
+**/Flutter/flutter_export_environment.sh
+**/Flutter/ephemeral/
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
-/build/
+**/build/
 
 # Symbolication related
 app.*.symbols
@@ -48,6 +51,7 @@ lib/config/app_config.dart
 # iOS secrets
 # Ignore secret config files anywhere in the project
 **/nvSecrets.xcconfig
+**/ios/Flutter/nvSecrets.xcconfig
 **/Flutter/nvSecrets.xcconfig
 **/GoogleService-Info.plist
 **/Runner/GoogleService-Info.plist

@@ -7,5 +7,4 @@ framework module flutter_notifyvisitors {
 
 module flutter_notifyvisitors.Swift {
   header "flutter_notifyvisitors-Swift.h"
-  requires objc
 }
