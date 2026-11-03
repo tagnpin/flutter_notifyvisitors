@@ -106,6 +106,16 @@ jobs:
         run: flutter pub get
 
       # ============================================================
+      # STEP 5️⃣ Verify Flutter Root 📦
+      # ============================================================
+      - name: Verify Flutter Root
+        run: |
+          echo "Generated Flutter configuration:"
+          cat ios/Flutter/Generated.xcconfig
+          echo "Checking Flutter root..."
+          grep '^FLUTTER_ROOT=' ios/Flutter/Generated.xcconfig
+
+      # ============================================================
       # STEP 6️⃣  Install CocoaPods 📚
       # ============================================================
       - name: 📚 Install CocoaPods
