@@ -1,5 +1,13 @@
 ## CHANGE LOG
 
+### Version 1.6.6 *(November 03, 2026)*
+-------------------------------------------
+- iOS Updates:
+  - Simplified SDK integration with a new configuration-based registration function.
+  - Updated system event handling.
+- Minor bug fixes
+- Code optimisation and performance enhancement.
+
 ### Version 1.6.5 *(Septemer 30, 2026)*
 -------------------------------------------
 - Android Updates:
