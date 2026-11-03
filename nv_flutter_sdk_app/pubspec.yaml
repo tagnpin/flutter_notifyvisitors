@@ -43,8 +43,7 @@ dependencies:
 
   # Utilities
   equatable: ^2.0.5
-  flutter_native_splash: ^2.4.4
-  # flutter_native_splash: ^2.4.6
+  flutter_native_splash: 2.4.4
 
   # NVECTA (Formally NotifyVisitors) Flutter SDK
   flutter_notifyvisitors:

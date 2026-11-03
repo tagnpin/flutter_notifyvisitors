@@ -1,9 +1,14 @@
 import Flutter
 import UIKit
+import UserNotifications
+
 
 @main
-@objc class AppDelegate: FlutterAppDelegate, FlutterImplicitEngineDelegate {
-  override func application(
+@objc class AppDelegate: FlutterAppDelegate {
+ // @objc class AppDelegate: FlutterAppDelegate, FlutterImplicitEngineDelegate {
+
+    
+    override func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
@@ -19,12 +24,9 @@ import UIKit
       NotifyvisitorsPlugin.initialize(withBrandId: nvAccountBrnadIDInt, secretKey: nvAccountSecretKey, launchingOptions: launchOptions)
       NotifyvisitorsPlugin.registerPush(withDelegate: self, app: application, launchOptions: launchOptions)
       
+      GeneratedPluginRegistrant.register(with: self)
       
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
-  }
-
-  func didInitializeImplicitFlutterEngine(_ engineBridge: FlutterImplicitEngineBridge) {
-    GeneratedPluginRegistrant.register(with: engineBridge.pluginRegistry)
   }
     
     override func applicationDidEnterBackground(_ application: UIApplication) {
