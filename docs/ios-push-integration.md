@@ -17,6 +17,17 @@ This guide covers:
 - Handling notification callbacks
 - Rich notifications using Notification Service Extension
 
+<br>
+
+> **Integration methods**
+>
+> The push notification setup supports both Simplified Integration and Manual Integration.
+>
+> - **Simplified Integration (`flutter_notifyvisitors` 1.6.6 and later):** You must register for push notifications using the `registerPush` function. APNs registration callbacks and notification delegate forwarding are handled automatically by the SDK.
+> - **Manual Integration:** You must register for push notifications using the `registerPush` function and manually forward APNs registration callbacks and notification delegates to the SDK.
+
+**Note:** The APNs configuration, Xcode capabilities, and Rich Notification setup remain the same for both integration methods.
+
 ---
 
 ## Prerequisites
@@ -72,7 +83,7 @@ The iOS application must:
 
 - Register for remote notifications
 - Enable Push Notification capabilities
-- Forward notification delegates to the SDK
+- Forward APNs registration callbacks and notification delegates when using Manual Integration.
 - Configure a Notification Service Extension (recommended)
 
 ---
@@ -104,6 +115,8 @@ class AppDelegate: FlutterAppDelegate, UNUserNotificationCenterDelegate
 
 After initializing the SDK in `didFinishLaunchingWithOptions`, register for push notifications.
 
+**This registration step is required for both Simplified Integration and Manual Integration.**
+
 ### Swift
 
 ```swift
@@ -133,7 +146,11 @@ NotifyvisitorsPlugin.registerPush(
 
 ### Forward APNs Registration Callbacks
 
-Forward the following callbacks to the SDK.
+<badge color="warning">Manual Integration only</badge>
+
+If you are using Manual Integration, forward the following APNs registration callbacks to the SDK.
+
+**For Simplified Integration, these callbacks are handled automatically. You do not need to add them manually.**
 
 #### Swift
 
@@ -214,7 +231,11 @@ These capabilities are required for reliable push notification delivery and back
 
 ## 2.3 Forward Notification Delegates
 
-Forward all notification callbacks to the SDK.
+<badge color="warning">Manual Integration only</badge>
+
+If you are using Manual Integration, forward the following notification callbacks to the SDK.
+
+**For Simplified Integration, notification delegate forwarding is handled automatically. You do not need to add these methods manually.**
 
 ### Swift
 
