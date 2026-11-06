@@ -18,6 +18,15 @@ The iOS integration consists of the following steps:
 5. Verify the integration
 6. Configure Push Notifications (optional)
 
+<br>
+
+> **Integration methods**
+>
+> - **`flutter_notifyvisitors` 1.6.6 and later:** Supports both Simplified Integration (recommended) and the existing Manual Integration.
+> - **Versions earlier than `1.6.6`:** Support the existing Manual Integration only.
+
+**Note:** Upgrading to version `1.6.6` or later does not require you to change your existing Manual Integration. You can continue using it or switch to Simplified Integration whenever you choose.
+
 ---
 
 ## Prerequisites
@@ -28,7 +37,7 @@ Before proceeding, ensure that:
 - Xcode is installed.
 - CocoaPods is installed.
 - The NotifyVisitors Flutter plugin has been added to your project's `pubspec.yaml`.
-- You have your **Brand ID** and **Secret Key** from the NVECTA Dashboard.
+- You have your `Brand ID` and `Secret Key` from the **NVECTA** Dashboard.
 
 ---
 
@@ -45,6 +54,18 @@ cd ..
 ---
 
 ## 2. Configure SDK Credentials
+
+The credential configuration depends on the integration method you choose.
+
+### Simplified Integration (`flutter_notifyvisitors` 1.6.6 and later)
+
+Provide the `BrandID` and `SecretKey` through the `NVConfiguration` object during SDK registration.
+
+You do not need to add `nvBrandID` or `nvSecretKey` to `Info.plist`.
+
+### Manual Integration (all package versions)
+
+If you use the existing `nvInitialize()` method, including when using `flutter_notifyvisitors` 1.6.6 or later, the SDK continues to read the `BrandID` and `SecretKey` from `Info.plist`.
 
 Open the iOS project using:
 
@@ -146,7 +167,109 @@ Import the SDK header in `AppDelegate.m`:
 
 ### AppDelegate Integration
 
-Forward the following callbacks from your `AppDelegate`.
+Choose the integration method you want to use.
+
+### Option 1: Simplified Integration (Recommended)
+
+**Requires `flutter_notifyvisitors` version `1.6.6` or later.**
+
+The simplified integration uses a configuration-based registration function. It initializes the SDK and automatically handles the required application lifecycle, deep-link, and underlying push notification integration.
+
+You only need to create an `NVConfiguration` object, provide your SDK credentials and settings, and initialise the SDK from `didFinishLaunchingWithOptions` as shown below example code.
+
+You do not need to manually forward the SDK lifecycle or deep-link callbacks shown in the Manual Integration section.
+
+#### Swift
+
+```swift
+import UIKit
+import Flutter
+
+@main
+@objc class AppDelegate: FlutterAppDelegate {
+
+    override func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+
+        var nvMode: String? = nil
+
+        #if DEBUG
+            nvMode = "debug"
+        #else
+            nvMode = "live"
+        #endif
+
+        let config = NVConfiguration()
+        config.brandID = 1234
+        config.secretKey = "YOUR_SECRET_KEY"
+        config.appMode = nvMode
+
+        NotifyvisitorsPlugin.nvRegister(withConfiguration: config)
+
+        GeneratedPluginRegistrant.register(with: self)
+
+        return super.application(
+            application,
+            didFinishLaunchingWithOptions: launchOptions
+        )
+    }
+}
+```
+
+<details>
+<summary>Objective-C</summary>
+
+```objective-c
+#import "AppDelegate.h"
+#import <Flutter/Flutter.h>
+#import <flutter_notifyvisitors/NotifyvisitorsPlugin.h>
+
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application
+didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
+    NSString *nvMode = @"live";
+    #if DEBUG
+        nvMode = @"debug";
+    #endif
+
+    NVConfiguration *config = [[NVConfiguration alloc] init];
+    config.brandID = 1234;
+    config.secretKey = @"YOUR_SECRET_KEY";
+    config.appMode = nvMode;
+    config.trackingAuthorizationWaitTimeInterval = 40;
+
+    [NotifyvisitorsPlugin nvRegisterWithConfiguration:config];
+
+    [GeneratedPluginRegistrant registerWithRegistry:self];
+
+    return [super application:application
+        didFinishLaunchingWithOptions:launchOptions];
+}
+
+@end
+```
+
+</details>
+
+#### Configuration properties
+
+| Property    | Description                                                                          |
+| ----------- | ------------------------------------------------------------------------------------ |
+| `brandID`   | Your NotifyVisitors Brand ID.                                                        |
+| `secretKey` | Your NotifyVisitors Secret Key.                                                      |
+| `appMode`   | Application environment. Use `debug` for Debug builds and `live` for Release builds. |
+
+### Option 2: Manual Integration (Available in All Versions)
+
+You can continue using the existing Manual Integration with any supported `flutter_notifyvisitors` version, including version `1.6.6` and later.
+
+This means you can upgrade the package without changing your existing integration.
+
+The `nvInitialize()` function reads the Brand ID and Secret Key from `Info.plist`. You must also forward the required application lifecycle and URL callbacks to the SDK from your `AppDelegate` as shown in example below.
 
 ### Swift
 

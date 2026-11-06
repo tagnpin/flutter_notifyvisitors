@@ -64,7 +64,7 @@
 
 // SDK Auto Integration
 
-+(void)nvRegisterWithConfiguration:(NVConfiguration *_Nullable)configuration NS_SWIFT_NAME(register(withConfiguration:));
++(void)nvRegisterWithConfiguration:(NVConfiguration *_Nullable)configuration NS_SWIFT_NAME(nvRegister(withConfiguration:));
 
 // SDK initialization
 
