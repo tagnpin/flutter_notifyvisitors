@@ -34,7 +34,7 @@ import UIKit
      // NotifyvisitorsPlugin.
       //NotifyvisitorsPlugin
     //  NotifyvisitorsPlugin.initialize(withBrandId: nvAccountBrnadIDInt, secretKey: nvAccountSecretKey, launchingOptions: launchOptions)
-      NotifyvisitorsPlugin.register(withConfiguration: config)
+      NotifyvisitorsPlugin.nvRegister(withConfiguration: config)
       NotifyvisitorsPlugin.registerPush(withDelegate: self, app: application, launchOptions: launchOptions)
       
       //GeneratedPluginRegistrant.register(with: self)
