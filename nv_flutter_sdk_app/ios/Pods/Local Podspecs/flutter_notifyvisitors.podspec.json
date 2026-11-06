@@ -1,13 +1,13 @@
 {
   "name": "flutter_notifyvisitors",
-  "version": "1.6.5",
+  "version": "1.6.6",
   "summary": "NotifyVisitors Flutter SDK for marketing automation software that designed to help marketers take their campaigns to the next level.",
   "description": "NotifyVisitors sdk to attribute and analyse user behaviour analytics like funnel, cohort, RFM also used to increase Mobile App engagement through push notification, in-app nudges.",
   "source_files": "Classes/**/*",
   "dependencies": {
     "Flutter": [],
     "notifyvisitors": [
-      "8.0.2"
+      "9.0.0"
     ],
     "notifyvisitorsNudges": [
       "0.0.3"

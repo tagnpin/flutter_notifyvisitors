@@ -6,7 +6,7 @@
 #import "UserNotifications.h"
 #endif
 #define TAG @"[FLUTTER-NOTIFYVISITORS]:"
-#define PLUGIN_VERSION @"1.6.5" //Flutter plugin version number.
+#define PLUGIN_VERSION @"1.6.6" //Flutter plugin version number.
 #define SHOW @"show"
 #define SHOW_INAPP_MESSAGE @"showInAppMessage"
 #define NOTIFICATION_CENTER @"showNotifications"
@@ -61,6 +61,10 @@
 
 + (instancetype _Nullable )sharedInstance;
 
+
+// SDK Auto Integration
+
++(void)nvRegisterWithConfiguration:(NVConfiguration *_Nullable)configuration NS_SWIFT_NAME(nvRegister(withConfiguration:));
 
 // SDK initialization
 
